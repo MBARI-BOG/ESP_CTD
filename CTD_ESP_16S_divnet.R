@@ -7,14 +7,14 @@ library(ggfortify)
 library(RColorBrewer)
 library(data.table)
 library(textshape)
-library(magrittr) # to use %>% as a pipe
+library(magrittr)
 library(vegan)
 library(doParallel)
 library(dplyr)
 library(foreach)
 library(doSNOW)
 
-# import ASV table (eg "table_IDs_sterivex") and ID-to-taxonomy table
+# import ASV table and ID-to-taxonomy table
 
 microbe <- column_to_rownames(table_phyloseq, 'ID')
 tax_table <- column_to_rownames(taxonomy_phyloseq, 'ID')
@@ -54,17 +54,18 @@ plot(ba, water, color = "control_type")
 
 # Run DivNet at various taxonomic levels: phylum, genus, and ASV
 # If you use X=variable, estimates will be made for each group rather than each sample
+
 divnet_phylum <- divnet(tax_glom(physeq, taxrank="Phylum"), X="Location", ncores=6)
 divnet_genus <- divnet(tax_glom(physeq, taxrank="Genus"), ncores=4) # X="control_type"
+
+# unfiltered base asv
+divnet_asv <- divnet(physeq, base="10f86f692e9965c610fe1442ec51e246", ncores=4)
 
 #filtered base asv
 divnet_asv <- divnet(physeq, base="ecccfdc6bc637875988540bab042e56c", ncores=4)
 
 #filtered, experimental samples only
 divnet_asv_exp <- divnet(physeq_exp, base="ecccfdc6bc637875988540bab042e56c", ncores=4)
-
-# unfiltered base asv
-divnet_asv <- divnet(physeq, base="10f86f692e9965c610fe1442ec51e246", ncores=4)
 
 divnet_asv %>% names
 physeq %>% sample_data
@@ -101,7 +102,7 @@ simpson_true()divnet_asv$shannon %>%
   labs(col = "Sampling Method") +
   coord_cartesian(ylim = c(1, 5))
 
-# To get diversity indices for SAMPLE GROUPS rather than individual samples   
+# To get diversity indices for sample groups rather than individual samples   
 divnet_controls <- physeq %>%
   divnet(X = "control_type", ncores = 2)
 
