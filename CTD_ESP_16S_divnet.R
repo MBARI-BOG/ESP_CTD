@@ -70,52 +70,28 @@ divnet_asv_exp <- divnet(physeq_exp, base="ecccfdc6bc637875988540bab042e56c", nc
 divnet_asv %>% names
 physeq %>% sample_data
 
-# Alpha diversity
+################ ALPHA DIVERSITY #################
 
-divnet_asv$shannon %>%
-  plot(physeq_exp, col = "season", shape = "sampling_device") +
-  xlab("Sample") +
-  labs(col = "Season", shape = "Sampling Method") +
-  coord_cartesian(ylim = c(1, 5)) # + theme_classic()
+# Calculate alpha diversity metrics for each sample
+shan = divnet_asv_exp$shannon
+simp = divnet_asv_exp$simpson
 
-divnet_asv$shannon %>%
-  plot(physeq, col = "control_type") +
-  xlab("Sample") +
-  labs(col = "Control Status") +
-  coord_cartesian(ylim = c(1, 5)) # + theme_classic()
+# Plot each sample metric
+plot(divnet_asv_exp$shannon, 
+     physeq_exp, 
+     col = "sample_type")
 
-divnet_asv$simpson %>%
-  plot(physeq, col = "control_type") +
-  xlab("Sample") +
-  coord_cartesian(ylim = c(0, 0.42)) +
-  labs(col = "Control Status") # + theme_classic()
-
-divnet_asv$simpson %>%
-  plot(physeq_exp, col = "season", shape = "sampling_device") +
-  xlab("Sample") +
-  labs(col = "Season", shape = "Sampling Method") +
-  coord_cartesian(ylim = c(0, 0.06))
-
-simpson_true()divnet_asv$shannon %>%
-  plot(physeq_exp, col = "sampling_device") +
-  xlab("Sample") +
-  labs(col = "Sampling Method") +
-  coord_cartesian(ylim = c(1, 5))
+plot(divnet_asv_exp$simpson, 
+     physeq_exp, 
+     col = "sample_type")
 
 # To get diversity indices for sample groups rather than individual samples   
-divnet_controls <- physeq %>%
-  divnet(X = "control_type", ncores = 2)
-
 divnet_exp <- physeq_exp %>%
-  divnet(X = "depth_group", ncores = 2)
+  divnet(X = "sample_type", ncores = 2)
 
-plot(divnet_controls$shannon, 
-     physeq_exp, 
-     col = "DepthGroup")
-
-plot(divnet_controls$simpson, 
-     physeq, 
-     col = "DepthGroup")
+# To export values as table
+shan_tib <- bind_rows(shan)
+write.csv(shan_tib, file="DivNet_exp_shannon.csv")
 
 testDiversity(divnet_asv, "shannon")
 
