@@ -1,2 +1,11 @@
 # ESP_CTD
 A repository for the code for the metabarcoding comparison of ESP and CTD eDNA samples.
+
+## Analysis
+The analysis directory contains all scripts this analysis.
+
+## Data
+The data directory contains the data to be used in the scripts in the analysis directory.
+
+## Figures
+The figures directory contains the plotting outputs from the scripts in the analysis directory.
