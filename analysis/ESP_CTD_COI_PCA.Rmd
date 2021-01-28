@@ -1,0 +1,140 @@
+---
+title: "ESP_CTD_COI_PCA"
+author: "Markus Min"
+date: "1/28/2021"
+output: html_document
+---
+
+### Dependencies
+
+In addition to the R packages required for this script, you will also need to install **qiime2** and **DEICODE** (a qiime2 plugin) and create a qiime2 environment to run DEICODE within.
+
+
+### Load libraries
+```{r}
+library(tidyverse)
+library(phyloseq)
+library(qiime2R)
+```
+
+### Load data
+
+```{r}
+asv_table_path_COI <- here("data", "COI", "ESP_CTD_COI_asv_table.csv")
+tax_table_path_COI <- here("data", "COI", "ESP_CTD_COI_tax_table.csv")
+metadata_path_COI <- here("data", "COI", "ESP_CTD_COI_metadata.csv")
+
+ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_COI, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_COI, row.names = 1)))
+```
+
+### Prep data for DEICODE
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here("DEICODE", "COI")
+
+# Subset environmental samples for comparison
+ESP_CTD_COI_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_COI_phyloseq)
+ESP_CTD_COI_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_COI_envt_phyloseq) > 0, ESP_CTD_COI_envt_phyloseq)
+
+ESP_CTD_COI_envt_asv_table <- as.data.frame(as(otu_table(ESP_CTD_COI_envt_phyloseq),"matrix"))
+ESP_CTD_COI_envt_asv_table <- tibble::rownames_to_column(ESP_CTD_COI_envt_asv_table,"#OTUID")
+write.table(ESP_CTD_COI_envt_asv_table, paste0(deicode_dir, "/ESP_CTD_COI_envt_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_envt_tax_table <- as.data.frame(as(tax_table(ESP_CTD_COI_envt_phyloseq),"matrix"))
+ESP_CTD_COI_envt_tax_table <- tibble::rownames_to_column(ESP_CTD_COI_envt_tax_table,"#OTUID")
+write.table(ESP_CTD_COI_envt_tax_table,paste0(deicode_dir, "/ESP_CTD_COI_envt_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_envtsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_COI_envt_phyloseq)))
+ESP_CTD_COI_envtsamples_metadata <- tibble::rownames_to_column(ESP_CTD_COI_envtsamples_metadata,"#SampleID")
+write.table(ESP_CTD_COI_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_envt_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/COI/ESP_CTD_COI_envt_asv_table_for_biom.txt -o ../DEICODE/COI/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/COI/table.from_txt_json.biom -o ../DEICODE/COI/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/COI/ESP_CTD_COI_envt_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/COI/ESP_CTD_COI_envt_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+ --input-path ../DEICODE/COI/table.w_md.biom \
+ --output-path ../DEICODE/COI/ESP_CTD_COI_master.biom.qza \
+ --type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+    --i-table ../DEICODE/COI/ESP_CTD_COI_master.biom.qza \
+    --p-n-components 3 \
+    --p-min-feature-count 1 \
+    --p-min-sample-count 1000 \
+    --o-biplot ../DEICODE/COI/ordination.qza \
+    --o-distance-matrix ../DEICODE/COI/distance.qza
+```
+
+
+
+
+
+
+
+### Plot COI DEICODE RPCA
+```{r}
+# Set figure directory
+fig_dir <- here("figures", "PCAs")
+
+pco <- read_qza(here("DEICODE","COI","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_COI_envtsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+#pca_metadata$depth_cat <- factor(pca_metadata$depth_cat,levels = c("0-5","6-20","20-29","30-39","40-59","60-80","100-199","200-250","280-500","600-700"))
+pca_data <- pco$data$Vectors
+#pca_data <- left_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+## Plot PCA in ggplot
+
+pca_gg_sample <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise,shape = CTD_or_ESP))+
+  geom_point(size = 5)+
+  # geom_text(hjust = 1, vjust=-0.5, segment.alpha = 0, show_guide = FALSE)+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  # scale_color_manual(name = "Station", values = c("#e41a1c","#377eb8"), labels = c("Mesocosm 1", "Pacific"))+
+  # scale_shape_manual(name = "Station", values = c(19,17), labels = c("Mesocosm 1", "Pacific"))+
+  annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20,face = "bold"),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0, "cm"),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")
+
+pca_gg_sample
+
+ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", pca_gg_sample,width = 7,height = 5)
+```
+
+
+
+
+
+
