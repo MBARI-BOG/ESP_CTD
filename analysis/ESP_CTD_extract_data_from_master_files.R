@@ -420,56 +420,12 @@ subset(metadata_16S_ESP_CTD_subset, is.na(matching_ID) | matching_ID %in% c(""))
 subset(metadata_16S_ESP_CTD_subset,CTD_or_ESP == "CTD")
 subset(metadata_16S_ESP_CTD_subset,CTD_or_ESP == "ESP")
 
-# ESP: CN18F 4, 5, 21, 22
-```
-
-### Make some tweaks to tax table
-```{r}
-tax_table_16S <- read.csv("/Users/markusmin/Documents/MBARI-2167/local/ESP_to_CTD_local_data/ESP_CTD_Data/banzai_dada2/ESP_CTD_16S/raw_data/Filtered_raw_taxa_table.csv")
-# Change actinobacteria
-tax_table_16S %>% mutate(.,Phylum = gsub(" <actinobacteria>","",Phylum)) -> tax_table_16S
-
-tax_table_16S <- tibble::column_to_rownames(tax_table_16S,"ASV")
-```
-
-
-### Create phyloseq object
-``` {r}
-
-# Load in master files
-asv_table_16S <- read.csv("/Users/markusmin/Documents/MBARI-2167/local/ESP_to_CTD_local_data/ESP_CTD_Data/banzai_dada2/ESP_CTD_16S/raw_data/Filtered_raw_ASV_table.csv",row.names = 1)
-# DESTROY X!!!
-destroyX = function(es) {
-  f = es
-  for (col in c(1:ncol(f))){ #for each column in dataframe
-    if (startsWith(colnames(f)[col], "X") == TRUE)  { #if starts with 'X' ..
-      colnames(f)[col] <- substr(colnames(f)[col], 2, 100) #get rid of it
-    }
-  }
-  assign(deparse(substitute(es)), f, inherits = TRUE) #assign corrected data to original name
-}
-asv_table_16S <- destroyX(asv_table_16S)
-
-
 # Change metadata names so that they match
-metadata_16S_ESP_CTD_subset$sample_name <- str_replace_all(metadata_16S_ESP_CTD_subset$sample_name,"-",".")
+metadata_16S_ESP_CTD_subset$sample_name <- str_replace_all(metadata_16S_ESP_CTD_subset$sample_name,"-","_")
 
+# ESP: CN18F 4, 5, 21, 22
 
-# Change metadata column to rownames
-metadata_16S_ESP_CTD_subset %>% tibble::column_to_rownames(.,"sample_name") -> metadata_16S_ESP_CTD_subset_for_phyloseq
-
-setdiff(rownames(metadata_16S_ESP_CTD_subset_for_phyloseq),colnames(asv_table_16S))
-
-ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),tax_table(as.matrix(tax_table_16S)),sample_data(metadata_16S_ESP_CTD_subset_for_phyloseq))
-ESP_CTD_16S_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_16S_phyloseq) > 0, ESP_CTD_16S_phyloseq)
-# ESP_CTD_16S_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_phyloseq)$CTD_or_ESP %in% c("ESP","CTD"),ESP_CTD_16S_phyloseq)
-
-# sample_names(ESP_CTD_16S_phyloseq)
-
-sort(sample_sums(ESP_CTD_16S_phyloseq))
-```
-
-
+write.csv(metadata_16S_ESP_CTD_subset, here("data", "16S", "ESP_CTD_16S_metadata.csv"))
 
 
 
