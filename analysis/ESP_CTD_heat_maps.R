@@ -173,7 +173,7 @@ ESP_COI_phylum_superheat_df_top10phyla_gather[ESP_COI_phylum_superheat_df_top10p
 
 CTD_COI_phylum_heatmap_gg <- ggplot(CTD_COI_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
   scale_y_discrete(limits = rev(levels(CTD_COI_phylum_superheat_df_top10phyla_gather$Phylum)))+
@@ -186,7 +186,7 @@ CTD_COI_phylum_heatmap_gg <- ggplot(CTD_COI_phylum_superheat_df_top10phyla_gathe
 
 ESP_COI_phylum_heatmap_gg <- ggplot(ESP_COI_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
@@ -310,7 +310,7 @@ ESP_18S_phylum_superheat_df_top10phyla_gather[ESP_18S_phylum_superheat_df_top10p
 
 CTD_18S_phylum_heatmap_gg <- ggplot(CTD_18S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
   scale_y_discrete(limits = rev(levels(CTD_18S_phylum_superheat_df_top10phyla_gather$Phylum)))+
@@ -323,7 +323,7 @@ CTD_18S_phylum_heatmap_gg <- ggplot(CTD_18S_phylum_superheat_df_top10phyla_gathe
 
 ESP_18S_phylum_heatmap_gg <- ggplot(ESP_18S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
@@ -456,7 +456,7 @@ ESP_12S_family_superheat_df_top10family_gather[ESP_12S_family_superheat_df_top10
 
 CTD_12S_family_heatmap_gg <- ggplot(CTD_12S_family_superheat_df_top10family_gather, aes(x = sample, y = Family, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
   scale_y_discrete(limits = rev(levels(CTD_12S_family_superheat_df_top10family_gather$Family)))+
@@ -469,7 +469,7 @@ CTD_12S_family_heatmap_gg <- ggplot(CTD_12S_family_superheat_df_top10family_gath
 
 ESP_12S_family_heatmap_gg <- ggplot(ESP_12S_family_superheat_df_top10family_gather, aes(x = sample, y = Family, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
@@ -572,7 +572,7 @@ ESP_16S_phylum_superheat_df_top10phyla_gather[ESP_16S_phylum_superheat_df_top10p
 
 CTD_16S_phylum_heatmap_gg <- ggplot(CTD_16S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
   scale_y_discrete(limits = rev(levels(CTD_16S_phylum_superheat_df_top10phyla_gather$Phylum)))+
@@ -585,7 +585,7 @@ CTD_16S_phylum_heatmap_gg <- ggplot(CTD_16S_phylum_superheat_df_top10phyla_gathe
 
 ESP_16S_phylum_heatmap_gg <- ggplot(ESP_16S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
-  scale_fill_viridis(discrete = FALSE, breaks = c(0,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
   # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
   
