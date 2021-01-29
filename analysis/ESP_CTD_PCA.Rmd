@@ -99,10 +99,18 @@ qiime tools import \
 qiime deicode rpca \
     --i-table ../DEICODE/COI/ESP_CTD_COI_master.biom.qza \
     --p-n-components 3 \
-    --p-min-feature-count 1 \
-    --p-min-sample-count 1000 \
+    --p-min-feature-count 10 \
+    --p-min-sample-count 500 \
     --o-biplot ../DEICODE/COI/ordination.qza \
     --o-distance-matrix ../DEICODE/COI/distance.qza
+    
+# Run PERMANOVA
+ qiime diversity beta-group-significance \
+    --i-distance-matrix ../DEICODE/COI/distance.qza \
+    --m-metadata-file ../DEICODE/COI/ESP_CTD_COI_envt_sample_data_for_biom.txt \
+    --m-metadata-column CTD_or_ESP \
+    --p-method permanova \
+    --o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
 ```
 
 
@@ -214,10 +222,18 @@ qiime tools import \
 qiime deicode rpca \
 --i-table ../DEICODE/18S/ESP_CTD_18S_master.biom.qza \
 --p-n-components 3 \
---p-min-feature-count 1 \
---p-min-sample-count 1000 \
+--p-min-feature-count 10 \
+--p-min-sample-count 500 \
 --o-biplot ../DEICODE/18S/ordination.qza \
 --o-distance-matrix ../DEICODE/18S/distance.qza
+
+# Run PERMANOVA
+ qiime diversity beta-group-significance \
+    --i-distance-matrix ../DEICODE/18S/distance.qza \
+    --m-metadata-file ../DEICODE/18S/ESP_CTD_18S_envt_sample_data_for_biom.txt \
+    --m-metadata-column CTD_or_ESP \
+    --p-method permanova \
+    --o-visualization ../DEICODE/PERMANOVA_results/18S_ESP_CTD_PERMANOVA.qzv
 ```
 
 
@@ -329,10 +345,18 @@ qiime tools import \
 qiime deicode rpca \
 --i-table ../DEICODE/12S/ESP_CTD_12S_master.biom.qza \
 --p-n-components 3 \
---p-min-feature-count 1 \
---p-min-sample-count 1000 \
+--p-min-feature-count 10 \
+--p-min-sample-count 500 \
 --o-biplot ../DEICODE/12S/ordination.qza \
 --o-distance-matrix ../DEICODE/12S/distance.qza
+
+# Run PERMANOVA
+ qiime diversity beta-group-significance \
+    --i-distance-matrix ../DEICODE/12S/distance.qza \
+    --m-metadata-file ../DEICODE/12S/ESP_CTD_12S_envt_sample_data_for_biom.txt \
+    --m-metadata-column CTD_or_ESP \
+    --p-method permanova \
+    --o-visualization ../DEICODE/PERMANOVA_results/12S_ESP_CTD_PERMANOVA.qzv
 ```
 
 
