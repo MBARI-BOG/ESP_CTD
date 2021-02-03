@@ -19,38 +19,40 @@ library(cowplot)
 library(tidyverse)
 library(here)
 library(ggpubr)
+library(gridExtra)
+library(egg)
 
 ## ----Load data----------------------------------------------------------------
 
 #### COI
-asv_table_path_COI <- here("data", "COI", "ESP_CTD_COI_asv_table.csv")
-tax_table_path_COI <- here("data", "COI", "ESP_CTD_COI_tax_table.csv")
-metadata_path_COI <- here("data", "COI", "ESP_CTD_COI_metadata.csv")
+asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
+tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
+metadata_path_COI <- here::here("data", "COI", "ESP_CTD_COI_metadata.csv")
 
 ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_COI, row.names = 1),taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
                                        sample_data(read.csv(metadata_path_COI, row.names = 1)))
 
 #### 18S
-asv_table_path_18S <- here("data", "18S", "ESP_CTD_18S_asv_table.csv")
-tax_table_path_18S <- here("data", "18S", "ESP_CTD_18S_tax_table.csv")
-metadata_path_18S <- here("data", "18S", "ESP_CTD_18S_metadata.csv")
+asv_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_asv_table.csv")
+tax_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_tax_table.csv")
+metadata_path_18S <- here::here("data", "18S", "ESP_CTD_18S_metadata.csv")
 
 ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_18S, row.names = 1),taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_18S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_18S, row.names = 1)))
 
 #### 12S
-asv_table_path_12S <- here("data", "12S", "ESP_CTD_12S_asv_table.csv")
-tax_table_path_12S <- here("data", "12S", "ESP_CTD_12S_tax_table.csv")
-metadata_path_12S <- here("data", "12S", "ESP_CTD_12S_metadata.csv")
+asv_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_asv_table.csv")
+tax_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_tax_table.csv")
+metadata_path_12S <- here::here("data", "12S", "ESP_CTD_12S_metadata.csv")
 
 ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, row.names = 1),taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_12S, row.names = 1)))
 
 #### 16S
-phylum_table_path_16S <- here("data", "16S", "16S_phylum_L2-table.txt")
+phylum_table_path_16S <- here::here("data", "16S", "16S_phylum_L2-table.txt")
 phylum_table_16S <- read.table(phylum_table_path_16S, header = TRUE)
 
 # Split phylum from domain
@@ -64,10 +66,10 @@ phylum_table_16S %>%
   column_to_rownames("Phylum")-> phylum_table_16S
 
 # Read in 16S metadata
-ESP_CTD_16S_metadata <- read.csv(here("data","16S","ESP_CTD_16S_metadata.csv"))
+ESP_CTD_16S_metadata <- read.csv(here::here("data","16S","ESP_CTD_16S_metadata.csv"))
 
 # Set figure directory
-fig_dir <- here("figures", "heatmaps")
+fig_dir <- here::here("figures", "heatmaps")
 
 
 
@@ -174,28 +176,28 @@ ESP_COI_phylum_superheat_df_top10phyla_gather[ESP_COI_phylum_superheat_df_top10p
 CTD_COI_phylum_heatmap_gg <- ggplot(CTD_COI_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_COI_phylum_superheat_df_top10phyla_gather$Phylum)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_text(size = 15),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
         legend.position = "none",
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"))
 
 ESP_COI_phylum_heatmap_gg <- ggplot(ESP_COI_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_COI_phylum_superheat_df_top10phyla_gather$Phylum)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        legend.position = "none",
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(0, 1.5, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_COI_phylum_heatmap_gg)
 gB <- ggplotGrob(ESP_COI_phylum_heatmap_gg)
@@ -311,28 +313,28 @@ ESP_18S_phylum_superheat_df_top10phyla_gather[ESP_18S_phylum_superheat_df_top10p
 CTD_18S_phylum_heatmap_gg <- ggplot(CTD_18S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_18S_phylum_superheat_df_top10phyla_gather$Phylum)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_text(size = 15),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
         legend.position = "none",
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"))
 
 ESP_18S_phylum_heatmap_gg <- ggplot(ESP_18S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_18S_phylum_superheat_df_top10phyla_gather$Phylum)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        legend.position = "none",
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(0, 1.5, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_18S_phylum_heatmap_gg)
 gB <- ggplotGrob(ESP_18S_phylum_heatmap_gg)
@@ -457,28 +459,28 @@ ESP_12S_family_superheat_df_top10family_gather[ESP_12S_family_superheat_df_top10
 CTD_12S_family_heatmap_gg <- ggplot(CTD_12S_family_superheat_df_top10family_gather, aes(x = sample, y = Family, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_12S_family_superheat_df_top10family_gather$Family)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_text(size = 15),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
         legend.position = "none",
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"))
 
 ESP_12S_family_heatmap_gg <- ggplot(ESP_12S_family_superheat_df_top10family_gather, aes(x = sample, y = Family, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_12S_family_superheat_df_top10family_gather$Family)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        legend.position = "none",
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(0, 1.5, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_12S_family_heatmap_gg)
 gB <- ggplotGrob(ESP_12S_family_heatmap_gg)
@@ -573,28 +575,28 @@ ESP_16S_phylum_superheat_df_top10phyla_gather[ESP_16S_phylum_superheat_df_top10p
 CTD_16S_phylum_heatmap_gg <- ggplot(CTD_16S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_16S_phylum_superheat_df_top10phyla_gather$Phylum)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_text(size = 15),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
         legend.position = "none",
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"))
 
 ESP_16S_phylum_heatmap_gg <- ggplot(ESP_16S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
   geom_tile(color = "white")+
   scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50")+
   labs(fill = "Relative\nabundance")+
-  # scale_fill_continuous(breaks = c(0,10000,20000,30000,40000,50000), limits = c(0,50000))+
-  
   scale_y_discrete(limits = rev(levels(CTD_16S_phylum_superheat_df_top10phyla_gather$Phylum)))+
   theme(axis.text.x = element_blank(),
         axis.text.y = element_blank(),
         axis.title = element_blank(),
         axis.ticks.length = unit(0,"cm"),
-        plot.title = element_text(size = 15, face = "bold",hjust = 0.5))
+        legend.position = "none",
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"),
+        plot.margin = margin(0, 1.5, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_16S_phylum_heatmap_gg)
 gB <- ggplotGrob(ESP_16S_phylum_heatmap_gg)
@@ -603,18 +605,45 @@ ESP_CTD_16S_gg_heatmap <- arrangeGrob(cbind(gA, gB))
 
 ggsave(paste0(fig_dir, "/ESP_CTD_16S_gg_heatmap.png"), ESP_CTD_16S_gg_heatmap, width = 8.5, height = 2.5)
 
+## ----- Extract the legend ----------------------------------------------------
+ESP_CTD_heatmap_for_legend_gg <- ggplot(ESP_16S_phylum_superheat_df_top10phyla_gather, aes(x = sample, y = Phylum, fill= reads)) + 
+  geom_tile(color = "white")+
+  scale_fill_viridis(discrete = FALSE, breaks = c(0.001,0.25, 0.5, 0.75, 1), limits = c(0,1), na.value = "gray50",   
+                     guide = guide_colorbar(title.position = "top", direction = "horizontal",label.position = "top",
+                                            barwidth = 40, barheight = 2.5, title.hjust = 0.5))+
+  labs(fill = "Relative abundance")+
+  scale_y_discrete(limits = rev(levels(CTD_16S_phylum_superheat_df_top10phyla_gather$Phylum)))+
+  theme(axis.text.x = element_blank(),
+        axis.text.y = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks.length = unit(0,"cm"),
+        plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
+        panel.background = element_rect(fill = "white", color = "white"),
+        legend.title = element_text(size = 20),
+        legend.text = element_text(size = 16),
+        legend.position = c(0.55, 0.5))
 
+g_legend<-function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)}
 
+heatmap_legend <- g_legend(ESP_CTD_heatmap_for_legend_gg)
 
 
 ## ----Arrange heatmaps for all markers with ggarrange--------------------------
 
-combined_heatmap_gg <- annotate_figure(ggarrange(ESP_CTD_COI_gg_heatmap, ESP_CTD_18S_gg_heatmap, 
-                                                 ESP_CTD_12S_gg_heatmap, ESP_CTD_16S_gg_heatmap, ncol = 1, nrow = 4,
-                                                 labels = c("(a)", "(b)", "(c)", "(d)"), label.x = 0.9, label.y = 0.97,
-                                                 font.label = list(size = 25, color = "black", face = "bold")),
-                                       top = text_grob("CTD/Niskin Rosette                Automated (ESP)            ", 
-                                                                            color = "black", face = "bold", size = 20))
+combined_heatmap_gg <- annotate_figure(ggpubr::ggarrange(egg::ggarrange(plots = list(CTD_16S_phylum_heatmap_gg, ESP_16S_phylum_heatmap_gg, 
+                                                                   CTD_18S_phylum_heatmap_gg, ESP_18S_phylum_heatmap_gg,
+                                                                   CTD_COI_phylum_heatmap_gg, ESP_COI_phylum_heatmap_gg,
+                                                                   CTD_12S_family_heatmap_gg, ESP_12S_family_heatmap_gg), ncol = 2, nrow = 4,
+                                                      labels = c(" ", "(a)", " ", "(b)", " ", "(c)", " ", "(d)"), 
+                                                      label.args = list(gp = grid::gpar(fontsize = 25, fontface = "bold"),
+                                                                        x = 0.9, y = 0.95)),
+                                                 heatmap_legend, nrow = 2, ncol = 1, heights = c(10,1)),
+                                       top = text_grob("CTD/Niskin Rosette                      Automated (ESP)       ", 
+                                      color = "black", face = "bold", size = 23))
 
 
-ggsave(combined_heatmap_gg, height = 16, width = 10, path = fig_dir, filename = "combined_heatmap_fig.png", device = "png")
+ggsave(combined_heatmap_gg, height = 16, width = 12, path = fig_dir, filename = "combined_heatmap_fig.png", device = "png")
