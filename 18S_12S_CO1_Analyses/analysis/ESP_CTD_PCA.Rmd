@@ -16,6 +16,7 @@ library(tidyverse)
 library(phyloseq)
 library(qiime2R)
 library(here)
+library(vegan)
 ```
 
 ### Load data
@@ -122,7 +123,7 @@ qiime deicode rpca \
 
 ### Plot COI DEICODE RPCA
 ```{r}
-pco <- read_qza(here::here("DEICODE","COI","ordination.qza"))
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
 label.PC1
@@ -143,14 +144,30 @@ pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25, "0-25",
-                            ifelse(depth <= 50, "25-50",
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
                                    ifelse(depth <= 201 & depth >=195, "195-200",
                                           "unknown")))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "25-50" = 22, "195-200" = 24)
+depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
+
+##----Run PERMANOVA-------------------------------------------------------------
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+
+# PERMANOVA for control vs exp
+
+permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+permanova_value <- permanova$`Pr(>F)`[1]
+
+##----Make plot-----------------------------------------------------------------
 
 ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
   # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
@@ -170,9 +187,9 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
-        legend.position = "none")
-
-ESP_CTD_COI_PCA
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
@@ -245,7 +262,7 @@ qiime deicode rpca \
 # Set figure directory
 fig_dir <- here::here("figures", "PCAs")
 
-pco <- read_qza(here::here("DEICODE","18S","ordination.qza"))
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","18S","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
 label.PC1
@@ -266,14 +283,30 @@ pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25, "0-25",
-                            ifelse(depth <= 50, "25-50",
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
                                    ifelse(depth <= 201 & depth >=195, "195-200",
                                           "unknown")))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "25-50" = 22, "195-200" = 24)
+depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
+
+##----Run PERMANOVA-------------------------------------------------------------
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","18S","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+
+# PERMANOVA for control vs exp
+
+permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+permanova_value <- permanova$`Pr(>F)`[1]
+
+##----Make plot-----------------------------------------------------------------
 
 ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
   # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
@@ -293,7 +326,9 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
-        legend.position = "none")
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_18S_PCA
 
@@ -368,7 +403,7 @@ qiime deicode rpca \
 # Set figure directory
 fig_dir <- here::here("figures", "PCAs")
 
-pco <- read_qza(here::here("DEICODE","12S","ordination.qza"))
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","12S","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
 label.PC1
@@ -389,14 +424,30 @@ pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25, "0-25",
-                            ifelse(depth <= 50, "25-50",
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
                                    ifelse(depth <= 201 & depth >=195, "195-200",
                                           "unknown")))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "25-50" = 22, "195-200" = 24)
+depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
+
+##----Run PERMANOVA-------------------------------------------------------------
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","12S","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+
+# PERMANOVA for control vs exp
+
+permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+permanova_value <- permanova$`Pr(>F)`[1]
+
+##----Make plot-----------------------------------------------------------------
 
 ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
   # Make fill for geom point be white if CN18F; if CN12S, then make it the color corresponding to ESP or CTD
@@ -416,7 +467,9 @@ ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
-        legend.position = "none")
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_12S_PCA
 
@@ -442,7 +495,7 @@ PCA_legend <- ggplot(pca_data) +
   annotate("point", x = 8, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # 0-25 m
   annotate("text",label = "0-25 m", x = 8.2, y = 2,size = 7.5,adj = 0)+ #0-25 m
   annotate("point", x = 8, y = 1.2, shape = 22, colour = "black", fill = "black", size = 7, stroke = 3)+ # 25-50 m
-  annotate("text",label = "25-50 m", x = 8.2, y = 1.2,size = 7.5,adj = 0)+ #25-50 m
+  annotate("text",label = "27-50 m", x = 8.2, y = 1.2,size = 7.5,adj = 0)+ #25-50 m
   annotate("point", x = 8, y = 0.4, shape = 24, colour = "black", fill = "black", size = 7, stroke = 3)+ # 195-200 m
   annotate("text",label = "195-200 m", x = 8.2, y = 0.4,size = 7.5,adj = 0)+ #195-200 m
   
@@ -454,14 +507,14 @@ PCA_legend <- ggplot(pca_data) +
         axis.title = element_blank(),
         axis.ticks = element_blank(), 
         legend.position = "none",
-        plot.margin = unit(c(0,0,0,0),"pt"))
+        plot.margin = unit(c(0,3,0,3),"cm"))
 ```
 
 # Combine all PCA figures
 ```{r}
-combined_PCA_gg <- annotate_figure(ggarrange(ggarrange(ESP_CTD_12S_PCA, ESP_CTD_18S_PCA, 
+combined_PCA_gg <- annotate_figure(ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_12S_PCA, ESP_CTD_18S_PCA, 
                                                  ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
-                                                 labels = c("(a)", "(b)", "(c)", "(d)"), label.x = 0.85, label.y = 0.97,
+                                                 labels = c("(a)", "(b)", "(c)", "(d)"), label.x = 0.05, label.y = 0.985,
                                                  font.label = list(size = 35, color = "black", face = "bold")),
                                                  PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
                                    )+
