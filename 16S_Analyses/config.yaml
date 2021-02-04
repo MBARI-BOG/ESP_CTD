@@ -1,14 +1,21 @@
-# fastq manifests and metadata
-manifest_se: 00-data/manifest_se.csv
-manifest_pe: 00-data/manifest_pe.csv
+# metadata
 metadata: 00-data/metadata.tsv
 
-# reference sequences
-refseqs: 00-data/refseqs.fna
-reftax: 00-data/reftax.tsv
-pcr_locus: 16S-EMP
-pcr_primer_fwd: GTGYCAGCMGCCGCGGTAA
-pcr_primer_rev: GGACTACNVGGGTWTCTAAT
+# fastq data
+# option 1 - if your fastq sequences are not yet imported, the parameters below will be used to find your manifest file(s)
+manifest_pe: 00-data/manifest_pe.csv
+manifest_se: 00-data/manifest_se.csv
+# option 2 - if your fastq sequences are already in qza format, the parameters below will be used to find your qza file(s)
+fastq_pe_qza: 01-imported/fastq_pe.qza
+fastq_se_qza: 01-imported/fastq_se.qza
+
+# reference database
+# option 1 - if your reference database is not yet imported, the parameters below will be used to find the fna and tsv files
+refseqs_fna: 00-data/refseqs.fna
+reftax_tsv: 00-data/reftax.tsv
+# option 2 - if your reference database is already in qza format, the parameters below will be used to find your qza file(s)
+refseqs_qza: 01-imported/refseqs.qza
+reftax_qza: 01-imported/reftax.qza
 
 # dada2 paired-end
 dada2pe_trunc_len_f: 240
@@ -18,9 +25,9 @@ dada2pe_trim_left_r: 0
 dada2pe_max_ee_f: 2
 dada2pe_max_ee_r: 2
 dada2pe_trunc_q: 2
+dada2pe_pooling_method: independent
 dada2pe_chimera_method: consensus
 dada2pe_min_fold_parent_over_abundance: 1
-dada2pe_n_threads: 8
 dada2pe_n_reads_learn: 1000000
 dada2pe_hashed_feature_ids: --p-hashed-feature-ids
 
@@ -29,9 +36,9 @@ dada2se_trunc_len: 130
 dada2se_trim_left: 0
 dada2se_max_ee: 2
 dada2se_trunc_q: 2
+dada2se_pooling_method: independent
 dada2se_chimera_method: consensus
 dada2se_min_fold_parent_over_abundance: 1
-dada2se_n_threads: 8
 dada2se_n_reads_learn: 1000000
 dada2se_hashed_feature_ids: --p-hashed-feature-ids
 
@@ -43,45 +50,47 @@ deblur_indel_prob: 0.01
 deblur_indel_max: 3
 deblur_min_reads: 10
 deblur_min_size: 2
-deblur_jobs_to_start: 1
 deblur_hashed_feature_ids: --p-hashed-feature-ids
+
+# threads
+dada2pe_threads: 8
+dada2se_threads: 8
+deblur_threads: 8
+feature_classifier_threads: 8
+alignment_mafft_threads: 8
+phylogeny_fasttree_threads: 8
+diversity_core_metrics_phylogenetic_threads: 8
 
 # taxonomic classification method (choose from: consensus-blast, naive-bayes)
 classify_method: consensus-blast
 
-# filter table and representative sequences by taxonomy (separate terms with commas; use nonsense word or don't run filter rule for no filtering)
-exclude_terms: mitochondria,chloroplast,eukaryota,unassigned
+# filter table and representative sequences by taxonomy
+# - separate terms with commas
+# - terms are not case-sensitive
+# - use a nonsense word or don't run filtering mode to skip
+exclude_terms: mitochondria,chloroplast,eukaryota
 
-# filter representative sequences by featureid (feature metadata tsv file with two columns: first column is "featureid", second column can be anything)
-# repseqs_to_filter: 00-data/repseqs_to_filter.tsv
+# filter representative sequences by featureid (paths hard-coded, not specified in config.yaml)
+# - feature metadata tsv file has a header line with two columns: 1. "featureid", 2. anything
+# - easiest method to create feature metadata file for filtering repseqs:
+# - 1. go to 02-output-{method}-{filter}/02-alignment-tree
+# - 2. merge or copy repseqs_to_filter_outliers.tsv and/or repseqs_to_filter_unassigned.tsv
+# - 3. rename to the file name below correspoinding to your method:
+# 00-data/repseqs_to_filter_dada2-pe.tsv
+# 00-data/repseqs_to_filter_dada2-se.tsv
+# 00-data/repseqs_to_filter_deblur-se.tsv
 
 # representative sequence outlier detection using odseq
-# odseq_distance_metric: type of distance metric to be computed (choose from: linear, affine)
-# odseq_bootstrap_replicates: number of bootstrap replicates to be run (integer)
-# odseq_threshold: probability to remain at the right of the bootstrap scores distribution when computing outliers (float)
-odseq_distance_metric: affine
-odseq_bootstrap_replicates: 1000
-odseq_threshold: 0.025
+odseq_distance_metric: linear # choose from: linear, affine
+odseq_bootstrap_replicates: 100
+odseq_threshold: 0.025 # probability to be at right of the bootstrap scores distribution
 
 # subsampling
 core_sampling_depth: 500
 alpha_max_depth: 500
 
-# statistics
-beta_group_column: depth_group
+# beta group significance (choose a column from metadata to test)
+beta_group_column: region
 
 # report theme (choose from: github, gothic, newsprint, night, pixyll, whitey)
 report_theme: github
-
-# NOTE: refseqs.fasta and reftax.tsv -- and/or their outputs refseqs.qza, 
-# reftax.qza, and classifier.qza -- should ideally be in an external directory.
-# We recommend setting symbolic links in 00-data and 01-imported to these
-# external files. Adding these files will circumvent the rules that produce
-# them; e.g., if classifier.qza is added, the rule
-# feature_classifier_fit_classifier_naive_bayes will be skipped.
-
-# WARNING: Snakemake will not automatically rerun if parameters change. It 
-# should rerun if input files change. To ensure that a file is regenerated,
-# you can delete it directly before re-running Snakemake. For Snakemake to 
-# work with the symbolic links, you may first have to run:
-#     snakemake --cleanup-metadata <filenames>
