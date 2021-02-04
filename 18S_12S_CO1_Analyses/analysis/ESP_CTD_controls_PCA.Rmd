@@ -119,12 +119,12 @@ qiime deicode rpca \
     --o-distance-matrix ../DEICODE/COI_controls/distance.qza
     
 # Run PERMANOVA
- qiime diversity beta-group-significance \
-    --i-distance-matrix ../DEICODE/COI_controls/distance.qza \
-    --m-metadata-file ../DEICODE/COI_controls/ESP_CTD_COI_envt_negative_sample_data_for_biom.txt \
-    --m-metadata-column sample_type.x \
-    --p-method permanova \
-    --o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
+# qiime diversity beta-group-significance \
+#    --i-distance-matrix ../DEICODE/COI_controls/distance.qza \
+#    --m-metadata-file ../DEICODE/COI_controls/ESP_CTD_COI_envt_negative_sample_data_for_biom.txt \
+#    --m-metadata-column sample_type.x \
+#    --p-method permanova \
+#    --o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
 ```
 
 
@@ -265,12 +265,12 @@ qiime deicode rpca \
 --o-distance-matrix ../DEICODE/18S_controls/distance.qza
 
 # Run PERMANOVA
-qiime diversity beta-group-significance \
---i-distance-matrix ../DEICODE/18S_controls/distance.qza \
---m-metadata-file ../DEICODE/18S_controls/ESP_CTD_18S_envt_negative_sample_data_for_biom.txt \
---m-metadata-column sample_type.x \
---p-method permanova \
---o-visualization ../DEICODE/PERMANOVA_results/18S_ESP_CTD_PERMANOVA.qzv
+#qiime diversity beta-group-significance \
+#--i-distance-matrix ../DEICODE/18S_controls/distance.qza \
+#--m-metadata-file ../DEICODE/18S_controls/ESP_CTD_18S_envt_negative_sample_data_for_biom.txt \
+#--m-metadata-column sample_type.x \
+#--p-method permanova \
+#--o-visualization ../DEICODE/PERMANOVA_results/18S_ESP_CTD_PERMANOVA.qzv
 ```
 
 
@@ -409,12 +409,12 @@ qiime deicode rpca \
 --o-distance-matrix ../DEICODE/12S_controls/distance.qza
 
 # Run PERMANOVA
-qiime diversity beta-group-significance \
---i-distance-matrix ../DEICODE/12S_controls/distance.qza \
---m-metadata-file ../DEICODE/12S_controls/ESP_CTD_12S_envt_negative_sample_data_for_biom.txt \
---m-metadata-column sample_type.x \
---p-method permanova \
---o-visualization ../DEICODE/PERMANOVA_results/12S_ESP_CTD_PERMANOVA.qzv
+#qiime diversity beta-group-significance \
+#--i-distance-matrix ../DEICODE/12S_controls/distance.qza \
+#--m-metadata-file ../DEICODE/12S_controls/ESP_CTD_12S_envt_negative_sample_data_for_biom.txt \
+#--m-metadata-column sample_type.x \
+#--p-method permanova \
+#--o-visualization ../DEICODE/PERMANOVA_results/12S_ESP_CTD_PERMANOVA.qzv
 ```
 
 
@@ -556,12 +556,12 @@ qiime deicode rpca \
 --o-distance-matrix ../../16S_Analyses/DEICODE/16S_controls/distance.qza
 
 # Run PERMANOVA
-qiime diversity beta-group-significance \
---i-distance-matrix ../../16S_Analyses/DEICODE/16S_controls/distance.qza \
---m-metadata-file ../../16S_Analyses/DEICODE/16S_controls/ESP_CTD_16S_envt_negative_sample_data_for_biom.txt \
---m-metadata-column sample_type_2 \
---p-method permanova \
---o-visualization ../DEICODE/PERMANOVA_results/16S_ESP_CTD_PERMANOVA.qzv
+# qiime diversity beta-group-significance \
+# --i-distance-matrix ../../16S_Analyses/DEICODE/16S_controls/distance.qza \
+# --m-metadata-file ../../16S_Analyses/DEICODE/16S_controls/ESP_CTD_16S_envt_negative_sample_data_for_biom.txt \
+# --m-metadata-column sample_type_2 \
+# --p-method permanova \
+# --o-visualization ../DEICODE/PERMANOVA_results/16S_ESP_CTD_PERMANOVA.qzv
 ```
 
 
