@@ -52,14 +52,13 @@ ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, ro
                                        sample_data(read.csv(metadata_path_12S, row.names = 1)))
 
 ### 16S
-asv_table_path_16S <- here::here("data", "16S", "table_phyloseq.csv")
+asv_table_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table.csv")
 tax_table_path_16S <- here::here("data", "16S", "taxonomy_phyloseq.csv")
 metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
 
 ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_16S, row.names = 1),taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_16S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_16S, row.names = 1)))
-as.data.frame(sample_data(ESP_CTD_16S_phyloseq))
 
 # Set figure directory
 fig_dir <- here::here("figures", "supplemental")
@@ -588,6 +587,9 @@ pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 # Add negative to CTD_or_ESP field
 pca_data %>%
   mutate(CTD_or_ESP = ifelse(is.na(CTD_or_ESP) | CTD_or_ESP == "", "control", CTD_or_ESP)) -> pca_data
+
+# Extract depth data
+pca_data$depth <- extract_numeric(pca_data$Depth)
 
 # Create a categorical depth
 table(pca_data$depth)
