@@ -207,7 +207,7 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Controls): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("COI: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_controls_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
@@ -359,7 +359,7 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Controls): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("18S: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_18S_controls_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
 ```
@@ -509,7 +509,7 @@ ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Controls): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("12S: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
         
 ggsave(path = fig_dir, filename = "ESP_CTD_12S_controls_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
 ```
@@ -661,7 +661,7 @@ ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Controls): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("16S: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_16S_controls_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
 ```
