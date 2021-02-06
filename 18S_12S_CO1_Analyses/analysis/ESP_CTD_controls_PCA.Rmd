@@ -658,8 +658,8 @@ PCA_legend <- ggplot(pca_data) +
   annotate("point", x = 1, y = 2, shape = 21, colour = "#6a3d9a", fill = "#6a3d9a", size = 7, stroke = 3)+ # CTD
   annotate("point", x = 1, y = 0.4, shape = 23, colour = "#e41a1c", fill = "#e41a1c", size = 7, stroke = 3)+ # Control
   annotate("text",label = "Negative Control", x = 1.2, y = 0.4,size = 7.5,adj = 0)+ # control
-  annotate("text",label = "Automated (ESP)", x = 1.2, y = 2,size = 7.5,adj = 0)+ #ESP
-  annotate("text",label = "CTD/Niskin Rosette", x = 1.2, y = 1.2,size = 7.5,adj = 0)+ #CTD
+  annotate("text",label = "Automated", x = 1.2, y = 2,size = 7.5,adj = 0)+ #ESP
+  annotate("text",label = "Manual", x = 1.2, y = 1.2,size = 7.5,adj = 0)+ #CTD
   # Spring vs. Fall
   annotate("text",label = "Season", x = 4.9, y = 2.8,size = 10,adj = 0)+ # Title seasonality
   annotate("point", x = 5, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # Spring
