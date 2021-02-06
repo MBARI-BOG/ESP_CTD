@@ -197,7 +197,8 @@ ESP_COI_phylum_heatmap_gg <- ggplot(ESP_COI_phylum_superheat_df_top10phyla_gathe
         legend.position = "none",
         plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
         panel.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        # plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        plot.margin = margin(1, 0, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_COI_phylum_heatmap_gg)
 gB <- ggplotGrob(ESP_COI_phylum_heatmap_gg)
@@ -334,7 +335,8 @@ ESP_18S_phylum_heatmap_gg <- ggplot(ESP_18S_phylum_superheat_df_top10phyla_gathe
         legend.position = "none",
         plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
         panel.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        # plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        plot.margin = margin(1, 0, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_18S_phylum_heatmap_gg)
 gB <- ggplotGrob(ESP_18S_phylum_heatmap_gg)
@@ -480,7 +482,8 @@ ESP_12S_family_heatmap_gg <- ggplot(ESP_12S_family_superheat_df_top10family_gath
         legend.position = "none",
         plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
         panel.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        # plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        plot.margin = margin(1, 0, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_12S_family_heatmap_gg)
 gB <- ggplotGrob(ESP_12S_family_heatmap_gg)
@@ -596,7 +599,8 @@ ESP_16S_phylum_heatmap_gg <- ggplot(ESP_16S_phylum_superheat_df_top10phyla_gathe
         legend.position = "none",
         plot.title = element_text(size = 15, face = "bold",hjust = 0.5),
         panel.background = element_rect(fill = "white", color = "white"),
-        plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        # plot.margin = margin(0, 1.5, 0, 0, "cm"))
+        plot.margin = margin(1, 0, 0, 0, "cm"))
 
 gA <- ggplotGrob(CTD_16S_phylum_heatmap_gg)
 gB <- ggplotGrob(ESP_16S_phylum_heatmap_gg)
@@ -638,12 +642,15 @@ combined_heatmap_gg <- annotate_figure(ggpubr::ggarrange(egg::ggarrange(plots = 
                                                                    CTD_18S_phylum_heatmap_gg, ESP_18S_phylum_heatmap_gg,
                                                                    CTD_COI_phylum_heatmap_gg, ESP_COI_phylum_heatmap_gg,
                                                                    CTD_12S_family_heatmap_gg, ESP_12S_family_heatmap_gg), ncol = 2, nrow = 4,
-                                                      labels = c(" ", "(a)", " ", "(b)", " ", "(c)", " ", "(d)"), 
-                                                      label.args = list(gp = grid::gpar(fontsize = 25, fontface = "bold"),
-                                                                        x = 0.9, y = 0.95)),
+                                                      # labels = c(" ", "(a)", " ", "(b)", " ", "(c)", " ", "(d)"), 
+                                                      labels = c("(a) 16S", " ", "(b) 18S", " ", "(c) COI", " ", "(d) 12S", " "), 
+                                                      # label.args = list(gp = grid::gpar(fontsize = 25, fontface = "bold"),
+                                                      #                   x = 0.9, y = 0.95)),
+                                                      label.args = list(gp = grid::gpar(fontsize = 20, fontface = "bold"),
+                                                                        x = 0.01, y = 0.95)),
                                                  heatmap_legend, nrow = 2, ncol = 1, heights = c(10,1)),
-                                       top = text_grob("CTD/Niskin Rosette                      Automated (ESP)       ", 
-                                      color = "black", face = "bold", size = 23))
+                                       top = text_grob("Manual                                         Automated             ", 
+                                      color = "black", face = "bold", size = 25, vjust = 2))
 
 
 ggsave(combined_heatmap_gg, height = 16, width = 12, path = fig_dir, filename = "combined_heatmap_fig.png", device = "png")
