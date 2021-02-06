@@ -190,7 +190,7 @@ for (i in 1:length(markers)){
           panel.background = element_rect(fill = "white"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
-          axis.line.x = element_line(size = ifelse(i %in% c(1,2), 0, 0.5), color = "black"),
+          axis.line.x = element_line(size = 0.5, color = "black"),
           axis.line.y = element_line(size = ifelse(i %in% c(2,4), 0, 0.5), color = "black"),
           axis.ticks.length.x = unit(0,"cm"),
           axis.ticks.length.y = unit(ifelse(i %in% c(2,4), 0, 0.2),"cm"),
