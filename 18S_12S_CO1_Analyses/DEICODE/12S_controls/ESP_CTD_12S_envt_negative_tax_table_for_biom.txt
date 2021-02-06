@@ -1,0 +1,1262 @@
+#OTUID	Kingdom	Phylum	Class	Order	Family	Genus	Species
+ASV_1	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_3	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_4	Eukaryota	Chordata	Actinopteri	Carangiformes	Carangidae	Trachurus	Trachurus symmetricus
+ASV_5	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_6	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_7	Eukaryota	Chordata	Actinopteri	Scombriformes	Centrolophidae	Icichthys	Icichthys lockingtoni
+ASV_8	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_9	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_10	Eukaryota	Chordata	Mammalia	unknown	Bovidae	Bos	Bos taurus
+ASV_11	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_13	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	Lipolagus	Lipolagus ochotensis
+ASV_14	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Symbolophorus	Symbolophorus californiensis
+ASV_15	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_16	Eukaryota	Chordata	Mammalia	unknown	Suidae	Sus	Sus scrofa
+ASV_17	Eukaryota	Chordata	Actinopteri	Scombriformes	Scombridae	Scomber	unassigned
+ASV_18	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_19	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_20	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_21	Eukaryota	Chordata	Actinopteri	Argentiniformes	Argentinidae	g_	s_
+ASV_22	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	Leuroglossus	Leuroglossus schmidti
+ASV_23	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	Sebastes paucispinis
+ASV_24	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_25	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_26	Eukaryota	Chordata	Actinopteri	Atheriniformes	Atherinopsidae	g_	s_
+ASV_27	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_28	Eukaryota	Chordata	Mammalia	unknown	Suidae	Sus	Sus scrofa
+ASV_29	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Microstomus	Microstomus pacificus
+ASV_33	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Symbolophorus	Symbolophorus californiensis
+ASV_34	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_35	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_37	Eukaryota	Chordata	Actinopteri	Perciformes	Hexagrammidae	Ophiodon	Ophiodon elongatus
+ASV_38	Eukaryota	Chordata	Actinopteri	Perciformes	Zoarcidae	Lycodes	Lycodes cortezianus
+ASV_39	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_41	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_42	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_44	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_45	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_46	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Diaphus	Diaphus theta
+ASV_47	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_48	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	unassigned	unassigned
+ASV_50	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_51	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_52	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_56	Eukaryota	Chordata	Actinopteri	Argentiniformes	Microstomatidae	Nansenia	Nansenia sanrikuensis
+ASV_57	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_58	Eukaryota	Chordata	Actinopteri	Scombriformes	Stromateidae	Peprilus	Peprilus medius
+ASV_59	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_61	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_62	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_63	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys stigmaeus
+ASV_65	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_68	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	unassigned	unassigned
+ASV_69	Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus
+ASV_71	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_72	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_73	Eukaryota	Chordata	Mammalia	Carnivora	Felidae	Felis	unassigned
+ASV_75	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Lampanyctus	Lampanyctus tenuiformis
+ASV_76	Eukaryota	Chordata	Actinopteri	Perciformes	Anoplopomatidae	Anoplopoma	Anoplopoma fimbria
+ASV_77	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_79	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_81	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_83	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_86	Eukaryota	Chordata	Mammalia	Cetacea	Balaenopteridae	Megaptera	Megaptera novaeangliae
+ASV_87	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_88	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Glyptocephalus	unassigned
+ASV_90	Eukaryota	Chordata	Actinopteri	Tetraodontiformes	Molidae	Mola	unassigned
+ASV_91	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_93	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	Tursiops	Tursiops truncatus
+ASV_94	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_96	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Lyopsetta	Lyopsetta exilis
+ASV_102	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	unassigned	unassigned
+ASV_103	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_106	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_109	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	unassigned	s_
+ASV_114	Eukaryota	Chordata	Mammalia	Cetacea	Balaenopteridae	Megaptera	Megaptera novaeangliae
+ASV_115	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_116	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_118	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_121	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_123	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_136	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_138	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_144	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Glyptocephalus	unassigned
+ASV_146	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_147	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Lampanyctus	Lampanyctus tenuiformis
+ASV_150	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_154	Eukaryota	Chordata	Mammalia	Carnivora	Otariidae	Zalophus	Zalophus californianus
+ASV_158	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_164	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	unassigned	unassigned
+ASV_167	Eukaryota	Chordata	Actinopteri	Carangiformes	Carangidae	Trachurus	Trachurus symmetricus
+ASV_176	Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus
+ASV_177	Eukaryota	Chordata	Actinopteri	Aulopiformes	Synodontidae	Synodus	Synodus lucioceps
+ASV_183	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_187	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_190	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys stigmaeus
+ASV_204	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_205	Eukaryota	Chordata	Actinopteri	Scombriformes	Scombridae	Thunnus	Thunnus alalunga
+ASV_214	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_221	Eukaryota	Chordata	Actinopteri	Perciformes	Zoarcidae	Melanostigma	Melanostigma atlanticum
+ASV_229	Eukaryota	Chordata	Actinopteri	Atheriniformes	Atherinopsidae	g_	s_
+ASV_235	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_236	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Microstomus	Microstomus pacificus
+ASV_239	Eukaryota	Chordata	Aves	Galliformes	Phasianidae	Gallus	Gallus gallus
+ASV_254	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_256	Eukaryota	Chordata	Actinopteri	Perciformes	Anarhichadidae	Anarrhichthys	Anarrhichthys ocellatus
+ASV_260	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_261	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_266	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	Tursiops	Tursiops truncatus
+ASV_279	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_282	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_286	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_295	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_300	Eukaryota	Chordata	Chondrichthyes	Rajiformes	Rajidae	unassigned	unassigned
+ASV_303	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_304	Eukaryota	Chordata	Actinopteri	Salmoniformes	Salmonidae	Oncorhynchus	Oncorhynchus tshawytscha
+ASV_305	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_319	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_322	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_328	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Paralichthys	s_
+ASV_333	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_336	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_340	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_343	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_345	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_347	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_348	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_350	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_359	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_370	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_372	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_379	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_383	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_387	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_390	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_393	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_394	Eukaryota	Chordata	Mammalia	Cetacea	Phocoenidae	Phocoena	Phocoena phocoena
+ASV_395	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_399	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_400	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_407	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_415	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Tarletonbeania	Tarletonbeania crenularis
+ASV_418	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_436	Eukaryota	Echinodermata	Asteroidea	Valvatida	Odontasteridae	g_	s_
+ASV_442	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_443	Bacteria	Proteobacteria	Deltaproteobacteria	Myxococcales	Anaeromyxobacteraceae	g_	s_
+ASV_448	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_449	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_451	Eukaryota	Chordata	Mammalia	Cetacea	Balaenopteridae	Balaenoptera	Balaenoptera musculus
+ASV_455	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_456	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_462	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_470	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_474	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_482	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	Planktomarina	Planktomarina temperata
+ASV_485	Eukaryota	Chordata	unknown	Myxiniformes	Myxinidae	Eptatretus	unassigned
+ASV_496	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_497	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_510	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_522	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_537	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_553	Eukaryota	Echinodermata	Asteroidea	Paxillosida	Astropectinidae	Astropecten	unassigned
+ASV_557	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_558	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_564	Bacteria	Proteobacteria	Alphaproteobacteria	Rickettsiales	unknown	g_	s_
+ASV_565	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_585	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_604	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_620	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_644	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_657	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_658	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_659	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_660	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_662	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_664	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_665	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_667	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_669	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_673	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_674	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_675	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_676	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_678	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_679	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_680	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_681	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_686	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_687	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_688	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_689	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_690	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_692	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_693	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_694	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_697	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_698	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_700	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_701	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_703	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_708	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_709	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_710	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_713	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_718	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_720	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_721	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_722	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_726	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_727	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_732	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_733	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_736	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_737	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_739	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_743	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_750	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_754	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_760	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_764	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_765	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_767	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_768	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_774	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_776	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_777	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_782	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_784	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_786	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_793	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_795	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_796	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_798	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_801	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_808	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_814	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_820	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_828	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_832	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_843	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_845	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_850	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_852	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_856	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_858	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_884	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_885	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_892	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_893	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_895	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_905	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_906	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_913	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_919	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_921	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_936	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_937	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_946	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_948	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_952	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_963	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_965	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_994	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_996	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1012	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1026	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1028	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1051	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1055	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1078	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1090	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1104	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1109	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1114	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1169	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1235	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1264	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1270	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1276	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1340	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1361	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1388	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1395	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1528	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1571	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1615	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1663	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1664	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1665	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1666	Eukaryota	Chordata	Actinopteri	Salmoniformes	Salmonidae	Salmo	Salmo salar
+ASV_1667	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1668	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_1669	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_1670	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1671	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1672	Eukaryota	Chordata	Actinopteri	unknown	Embiotocidae	Rhacochilus	Rhacochilus vacca
+ASV_1673	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1674	Eukaryota	Chordata	Actinopteri	Anabantiformes	Channidae	g_	s_
+ASV_1675	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1676	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1677	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1678	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Diogenichthys	unassigned
+ASV_1679	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1680	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1681	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1682	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1683	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1684	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	Lipolagus	Lipolagus ochotensis
+ASV_1685	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1686	Eukaryota	Chordata	Actinopteri	Lampriformes	Trachipteridae	Trachipterus	unassigned
+ASV_1687	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1689	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1690	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1691	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1692	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Diogenichthys	unassigned
+ASV_1693	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1694	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_1695	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1696	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_1697	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1698	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Lampanyctus	Lampanyctus tenuiformis
+ASV_1699	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1700	Eukaryota	Chordata	Actinopteri	Scombriformes	Centrolophidae	Icichthys	Icichthys lockingtoni
+ASV_1701	Eukaryota	Chordata	Mammalia	unknown	Bovidae	Ovis	Ovis aries
+ASV_1702	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1703	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1704	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1705	Eukaryota	Chordata	Actinopteri	Stomiiformes	Gonostomatidae	Cyclothone	Cyclothone acclinidens
+ASV_1706	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1707	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1708	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1709	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1710	Eukaryota	Chordata	Actinopteri	Ophidiiformes	Ophidiidae	g_	s_
+ASV_1711	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1712	Eukaryota	Chordata	Actinopteri	Atheriniformes	Atherinopsidae	g_	s_
+ASV_1713	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1714	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1715	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_1716	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1717	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1718	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1719	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_1720	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_1721	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1723	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1725	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1727	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1728	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1729	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1730	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1731	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1732	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1733	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1735	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1737	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1738	Eukaryota	Chordata	Actinopteri	Argentiniformes	Argentinidae	g_	s_
+ASV_1739	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1740	Eukaryota	Chordata	Actinopteri	Atheriniformes	Atherinopsidae	g_	s_
+ASV_1741	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1742	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1744	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1745	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1746	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1747	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1748	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1749	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1750	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1751	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1752	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1753	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1754	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1757	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	Stenella	Stenella longirostris
+ASV_1758	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1760	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1761	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1762	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1763	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1764	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1765	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Microstomus	Microstomus pacificus
+ASV_1766	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Diogenichthys	unassigned
+ASV_1768	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1769	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1770	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1771	Eukaryota	Chordata	Actinopteri	unknown	Embiotocidae	unassigned	unassigned
+ASV_1772	Eukaryota	Chordata	Actinopteri	Stomiiformes	Stomiidae	Chauliodus	Chauliodus macouni
+ASV_1773	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_1774	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1775	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1776	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1777	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	Orcinus	Orcinus orca
+ASV_1778	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Tarletonbeania	Tarletonbeania crenularis
+ASV_1779	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1780	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1781	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1782	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_1783	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_1784	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	Lipolagus	Lipolagus ochotensis
+ASV_1786	Eukaryota	Chordata	Mammalia	unassigned	unassigned	g_	s_
+ASV_1787	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1788	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	g_	s_
+ASV_1789	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1790	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1791	Bacteria	Cyanobacteria	unknown	Synechococcales	Synechococcaceae	Synechococcus	Synechococcus sp. CC9902
+ASV_1792	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_1793	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	s_
+ASV_1794	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1795	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1796	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1797	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1798	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_1799	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1800	Eukaryota	Chordata	Mammalia	Cetacea	Ziphiidae	Berardius	Berardius bairdii
+ASV_1801	Eukaryota	Chordata	Actinopteri	Scombriformes	Centrolophidae	Icichthys	s_
+ASV_1802	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1805	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1807	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1808	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1809	Eukaryota	Chordata	Mammalia	Cetacea	Delphinidae	g_	s_
+ASV_1810	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_1811	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1812	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1813	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1814	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1816	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1817	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_1818	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1819	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_1821	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1822	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1823	Eukaryota	Chordata	Mammalia	Cetacea	Ziphiidae	g_	s_
+ASV_1824	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	s_
+ASV_1825	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1826	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_1827	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1828	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_1829	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1830	Eukaryota	Chordata	Mammalia	Cetacea	Balaenopteridae	g_	s_
+ASV_1832	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1833	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1834	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1835	Eukaryota	Chordata	Mammalia	Cetacea	Ziphiidae	g_	s_
+ASV_1837	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1838	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1839	Eukaryota	Chordata	Actinopteri	Scombriformes	Centrolophidae	g_	s_
+ASV_1840	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1841	Bacteria	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_1842	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	g_	s_
+ASV_1843	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_1844	Eukaryota	Chordata	Mammalia	Primates	Hominidae	g_	s_
+ASV_1845	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1848	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	s_
+ASV_1849	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1850	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1852	Bacteria	Firmicutes	Bacilli	Lactobacillales	Lactobacillaceae	Lactobacillus	Lactobacillus crispatus
+ASV_1853	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1854	Eukaryota	Chordata	Chondrichthyes	Lamniformes	Alopiidae	Isurus	Isurus oxyrinchus
+ASV_1857	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1858	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_1861	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1862	Bacteria	Proteobacteria	Gammaproteobacteria	Pseudomonadales	Pseudomonadaceae	g_	s_
+ASV_1863	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1865	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1866	Eukaryota	Chordata	Aves	Pelecaniformes	Pelecanidae	Pelecanus	Pelecanus occidentalis
+ASV_1867	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1868	Eukaryota	Chordata	Aves	Charadriiformes	Laridae	Larus	Larus occidentalis
+ASV_1870	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1871	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1872	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1873	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_1874	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1876	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1877	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_1878	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_1879	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	s_
+ASV_1881	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1882	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1883	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1884	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1885	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_1886	Eukaryota	Chordata	Actinopteri	unknown	Sphyraenidae	g_	s_
+ASV_1890	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1894	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1897	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_1899	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1900	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1910	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_1911	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1912	Eukaryota	Chordata	Chondrichthyes	Carcharhiniformes	Carcharhinidae	Prionace	Prionace glauca
+ASV_1913	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_1914	Eukaryota	Chordata	Mammalia	unassigned	unassigned	g_	s_
+ASV_1920	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1921	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1923	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1924	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1930	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1931	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_1932	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1933	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1935	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1953	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1955	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1956	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1957	Bacteria	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_1958	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_1959	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_1960	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1962	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1963	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	s_
+ASV_1964	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1965	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_1966	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_1967	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1968	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_1969	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_1970	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1971	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_1974	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1975	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1976	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1977	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1978	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1979	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1980	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1981	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1983	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1984	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1985	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1986	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1988	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1991	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1992	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1993	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1999	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2000	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2001	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2002	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2006	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2007	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2008	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2009	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2013	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2014	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2016	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2019	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2020	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2021	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2026	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2027	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2031	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2032	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2033	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2035	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2036	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2037	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2039	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2040	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2042	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2043	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2044	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2050	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2051	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2056	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2057	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2058	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2059	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2060	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2061	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2062	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2066	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2067	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2068	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2069	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2070	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2072	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2073	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2075	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2076	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2078	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2079	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2080	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2081	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2082	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2083	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2086	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2087	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2089	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2090	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2091	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2093	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2094	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2096	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2097	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2098	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2099	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2100	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2101	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2107	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2108	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2109	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2110	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2111	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2112	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2113	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2114	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2115	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2116	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2117	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2118	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2119	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2122	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2123	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2124	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2128	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2129	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2130	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2131	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2132	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2138	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2139	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2140	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2141	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2142	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2144	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2148	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2151	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2152	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2153	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2154	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2155	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2156	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2157	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2158	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2159	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2160	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2161	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2162	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2163	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2169	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2172	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2175	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2176	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2179	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2180	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2183	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2184	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2185	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2188	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2192	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2193	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2194	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2196	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2200	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2204	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2205	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2206	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2207	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2208	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2209	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2210	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2219	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2222	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2224	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2225	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2226	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2227	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2228	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2230	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2231	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2233	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2234	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2236	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2237	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2238	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2239	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2245	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2248	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2250	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2251	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2252	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2253	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2260	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2268	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2269	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2270	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2271	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2272	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2273	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2274	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2275	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2276	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2277	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2278	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2279	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2280	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2281	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2282	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2283	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2284	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2285	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2286	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2287	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2288	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2289	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2290	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2291	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2292	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2293	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2294	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2295	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2296	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2297	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2298	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2299	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2300	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2301	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2302	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2303	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2304	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2305	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2314	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2316	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2318	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2319	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2320	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2324	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2326	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2327	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2328	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2329	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2330	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2342	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2377	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2378	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2379	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2380	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2381	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2382	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2383	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2384	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2385	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2386	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2387	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2388	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2389	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2390	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2391	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2392	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2393	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2394	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2395	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2396	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2397	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2398	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2399	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2400	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2401	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2402	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2403	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2404	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2405	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2406	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2407	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2408	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2409	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2410	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2411	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2412	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2413	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2414	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2415	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2416	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2417	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2418	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2419	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2420	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2421	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2422	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2423	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2424	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2425	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2426	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2427	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2428	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2429	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2430	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2437	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2440	Eukaryota	Chordata	Actinopteri	Beloniformes	Belonidae	Cololabis	Cololabis saira
+ASV_2441	Eukaryota	Chordata	Actinopteri	unknown	Embiotocidae	Amphistichus	Amphistichus argenteus
+ASV_2442	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2443	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2444	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Glyptocephalus	unassigned
+ASV_2445	Eukaryota	Chordata	Actinopteri	Lophiiformes	Oneirodidae	Oneirodes	unassigned
+ASV_2446	Eukaryota	Chordata	Actinopteri	unknown	Embiotocidae	Embiotoca	Embiotoca jacksoni
+ASV_2447	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2448	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	g_	s_
+ASV_2449	Eukaryota	Chordata	Actinopteri	Salmoniformes	Salmonidae	Oncorhynchus	Oncorhynchus tshawytscha
+ASV_2450	Eukaryota	Chordata	Actinopteri	Cypriniformes	Cyprinidae	Cyprinus	unassigned
+ASV_2451	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_2452	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Glyptocephalus	unassigned
+ASV_2453	Eukaryota	Chordata	Actinopteri	unknown	Pomacentridae	Chromis	Chromis punctipinnis
+ASV_2454	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2455	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2456	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2457	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Clupea	Clupea harengus
+ASV_2458	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2459	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2460	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2461	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_2462	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2463	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2464	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2465	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_2466	Eukaryota	Chordata	Actinopteri	Scombriformes	Stromateidae	Peprilus	Peprilus medius
+ASV_2467	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2468	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2469	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_2470	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Diaphus	Diaphus theta
+ASV_2471	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2472	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	Leuroglossus	Leuroglossus schmidti
+ASV_2473	Eukaryota	Chordata	Actinopteri	Labriformes	Labridae	g_	s_
+ASV_2474	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	s_
+ASV_2475	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2476	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_2477	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2478	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2479	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2480	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2482	Eukaryota	Chordata	Actinopteri	Perciformes	Zaniolepididae	Zaniolepis	unassigned
+ASV_2483	Eukaryota	Chordata	Actinopteri	unknown	Embiotocidae	Amphistichus	Amphistichus argenteus
+ASV_2484	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	unassigned	unassigned
+ASV_2485	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2486	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_2487	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_2488	Eukaryota	Chordata	Actinopteri	Beloniformes	Belonidae	Cololabis	Cololabis saira
+ASV_2489	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2490	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2491	Eukaryota	Chordata	Actinopteri	Argentiniformes	Bathylagidae	Leuroglossus	Leuroglossus schmidti
+ASV_2493	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_2494	Eukaryota	Chordata	Mammalia	unknown	Bovidae	Bos	Bos taurus
+ASV_2495	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2496	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2497	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	unassigned
+ASV_2498	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2499	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2502	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2503	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_2504	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2505	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2506	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2507	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2508	Eukaryota	Chordata	Actinopteri	Lophiiformes	Melanocetidae	Melanocetus	Melanocetus johnsonii
+ASV_2509	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2510	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2511	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2512	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2513	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2515	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2516	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2517	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2518	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Symbolophorus	Symbolophorus californiensis
+ASV_2519	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2520	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2522	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2523	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2524	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2525	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2526	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_2527	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_2528	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2529	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2531	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2532	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2533	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	unassigned	unassigned
+ASV_2535	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2537	Eukaryota	Chordata	Actinopteri	unknown	Embiotocidae	Embiotoca	Embiotoca jacksoni
+ASV_2538	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	g_	s_
+ASV_2539	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2540	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2541	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2542	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2544	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2545	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_2546	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2547	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2549	Eukaryota	Chordata	Actinopteri	Tetraodontiformes	Molidae	Mola	Mola mola
+ASV_2551	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2552	Eukaryota	Chordata	Mammalia	Carnivora	Canidae	Canis	Canis lupus
+ASV_2553	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2554	Eukaryota	Chordata	Mammalia	unknown	Bovidae	Bos	Bos taurus
+ASV_2555	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2557	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2558	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2561	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2562	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2565	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2567	Eukaryota	Chordata	Actinopteri	Salmoniformes	Salmonidae	Oncorhynchus	Oncorhynchus tshawytscha
+ASV_2569	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2571	Eukaryota	Chordata	Actinopteri	Scombriformes	Stromateidae	Peprilus	Peprilus medius
+ASV_2572	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2574	Eukaryota	Chordata	Mammalia	Carnivora	Phocidae	Mirounga	Mirounga angustirostris
+ASV_2575	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2577	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_2578	Bacteria	Proteobacteria	Gammaproteobacteria	unknown	unknown	g_	s_
+ASV_2579	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_2580	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	unassigned	unassigned
+ASV_2581	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2583	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2584	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2585	Eukaryota	Chordata	Actinopteri	unknown	Sciaenidae	Genyonemus	Genyonemus lineatus
+ASV_2586	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_2588	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2589	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2590	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2591	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys sordidus
+ASV_2593	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	unassigned	unassigned
+ASV_2594	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2595	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2596	Eukaryota	Chordata	Mammalia	Carnivora	Otariidae	Zalophus	Zalophus californianus
+ASV_2597	Eukaryota	Chordata	Actinopteri	Lophiiformes	Oneirodidae	Oneirodes	unassigned
+ASV_2598	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2606	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2609	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	Microstomus	Microstomus pacificus
+ASV_2612	Eukaryota	Ascomycota	Eurotiomycetes	Eurotiales	Aspergillaceae	Penicillium	unassigned
+ASV_2613	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	unassigned	unassigned
+ASV_2614	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2618	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2619	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2622	Eukaryota	Chordata	Chondrichthyes	Chimaeriformes	Chimaeridae	Hydrolagus	Hydrolagus colliei
+ASV_2623	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2628	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2630	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	Sebastes paucispinis
+ASV_2634	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2635	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_2636	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2639	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_2641	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2642	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2644	Eukaryota	Chordata	Chondrichthyes	Carcharhiniformes	Scyliorhinidae	unassigned	s_
+ASV_2645	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2646	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2648	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2651	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2652	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_2653	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	Citharichthys	Citharichthys stigmaeus
+ASV_2657	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2658	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2660	Bacteria	Proteobacteria	Deltaproteobacteria	Myxococcales	Anaeromyxobacteraceae	g_	s_
+ASV_2662	Eukaryota	Ascomycota	Eurotiomycetes	Eurotiales	Aspergillaceae	Penicillium	unassigned
+ASV_2663	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_2664	Eukaryota	Chordata	Mammalia	Cetacea	Balaenopteridae	Balaenoptera	Balaenoptera physalus
+ASV_2667	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	g_	s_
+ASV_2668	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	s_
+ASV_2669	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Tarletonbeania	unassigned
+ASV_2670	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_2675	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2676	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	Octadecabacter	s_
+ASV_2677	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2679	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	s_
+ASV_2680	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_2683	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2685	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Pleuronectidae	unassigned	unassigned
+ASV_2686	Bacteria	unknown	unknown	unknown	unknown	unknown	s_
+ASV_2688	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2689	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Ostreococcus	Ostreococcus sp. 'lucimarinus'
+ASV_2690	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	s_
+ASV_2694	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2695	Eukaryota	Chordata	Chondrichthyes	Rajiformes	Arhynchobatidae	Bathyraja	unassigned
+ASV_2696	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_2698	Eukaryota	Chordata	Mammalia	unknown	Bovidae	Bos	Bos taurus
+ASV_2699	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	unassigned
+ASV_2702	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2704	Eukaryota	Chordata	Actinopteri	Clupeiformes	Clupeidae	Sardinops	Sardinops melanostictus
+ASV_2705	Eukaryota	Chordata	Mammalia	unknown	Suidae	Sus	s_
+ASV_2706	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2708	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2710	Eukaryota	Chordata	Actinopteri	Perciformes	Sebastidae	Sebastes	s_
+ASV_2715	Eukaryota	Chordata	Mammalia	unknown	Suidae	g_	s_
+ASV_2716	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	g_	s_
+ASV_2718	Bacteria	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_2721	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2725	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2726	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_2727	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2728	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2729	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2731	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2735	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2739	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2740	Eukaryota	Chordata	Actinopteri	Pleuronectiformes	Paralichthyidae	g_	s_
+ASV_2741	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2742	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2745	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2748	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_2757	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_2758	Archaea	unknown	unknown	unknown	unknown	unknown	archaeon
+ASV_2759	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2760	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2761	Eukaryota	Chordata	Chondrichthyes	Lamniformes	Alopiidae	Lamna	Lamna ditropis
+ASV_2765	Bacteria	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_2776	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	g_	s_
+ASV_2777	Bacteria	Proteobacteria	Alphaproteobacteria	Rhodobacterales	Rhodobacteraceae	g_	s_
+ASV_2778	Bacteria	Proteobacteria	Gammaproteobacteria	unknown	unknown	g_	s_
+ASV_2779	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2780	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2782	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2783	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2784	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_2803	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Diaphus	s_
+ASV_2804	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_2807	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2808	Eukaryota	Chordata	Actinopteri	Myctophiformes	Myctophidae	Stenobrachius	Stenobrachius leucopsarus
+ASV_2809	Eukaryota	Chordata	Actinopteri	Perciformes	Anoplopomatidae	Anoplopoma	Anoplopoma fimbria
+ASV_2810	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2811	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2813	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_2821	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_2822	Eukaryota	Chordata	Actinopteri	Gadiformes	Merlucciidae	Merluccius	Merluccius productus
+ASV_2823	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	s_
+ASV_2824	Eukaryota	Chordata	Actinopteri	Clupeiformes	Engraulidae	Engraulis	Engraulis mordax
+ASV_2826	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2827	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2828	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2829	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2830	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2833	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2834	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2835	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2837	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2838	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2840	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2841	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2843	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2845	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2848	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2849	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2850	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2851	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2853	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2854	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2858	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2860	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2862	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2864	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2866	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2868	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2871	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2872	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2876	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2879	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2880	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2885	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2888	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2891	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2892	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2894	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2896	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2897	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2903	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2909	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2911	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2912	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2914	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2915	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2916	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2920	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2921	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2923	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2926	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2927	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2929	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2930	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2932	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2935	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2939	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2942	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2944	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2945	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2946	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2947	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2949	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2952	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2957	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2961	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2962	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2964	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2966	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2967	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2968	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2971	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2978	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2979	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2980	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2981	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2982	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2983	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2991	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2995	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2996	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2997	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2998	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_2999	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3000	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3001	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3006	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3007	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3009	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3013	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3014	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3015	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3016	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3017	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3022	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3025	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3027	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3028	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3031	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3035	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3036	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3037	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3038	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3047	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3049	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3051	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3076	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3077	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3078	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3079	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3080	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3081	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3082	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3083	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3084	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3086	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3087	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3088	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3090	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3094	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3115	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3121	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3137	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3138	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3139	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3140	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3141	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3142	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3143	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3144	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3145	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3147	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3148	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3149	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3154	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3186	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3211	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3212	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3213	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3214	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3215	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3216	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3217	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3219	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3220	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3221	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3222	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3223	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3224	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3225	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3226	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3228	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3229	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3230	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3231	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3232	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3233	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3234	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3304	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3329	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3351	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3352	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3353	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3354	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3355	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3356	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3361	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3362	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3363	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3364	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3365	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3366	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3367	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3368	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3369	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3370	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3371	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3372	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3373	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3374	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3375	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3376	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3377	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3378	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3379	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3380	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3381	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3382	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3383	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3384	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3385	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3388	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3389	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3533	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3534	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3535	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3536	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3537	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3538	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3539	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3540	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3541	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3544	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3545	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3546	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3547	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3548	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3549	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3550	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3551	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3552	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3553	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3554	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3555	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3556	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3557	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3558	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3559	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3560	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3561	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3562	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3563	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3567	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3568	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3569	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3570	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3571	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3572	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3573	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3574	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3575	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3576	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3577	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3578	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3579	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3580	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3584	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3585	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3586	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3587	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3588	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3589	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3590	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_3591	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
