@@ -625,7 +625,7 @@ ESP_CTD_heatmap_for_legend_gg <- ggplot(ESP_16S_phylum_superheat_df_top10phyla_g
         panel.background = element_rect(fill = "white", color = "white"),
         legend.title = element_text(size = 20),
         legend.text = element_text(size = 16),
-        legend.position = c(0.55, 0.5))
+        legend.position = c(0.575, 0.5))
 
 g_legend<-function(a.gplot){
   tmp <- ggplot_gtable(ggplot_build(a.gplot))
