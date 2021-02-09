@@ -88,7 +88,7 @@ write.table(ESP_CTD_COI_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash, eval = FALSE, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -110,7 +110,7 @@ qiime deicode rpca \
     --i-table ../DEICODE/COI/ESP_CTD_COI_master.biom.qza \
     --p-n-components 3 \
     --p-min-feature-count 10 \
-    --p-min-sample-count 500 \
+    --p-min-sample-count 1000 \
     --o-biplot ../DEICODE/COI/ordination.qza \
     --o-distance-matrix ../DEICODE/COI/distance.qza
     
@@ -197,7 +197,7 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("COI: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
@@ -227,7 +227,7 @@ write.table(ESP_CTD_18S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash, eval = FALSE, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -249,7 +249,7 @@ qiime deicode rpca \
 --i-table ../DEICODE/18S/ESP_CTD_18S_master.biom.qza \
 --p-n-components 3 \
 --p-min-feature-count 10 \
---p-min-sample-count 500 \
+--p-min-sample-count 1000 \
 --o-biplot ../DEICODE/18S/ordination.qza \
 --o-distance-matrix ../DEICODE/18S/distance.qza
 
@@ -336,7 +336,7 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("18S: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_18S_PCA
 
@@ -368,7 +368,7 @@ write.table(ESP_CTD_12S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash, eval = FALSE, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -390,7 +390,7 @@ qiime deicode rpca \
 --i-table ../DEICODE/12S/ESP_CTD_12S_master.biom.qza \
 --p-n-components 3 \
 --p-min-feature-count 10 \
---p-min-sample-count 500 \
+--p-min-sample-count 1000 \
 --o-biplot ../DEICODE/12S/ordination.qza \
 --o-distance-matrix ../DEICODE/12S/distance.qza
 
@@ -477,7 +477,7 @@ ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("12S: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_12S_PCA
 
@@ -507,7 +507,7 @@ write.table(ESP_CTD_16S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash, eval = FALSE, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -529,7 +529,7 @@ qiime deicode rpca \
 --i-table ../../16S_Analyses/DEICODE/ESP_CTD_16S_master.biom.qza \
 --p-n-components 3 \
 --p-min-feature-count 10 \
---p-min-sample-count 500 \
+--p-min-sample-count 1000 \
 --o-biplot ../../16S_Analyses/DEICODE/ordination.qza \
 --o-distance-matrix ../../16S_Analyses/DEICODE/distance.qza
 
@@ -617,7 +617,7 @@ ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (ESP vs. CTD): P = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("16S: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_16S_PCA
 
@@ -635,8 +635,8 @@ PCA_legend <- ggplot(pca_data) +
   annotate("text",label = "Sampling Method", x = 0.9, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
   annotate("point", x = 1, y = 1, shape = 21, colour = "#33a02c", fill = "#33a02c", size = 7, stroke = 3)+ # ESP
   annotate("point", x = 1, y = 2, shape = 21, colour = "#6a3d9a", fill = "#6a3d9a", size = 7, stroke = 3)+ # CTD
-  annotate("text",label = "Automated (ESP)", x = 1.2, y = 2,size = 7.5,adj = 0)+ #ESP
-  annotate("text",label = "CTD/Niskin Rosette", x = 1.2, y = 1,size = 7.5,adj = 0)+ #CTD
+  annotate("text",label = "Automated", x = 1.2, y = 2,size = 7.5,adj = 0)+ #ESP
+  annotate("text",label = "Manual", x = 1.2, y = 1,size = 7.5,adj = 0)+ #CTD
   # Spring vs. Fall
   annotate("text",label = "Season", x = 4.9, y = 2.8,size = 10,adj = 0)+ # Title seasonality
   annotate("point", x = 5, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # Spring
