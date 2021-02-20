@@ -82,6 +82,13 @@ ESP_CTD_COI_envt_tax_table <- tibble::rownames_to_column(ESP_CTD_COI_envt_tax_ta
 write.table(ESP_CTD_COI_envt_tax_table,paste0(deicode_dir, "/ESP_CTD_COI_envt_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ESP_CTD_COI_envtsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_COI_envt_phyloseq)))
 ESP_CTD_COI_envtsamples_metadata <- tibble::rownames_to_column(ESP_CTD_COI_envtsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_COI_envtsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_COI_envtsamples_metadata
 write.table(ESP_CTD_COI_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_envt_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ```
 
@@ -148,32 +155,9 @@ pca_data <- pco$data$Vectors
 pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
-# Create a categorical depth
-table(pca_data$depth)
-pca_data %>%
-  mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
-                            ifelse(depth <= 50, "27-50",
-                                   ifelse(depth <= 201 & depth >=195, "195-200",
-                                          "unknown")))) -> pca_data
-
 # Shape guide for depths
 depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
-
-##----Run PERMANOVA-------------------------------------------------------------
-distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI","distance.qza"))
-
-# Extract distance matrix
-distance_matrix <- distance$data
-
-# convert DEICODE matrix to "dist" class object
-PCA_dist <- as.dist(distance_matrix)
-
-# PERMANOVA for control vs exp
-
-permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
-permanova_value <- permanova$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
@@ -202,6 +186,35 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
 
+### Run PERMANOVA
+```{r}
+## Load COI Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+permanova_value <- ESP_CTD_permanova$`Pr(>F)`[1]
+
+# PERMANOVA for depth
+depth_permanova <- adonis2(PCA_dist ~ depth_cat, data = pca_metadata, permutations=999)
+
+# PERMANOVA for seasonality (cruise)
+season_permanova <- adonis2(PCA_dist ~ SAMPLING_cruise, data = pca_metadata, permutations=999)
+
+##----Run multi-facotiral PERMANOVAs-------------------------------------------------------------
+
+# Multi-factorial PERMANOVA
+mutli_permanova <- adonis2(PCA_dist ~  CTD_or_ESP + SAMPLING_cruise + depth_cat, data = pca_metadata, permutations=999)
+```
+
 
 # 18S
 
@@ -222,6 +235,13 @@ ESP_CTD_18S_envt_tax_table <- tibble::rownames_to_column(ESP_CTD_18S_envt_tax_ta
 write.table(ESP_CTD_18S_envt_tax_table, paste0(deicode_dir, "/ESP_CTD_18S_envt_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ESP_CTD_18S_envtsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_18S_envt_phyloseq)))
 ESP_CTD_18S_envtsamples_metadata <- tibble::rownames_to_column(ESP_CTD_18S_envtsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_18S_envtsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_18S_envtsamples_metadata
 write.table(ESP_CTD_18S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_envt_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ```
 
@@ -245,7 +265,7 @@ qiime tools import \
 --type FeatureTable[Frequency]
 
 #run DEICODE
-qiime deicode rpca \
+qiime DEICODE RPCA + run PERMANOVA \
 --i-table ../DEICODE/18S/ESP_CTD_18S_master.biom.qza \
 --p-n-components 3 \
 --p-min-feature-count 10 \
@@ -265,7 +285,7 @@ qiime deicode rpca \
 
 
 
-### Plot 18S DEICODE RPCA
+### Plot 18S DEICODE RPCA + run PERMANOVA
 ```{r}
 # Set figure directory
 fig_dir <- here::here("figures", "PCAs")
@@ -287,15 +307,6 @@ pca_data <- pco$data$Vectors
 pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
-# Create a categorical depth
-table(pca_data$depth)
-pca_data %>%
-  mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
-                            ifelse(depth <= 50, "27-50",
-                                   ifelse(depth <= 201 & depth >=195, "195-200",
-                                          "unknown")))) -> pca_data
-
 # Shape guide for depths
 depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
@@ -309,7 +320,7 @@ distance_matrix <- distance$data
 # convert DEICODE matrix to "dist" class object
 PCA_dist <- as.dist(distance_matrix)
 
-# PERMANOVA for control vs exp
+# PERMANOVA for CTD vs. ESP
 
 permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
 permanova_value <- permanova$`Pr(>F)`[1]
@@ -363,6 +374,13 @@ ESP_CTD_12S_envt_tax_table <- tibble::rownames_to_column(ESP_CTD_12S_envt_tax_ta
 write.table(ESP_CTD_12S_envt_tax_table, paste0(deicode_dir, "/ESP_CTD_12S_envt_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ESP_CTD_12S_envtsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_12S_envt_phyloseq)))
 ESP_CTD_12S_envtsamples_metadata <- tibble::rownames_to_column(ESP_CTD_12S_envtsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_18S_envtsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_18S_envtsamples_metadata
 write.table(ESP_CTD_12S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_envt_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ```
 
@@ -406,7 +424,7 @@ qiime deicode rpca \
 
 
 
-### Plot 12S DEICODE RPCA
+### Plot 12S DEICODE RPCA + run PERMANOVA
 ```{r}
 # Set figure directory
 fig_dir <- here::here("figures", "PCAs")
@@ -428,15 +446,6 @@ pca_data <- pco$data$Vectors
 pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
-# Create a categorical depth
-table(pca_data$depth)
-pca_data %>%
-  mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
-                            ifelse(depth <= 50, "27-50",
-                                   ifelse(depth <= 201 & depth >=195, "195-200",
-                                          "unknown")))) -> pca_data
-
 # Shape guide for depths
 depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
@@ -450,7 +459,7 @@ distance_matrix <- distance$data
 # convert DEICODE matrix to "dist" class object
 PCA_dist <- as.dist(distance_matrix)
 
-# PERMANOVA for control vs exp
+# PERMANOVA for CTD vs. ESP
 
 permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
 permanova_value <- permanova$`Pr(>F)`[1]
@@ -484,6 +493,8 @@ ESP_CTD_12S_PCA
 ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
 ```
 
+# 16S
+
 ### Prep data for DEICODE
 ```{r}
 # Set directory for saving DEICODE data
@@ -501,6 +512,13 @@ ESP_CTD_16S_envt_tax_table <- tibble::rownames_to_column(ESP_CTD_16S_envt_tax_ta
 write.table(ESP_CTD_16S_envt_tax_table,paste0(deicode_dir, "/ESP_CTD_16S_envt_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ESP_CTD_16S_envtsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_16S_envt_phyloseq)))
 ESP_CTD_16S_envtsamples_metadata <- tibble::rownames_to_column(ESP_CTD_16S_envtsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_16S_envtsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_16S_envtsamples_metadata
 write.table(ESP_CTD_16S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_envt_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ```
 
@@ -545,7 +563,7 @@ qiime diversity beta-group-significance \
 
 
 
-### Plot 16S DEICODE RPCA
+### Plot 16S DEICODE RPCA + run PERMANOVA
 ```{r}
 pco <- read_qza(here::here("16S_Analyses", "DEICODE","ordination.qza"))
 
@@ -567,16 +585,6 @@ pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 # Extract depth data
 pca_data$depth <- extract_numeric(pca_data$Depth)
 
-
-# Create a categorical depth
-table(pca_data$depth)
-pca_data %>%
-  mutate(depth = as.numeric(depth)) %>%
-  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
-                            ifelse(depth <= 50, "27-50",
-                                   ifelse(depth <= 201 & depth >=195, "195-200",
-                                          "unknown")))) -> pca_data
-
 # Shape guide for depths
 depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
 CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
@@ -590,7 +598,7 @@ distance_matrix <- distance$data
 # convert DEICODE matrix to "dist" class object
 PCA_dist <- as.dist(distance_matrix)
 
-# PERMANOVA for control vs exp
+# PERMANOVA for CTD vs. ESP
 
 permanova <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
 permanova_value <- permanova$`Pr(>F)`[1]
