@@ -53,12 +53,22 @@ ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, ro
                                        sample_data(read.csv(metadata_path_12S, row.names = 1)))
 
 ### 16S
-asv_table_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table.csv")
-tax_table_path_16S <- here::here("data", "16S", "taxonomy_phyloseq.csv")
+# Read in combined taxonomy + ASV table
+asv_tax_combined_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table_with_tax.csv")
+asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
+# Split off asv table
+dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
+  column_to_rownames("FeatureID") -> asv_table_16S
+# Split off taxonomy, separate into fields per rank
+tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
+tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
+tax_table_16S %>% separate(., Taxon, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  column_to_rownames("FeatureID") -> tax_table_16S
+  
 metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
 
-ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_16S, row.names = 1),taxa_are_rows = TRUE),
-                                       tax_table(as.matrix(read.csv(tax_table_path_16S, row.names = 1))),
+ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(tax_table_16S)),
                                        sample_data(read.csv(metadata_path_16S, row.names = 1)))
 
 # Set figure directory
@@ -181,8 +191,8 @@ PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
 
-permanova <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
-permanova_value <- permanova$`Pr(>F)`[1]
+permanova_control_envt_COI <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
+permanova_control_envt_COI_value <- permanova_control_envt_COI$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
@@ -207,11 +217,10 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("COI: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("COI: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_COI_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_controls_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
-
 
 
 
@@ -333,8 +342,8 @@ PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
 
-permanova <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
-permanova_value <- permanova$`Pr(>F)`[1]
+permanova_control_envt_18S <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
+permanova_control_envt_18S_value <- permanova_control_envt_18S$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
@@ -359,7 +368,7 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("18S: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("18S: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_18S_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_18S_controls_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
 ```
@@ -483,8 +492,8 @@ PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
 
-permanova <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
-permanova_value <- permanova$`Pr(>F)`[1]
+permanova_control_envt_12S <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
+permanova_control_envt_12S_value <- permanova_control_envt_12S$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
@@ -509,7 +518,7 @@ ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("12S: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("12S: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_12S_value), hjust = 1, size = 5)
         
 ggsave(path = fig_dir, filename = "ESP_CTD_12S_controls_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
 ```
@@ -635,8 +644,8 @@ PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
 
-permanova <- adonis2(PCA_dist ~ sample_type_2, data = pca_metadata, permutations=999)
-permanova_value <- permanova$`Pr(>F)`[1]
+permanova_control_envt_16S <- adonis2(PCA_dist ~ sample_type_2, data = pca_metadata, permutations=999)
+permanova_control_envt_16S_value <- permanova_control_envt_16S$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
@@ -661,7 +670,7 @@ ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
   ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("16S: PERMANOVA (Environment vs. Controls), p = ",permanova_value), hjust = 1, size = 5)
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("16S: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_16S_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_16S_controls_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
 ```
@@ -708,8 +717,8 @@ PCA_legend <- ggplot(pca_data) +
 
 # Combine all PCA figures
 ```{r}
-combined_PCA_gg <- annotate_figure(ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA, ESP_CTD_18S_PCA, 
-                                                 ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
+combined_PCA_gg <- annotate_figure(ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA, 
+                                                 ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ESP_CTD_16S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a)", "(b)", "(c)", "(d)"), label.x = 0.05, label.y = 0.985,
                                                  font.label = list(size = 35, color = "black", face = "bold")),
                                                  PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
@@ -720,3 +729,18 @@ ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "sup
 
 ```
 
+# Check how many samples were not plotted because they didn't meet the 1,000 read threshold for
+```{r}
+# Subset the negative controls that were included
+ESP_CTD_18S_negative_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_envt_negative_phyloseq)$sample_type.x == "negative",ESP_CTD_18S_envt_negative_phyloseq)
+ESP_CTD_COI_negative_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_envt_negative_phyloseq)$sample_type.x == "negative",ESP_CTD_COI_envt_negative_phyloseq)
+ESP_CTD_12S_negative_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_envt_negative_phyloseq)$sample_type.x == "negative",ESP_CTD_12S_envt_negative_phyloseq)
+ESP_CTD_16S_negative_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_envt_negative_phyloseq)$sample_type == "negative",ESP_CTD_16S_envt_negative_phyloseq)
+
+# Sort by sample read counts
+sort(sample_sums(ESP_CTD_18S_negative_phyloseq))
+sort(sample_sums(ESP_CTD_COI_negative_phyloseq))
+sort(sample_sums(ESP_CTD_12S_negative_phyloseq))
+sort(sample_sums(ESP_CTD_16S_negative_phyloseq))
+```
+1 18S control, 0 COI controls, 3 12S controls, 4 16S controls.
