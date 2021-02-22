@@ -18,8 +18,8 @@ refseqs_qza: 01-imported/refseqs.qza
 reftax_qza: 01-imported/reftax.qza
 
 # dada2 paired-end
-dada2pe_trunc_len_f: 240
-dada2pe_trunc_len_r: 190
+dada2pe_trunc_len_f: 150
+dada2pe_trunc_len_r: 150
 dada2pe_trim_left_f: 0
 dada2pe_trim_left_r: 0
 dada2pe_max_ee_f: 2
