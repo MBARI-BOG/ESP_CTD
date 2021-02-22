@@ -1,0 +1,13 @@
+"","Dataset","Variable_tested","p_value","F_statistic"
+"1","18S","Sampling method (ESP vs CTD)",0.001,43.1657522204932
+"2","18S","Season (fall vs spring)",0.001,62.6701881199975
+"3","18S","Depth groups (0-25, 27-50, 70-200)",0.001,57.5149193059305
+"4","COI","Sampling method (ESP vs CTD)",0.137,2.14242818974644
+"5","COI","Season (fall vs spring)",0.001,165.133672906074
+"6","COI","Depth groups (0-25, 27-50, 70-200)",0.001,102.467937331264
+"7","12S","Sampling method (ESP vs CTD)",0.001,10.7072259860232
+"8","12S","Season (fall vs spring)",0.002,8.72461190918831
+"9","12S","Depth groups (0-25, 27-50, 70-200)",0.001,18.8598424119984
+"10","16S","Sampling method (ESP vs CTD)",0.461,0.745810073110728
+"11","16S","Season (fall vs spring)",0.001,134.187905692505
+"12","16S","Depth groups (0-25, 27-50, 70-200)",0.001,100.472342055635

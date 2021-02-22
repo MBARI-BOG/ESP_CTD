@@ -51,26 +51,27 @@ ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, ro
                                        tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_12S, row.names = 1)))
 
-#### 16S
-phylum_table_path_16S <- here::here("data", "16S", "16S_phylum_L2-table.txt")
-phylum_table_16S <- read.table(phylum_table_path_16S, header = TRUE)
+### 16S
+# Read in combined taxonomy + ASV table
+asv_tax_combined_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table_with_tax.csv")
+asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
+# Split off asv table
+dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
+  column_to_rownames("FeatureID") -> asv_table_16S
+# Split off taxonomy, separate into fields per rank
+tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
+tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
+tax_table_16S %>% separate(., Taxon, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  column_to_rownames("FeatureID") -> tax_table_16S
 
-# Split phylum from domain
-phylum_table_16S %>%
-  mutate(., Phylum = sapply(str_split(ID,";p__"),'[', 2)) -> phylum_table_16S
-phylum_table_16S[is.na(phylum_table_16S$Phylum),]$Phylum <- "Unassigned"
+metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
 
-# Set phylum to row name
-phylum_table_16S %>%
-  dplyr::select(-ID) %>%
-  column_to_rownames("Phylum")-> phylum_table_16S
-
-# Read in 16S metadata
-ESP_CTD_16S_metadata <- read.csv(here::here("data","16S","ESP_CTD_16S_metadata.csv"))
+ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(tax_table_16S)),
+                                       sample_data(read.csv(metadata_path_16S, row.names = 1)))
 
 # Set figure directory
 fig_dir <- here::here("figures", "heatmaps")
-
 
 
 ## ----Plot COI ----------------------------------------------------------------
@@ -498,47 +499,71 @@ ggsave(paste0(fig_dir, "/ESP_CTD_12S_gg_heatmap.png"), ESP_CTD_12S_gg_heatmap, w
 ### Prep data
 
 # Subset environmental samples for comparison
-phylum_table_16S_envt <- phylum_table_16S[,colnames(phylum_table_16S) %in% subset(ESP_CTD_16S_metadata, CTD_or_ESP %in% c("ESP", "CTD"))$sample_name]
+ESP_CTD_16S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_16S_phyloseq)
 
-setdiff(subset(ESP_CTD_16S_metadata, CTD_or_ESP %in% c("ESP", "CTD"))$sample_name, colnames(phylum_table_16S))
-# Sample "CN18Fc35_5_eDNA" is missing because it only has one read. Proceed!
+# Merge at the phylum level
+ESP_CTD_16S_envt_phyloseq_phylum <- tax_glom(ESP_CTD_16S_envt_phyloseq,taxrank=rank_names(ESP_CTD_16S_envt_phyloseq)[2], NArm = FALSE)
 
-# Convert all read counts to relative abundance
-phylum_table_16S_envt_matrix <- as.matrix(phylum_table_16S_envt)
-phylum_table_16S_envt_sample_sums <- as.vector(colSums(phylum_table_16S_envt))
-t(t(phylum_table_16S_envt_matrix)/phylum_table_16S_envt_sample_sums) -> ESP_CTD_16S_phylum_normalized_asv_table
+# Extract tax table
+ESP_CTD_16S_phylum_tax_table <- as.data.frame(as(tax_table(ESP_CTD_16S_envt_phyloseq_phylum),"matrix"))
+ESP_CTD_16S_phylum_tax_table %>% tibble::rownames_to_column("ASV") -> ESP_CTD_16S_phylum_tax_table
+ESP_CTD_16S_phylum_tax_table <- ESP_CTD_16S_phylum_tax_table[,c("ASV","Kingdom","Phylum")]
+
+# Extract asv table
+ESP_CTD_16S_phylum_asv_table <- as.data.frame(as(otu_table(ESP_CTD_16S_envt_phyloseq_phylum),"matrix"))
+ESP_CTD_16S_phylum_asv_table %>% tibble::rownames_to_column("ASV") -> ESP_CTD_16S_phylum_asv_table
+
+# Convert all asv counts to relative abundance
+ESP_CTD_16S_phylum_asv_table <- tibble::column_to_rownames(ESP_CTD_16S_phylum_asv_table, "ASV")
+ESP_CTD_16S_phylum_asv_table_matrix <- as.matrix(ESP_CTD_16S_phylum_asv_table)
+ESP_CTD_16S_phylum_sample_sums <- as.vector(colSums(ESP_CTD_16S_phylum_asv_table))
+t(t(ESP_CTD_16S_phylum_asv_table_matrix)/ESP_CTD_16S_phylum_sample_sums) -> ESP_CTD_16S_phylum_normalized_asv_table
 ESP_CTD_16S_phylum_normalized_asv_table <- as.data.frame(ESP_CTD_16S_phylum_normalized_asv_table)
+ESP_CTD_16S_phylum_normalized_asv_table <- rownames_to_column(ESP_CTD_16S_phylum_normalized_asv_table,"ASV")
+
+
+# Replace ASVs with the phylum it belongs to in asv table
+ESP_CTD_16S_phylum_asv_table_combined <- left_join(ESP_CTD_16S_phylum_normalized_asv_table,ESP_CTD_16S_phylum_tax_table,by = "ASV")
+ESP_CTD_16S_phylum_asv_table_combined <- dplyr::select(ESP_CTD_16S_phylum_asv_table_combined,-c(Kingdom,ASV))
+# combine no_hit, unknown, and unassigned together
+ESP_CTD_16S_phylum_asv_table_combined$Phylum <- as.character(ESP_CTD_16S_phylum_asv_table_combined$Phylum)
+ESP_CTD_16S_phylum_asv_table_combined %>% mutate(., Phylum = ifelse(Phylum %in% c("no_hit","unassigned","unknown"),"unassigned",Phylum)) -> ESP_CTD_16S_phylum_asv_table_combined
+# add the values for all "unassigned" of the same phyla together
+ESP_CTD_16S_phylum_asv_table_combined %>% group_by(Phylum) %>% summarise_all(funs(sum)) -> ESP_CTD_16S_phylum_asv_table_combined
+# remove index row names
+rownames(ESP_CTD_16S_phylum_asv_table_combined) <- NULL
+ESP_CTD_16S_phylum_asv_table_combined <- tibble::column_to_rownames(ESP_CTD_16S_phylum_asv_table_combined,"Phylum")
 
 # Transpose
-ESP_CTD_16S_phylum_normalized_asv_table  <- as.data.frame(t(ESP_CTD_16S_phylum_normalized_asv_table ))
-ESP_CTD_16S_phylum_normalized_asv_table  <- tibble::rownames_to_column(ESP_CTD_16S_phylum_normalized_asv_table ,"sample_name")
+ESP_CTD_16S_phylum_asv_table_combined <- as.data.frame(t(ESP_CTD_16S_phylum_asv_table_combined))
+ESP_CTD_16S_phylum_asv_table_combined <- tibble::rownames_to_column(ESP_CTD_16S_phylum_asv_table_combined,"sample_name")
 
 # Determine which phyla are the most abundant
-phyla_sums_16S <- as.data.frame(colSums(dplyr::select(ESP_CTD_16S_phylum_normalized_asv_table,-sample_name)))
+phyla_sums_16S <- as.data.frame(colSums(dplyr::select(ESP_CTD_16S_phylum_asv_table_combined,-sample_name)))
 phyla_sums_16S <- tibble::rownames_to_column(phyla_sums_16S,"Phylum")
 colnames(phyla_sums_16S)[2] <- "total_reads"
 phyla_sums_16S <- phyla_sums_16S[order(-phyla_sums_16S$total_reads),]
-top_10_16S_phyla <- subset(phyla_sums_16S, Phylum != "Unassigned")$Phylum[1:10] 
-
-
-
+top_10_16S_phyla <- subset(phyla_sums_16S, Phylum != "unassigned")$Phylum[1:10] 
 
 # Extract metadata
-ESP_CTD_16S_metadata %>% mutate(.,name = paste0(matching_ID,"_",CTD_or_ESP)) -> ESP_CTD_16S_metadata # add a new name that combines the matching ID and sample type
-ESP_CTD_16S_envt_metadata_subset <- dplyr::select(ESP_CTD_16S_metadata,c(sample_name,CTD_or_ESP,matching_ID,name)) # subset only the data that we want
+ESP_CTD_16S_envt_metadata <- as.data.frame(as(sample_data(ESP_CTD_16S_envt_phyloseq_phylum),"matrix"))
+ESP_CTD_16S_envt_metadata <- tibble::rownames_to_column(ESP_CTD_16S_envt_metadata,"sample_name")
+ESP_CTD_16S_envt_metadata %>% mutate(.,name = paste0(matching_ID,"_",CTD_or_ESP)) -> ESP_CTD_16S_envt_metadata # add a new name that combines the matching ID and sample type
+ESP_CTD_16S_envt_metadata_subset <- dplyr::select(ESP_CTD_16S_envt_metadata,c(sample_name,CTD_or_ESP,matching_ID,name)) # subset only the data that we want
 
 # Join together
-ESP_CTD_16S_phylum_superheat_df <- left_join(ESP_CTD_16S_phylum_normalized_asv_table,ESP_CTD_16S_envt_metadata_subset,by = "sample_name")
+ESP_CTD_16S_phylum_superheat_df <- left_join(ESP_CTD_16S_phylum_asv_table_combined,ESP_CTD_16S_envt_metadata_subset,by = "sample_name")
 
 ESP_CTD_16S_phylum_superheat_df <- tibble::column_to_rownames(ESP_CTD_16S_phylum_superheat_df,"name")
-
 # Subset only the top 10 phyla
+
 ESP_CTD_16S_phylum_superheat_df_top10phyla <- ESP_CTD_16S_phylum_superheat_df[,top_10_16S_phyla]
 ESP_CTD_16S_phylum_superheat_df_top10phyla <- as.data.frame(t(ESP_CTD_16S_phylum_superheat_df_top10phyla))
 
+
 # Determine the sample names of the ESP and CTD samples
-CTD_sample_names_16S <- subset(ESP_CTD_16S_envt_metadata_subset,CTD_or_ESP == "CTD")$name
-ESP_sample_names_16S <- subset(ESP_CTD_16S_envt_metadata_subset,CTD_or_ESP == "ESP")$name
+CTD_sample_names_16S <- subset(ESP_CTD_16S_envt_metadata,CTD_or_ESP == "CTD")$name
+ESP_sample_names_16S <- subset(ESP_CTD_16S_envt_metadata,CTD_or_ESP == "ESP")$name
 
 
 ### Plot in ggplot
@@ -553,8 +578,8 @@ ESP_CTD_16S_phylum_superheat_df_top10phyla_gather <- gather(ESP_CTD_16S_phylum_s
 
 # Change two phyla for plotting
 ESP_CTD_16S_phylum_superheat_df_top10phyla_gather %>%
-  mutate(.,Phylum = ifelse(Phylum == "Marinimicrobia_(SAR406_clade)", "Marinimicrobia",
-                         ifelse(Phylum == "SAR324_clade(Marine_group_B)", "SAR324_clade", 
+  mutate(.,Phylum = ifelse(Phylum == " Marinimicrobia_(SAR406_clade)", "Marinimicrobia",
+                         ifelse(Phylum == " SAR324_clade(Marine_group_B)", "SAR324_clade", 
                          Phylum))) -> ESP_CTD_16S_phylum_superheat_df_top10phyla_gather
 
 # Make phyla into a factor (for plotting)
@@ -638,12 +663,12 @@ heatmap_legend <- g_legend(ESP_CTD_heatmap_for_legend_gg)
 
 ## ----Arrange heatmaps for all markers with ggarrange--------------------------
 
-combined_heatmap_gg <- annotate_figure(ggpubr::ggarrange(egg::ggarrange(plots = list(CTD_16S_phylum_heatmap_gg, ESP_16S_phylum_heatmap_gg, 
-                                                                   CTD_18S_phylum_heatmap_gg, ESP_18S_phylum_heatmap_gg,
+combined_heatmap_gg <- annotate_figure(ggpubr::ggarrange(egg::ggarrange(plots = list(CTD_18S_phylum_heatmap_gg, ESP_18S_phylum_heatmap_gg,
                                                                    CTD_COI_phylum_heatmap_gg, ESP_COI_phylum_heatmap_gg,
-                                                                   CTD_12S_family_heatmap_gg, ESP_12S_family_heatmap_gg), ncol = 2, nrow = 4,
+                                                                   CTD_12S_family_heatmap_gg, ESP_12S_family_heatmap_gg,
+                                                                   CTD_16S_phylum_heatmap_gg, ESP_16S_phylum_heatmap_gg), ncol = 2, nrow = 4,
                                                       # labels = c(" ", "(a)", " ", "(b)", " ", "(c)", " ", "(d)"), 
-                                                      labels = c("(a) 16S", " ", "(b) 18S", " ", "(c) COI", " ", "(d) 12S", " "), 
+                                                      labels = c("(a) 18S", " ", "(b) COI", " ", "(c) 12S", " ", "(d) 16S", " "), 
                                                       # label.args = list(gp = grid::gpar(fontsize = 25, fontface = "bold"),
                                                       #                   x = 0.9, y = 0.95)),
                                                       label.args = list(gp = grid::gpar(fontsize = 20, fontface = "bold"),
