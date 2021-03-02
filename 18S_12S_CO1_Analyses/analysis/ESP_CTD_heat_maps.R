@@ -118,7 +118,7 @@ ESP_CTD_COI_phylum_asv_table_combined <- tibble::column_to_rownames(ESP_CTD_COI_
 ESP_CTD_COI_phylum_asv_table_combined <- as.data.frame(t(ESP_CTD_COI_phylum_asv_table_combined))
 ESP_CTD_COI_phylum_asv_table_combined <- tibble::rownames_to_column(ESP_CTD_COI_phylum_asv_table_combined,"sample_name")
 
-# Determine which phyla are the most abundant
+# Determine which phyla are the most abundant by relative abundance
 COI_phyla_sums <- as.data.frame(colSums(dplyr::select(ESP_CTD_COI_phylum_asv_table_combined,-sample_name)))
 COI_phyla_sums <- tibble::rownames_to_column(COI_phyla_sums,"Phylum")
 colnames(COI_phyla_sums)[2] <- "total_reads"
@@ -145,6 +145,36 @@ ESP_CTD_COI_phylum_superheat_df_top10phyla <- as.data.frame(t(ESP_CTD_COI_phylum
 COI_CTD_sample_names <- subset(ESP_CTD_COI_envt_metadata,CTD_or_ESP == "CTD")$name
 COI_ESP_sample_names <- subset(ESP_CTD_COI_envt_metadata,CTD_or_ESP == "ESP")$name
 
+# Extract sample names that have library tags in them
+COI_CTD_sample_names_tags <- subset(ESP_CTD_COI_envt_metadata,CTD_or_ESP == "CTD")$sample_name
+COI_ESP_sample_names_tags <- subset(ESP_CTD_COI_envt_metadata,CTD_or_ESP == "ESP")$sample_name
+
+# Look which phyla are the most abundant in the ESP vs. CTD samples SEPARATELY
+
+## ESP
+ESP_ONLY_COI_phylum_asv_table_combined <- subset(ESP_CTD_COI_phylum_asv_table_combined, sample_name %in% COI_ESP_sample_names_tags)
+COI_ESP_ONLY_phyla_sums <- as.data.frame(colSums(dplyr::select(ESP_ONLY_COI_phylum_asv_table_combined,-sample_name)))
+COI_ESP_ONLY_phyla_sums <- tibble::rownames_to_column(COI_ESP_ONLY_phyla_sums,"Phylum")
+colnames(COI_ESP_ONLY_phyla_sums)[2] <- "total_reads"
+COI_ESP_ONLY_phyla_sums <- COI_ESP_ONLY_phyla_sums[order(-COI_ESP_ONLY_phyla_sums$total_reads),]
+top_10_COI_ESP_ONLY_phyla <- subset(COI_ESP_ONLY_phyla_sums, Phylum != "unassigned")$Phylum[1:10] 
+
+## CTD
+CTD_ONLY_COI_phylum_asv_table_combined <- subset(ESP_CTD_COI_phylum_asv_table_combined, sample_name %in% COI_CTD_sample_names_tags)
+COI_CTD_ONLY_phyla_sums <- as.data.frame(colSums(dplyr::select(CTD_ONLY_COI_phylum_asv_table_combined,-sample_name)))
+COI_CTD_ONLY_phyla_sums <- tibble::rownames_to_column(COI_CTD_ONLY_phyla_sums,"Phylum")
+colnames(COI_CTD_ONLY_phyla_sums)[2] <- "total_reads"
+COI_CTD_ONLY_phyla_sums <- COI_CTD_ONLY_phyla_sums[order(-COI_CTD_ONLY_phyla_sums$total_reads),]
+top_10_COI_CTD_ONLY_phyla <- subset(COI_CTD_ONLY_phyla_sums, Phylum != "unassigned")$Phylum[1:10] 
+
+# Phyla that are top ten in ESP that aren't top ten overall
+setdiff(top_10_COI_ESP_ONLY_phyla, top_10_COI_phyla)
+# Phyla that are top ten in CTD that aren't top ten overall
+setdiff(top_10_COI_CTD_ONLY_phyla, top_10_COI_phyla)
+# Phyla that are top ten overall that aren't top ten in ESP or CTD
+setdiff(top_10_COI_phyla, c(top_10_COI_ESP_ONLY_phyla, top_10_COI_CTD_ONLY_phyla))
+setdiff(top_10_COI_phyla, top_10_COI_ESP_ONLY_phyla)
+setdiff(top_10_COI_phyla, top_10_COI_CTD_ONLY_phyla)
 
 ### Plot in ggplot
 
@@ -220,6 +250,47 @@ ggsave(paste0(fig_dir, "/ESP_CTD_COI_gg_heatmap.png"), ESP_CTD_COI_gg_heatmap, w
 # Subset environmental samples for comparison
 ESP_CTD_18S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_18S_phyloseq)
 
+# Export dinoflagellate taxonomy for Nastassia
+ESP_CTD_18S_dino_phyloseq <- subset_taxa(ESP_CTD_18S_envt_phyloseq ,Phylum == "Dinoflagellata")
+
+# ESP Dinoflagellates
+ESP_ONLY_18S_dino_phyloseq <- subset_samples(ESP_CTD_18S_dino_phyloseq, CTD_or_ESP == "ESP")
+
+ESP_ONLY_18S_dino_tax_table <- as.data.frame(as(tax_table(ESP_ONLY_18S_dino_phyloseq),"matrix"))
+ESP_ONLY_18S_dino_tax_table <- rownames_to_column(ESP_ONLY_18S_dino_tax_table, "ASV")
+ESP_ONLY_18S_dino_asv_table <- as.data.frame(otu_table(ESP_ONLY_18S_dino_phyloseq))
+ESP_ONLY_18S_dino_asv_table <- rownames_to_column(ESP_ONLY_18S_dino_asv_table, "ASV")
+# sum all samples for each taxa
+ESP_ONLY_18S_dino_asv_table %>% mutate(.,total_reads = rowSums(ESP_ONLY_18S_dino_asv_table[2:ncol(ESP_ONLY_18S_dino_asv_table)])) -> ESP_ONLY_18S_dino_asv_sums
+ESP_ONLY_18S_dino_asv_sums <- ESP_ONLY_18S_dino_asv_sums[,c("ASV","total_reads")]
+taxa_sums <- dplyr::left_join(ESP_ONLY_18S_dino_asv_sums,ESP_ONLY_18S_dino_tax_table, by = "ASV")
+ESP_ONLY_18S_dino_total_reads <- sum(taxa_sums$total_reads)
+taxa_sums <- taxa_sums[order(-taxa_sums$total_reads),]
+
+write.csv(taxa_sums, here("figures", "supplemental", "18S_ESP_dinoflagellates.csv"))
+
+# CTD Dinoflagellates
+CTD_ONLY_18S_dino_phyloseq <- subset_samples(ESP_CTD_18S_dino_phyloseq, CTD_or_ESP == "CTD")
+
+CTD_ONLY_18S_dino_tax_table <- as.data.frame(as(tax_table(CTD_ONLY_18S_dino_phyloseq),"matrix"))
+CTD_ONLY_18S_dino_tax_table <- rownames_to_column(CTD_ONLY_18S_dino_tax_table, "ASV")
+CTD_ONLY_18S_dino_asv_table <- as.data.frame(otu_table(CTD_ONLY_18S_dino_phyloseq))
+CTD_ONLY_18S_dino_asv_table <- rownames_to_column(CTD_ONLY_18S_dino_asv_table, "ASV")
+# sum all samples for each taxa
+CTD_ONLY_18S_dino_asv_table %>% mutate(.,total_reads = rowSums(CTD_ONLY_18S_dino_asv_table[2:ncol(CTD_ONLY_18S_dino_asv_table)])) -> CTD_ONLY_18S_dino_asv_sums
+CTD_ONLY_18S_dino_asv_sums <- CTD_ONLY_18S_dino_asv_sums[,c("ASV","total_reads")]
+taxa_sums <- dplyr::left_join(CTD_ONLY_18S_dino_asv_sums,CTD_ONLY_18S_dino_tax_table, by = "ASV")
+CTD_ONLY_18S_dino_total_reads <- sum(taxa_sums$total_reads)
+taxa_sums <- taxa_sums[order(-taxa_sums$total_reads),]
+
+write.csv(taxa_sums, here("figures", "supplemental", "18S_CTD_dinoflagellates.csv"))
+
+
+
+
+
+
+
 # Merge at the phylum level
 ESP_CTD_18S_envt_phyloseq_phylum <- tax_glom(ESP_CTD_18S_envt_phyloseq,taxrank=rank_names(ESP_CTD_18S_envt_phyloseq)[2], NArm = FALSE)
 
@@ -284,6 +355,36 @@ ESP_CTD_18S_phylum_superheat_df_top10phyla <- as.data.frame(t(ESP_CTD_18S_phylum
 CTD_sample_names_18S <- subset(ESP_CTD_18S_envt_metadata,CTD_or_ESP == "CTD")$name
 ESP_sample_names_18S <- subset(ESP_CTD_18S_envt_metadata,CTD_or_ESP == "ESP")$name
 
+# Extract sample names that have library tags in them
+CTD_sample_names_18S_tags <- subset(ESP_CTD_18S_envt_metadata,CTD_or_ESP == "CTD")$sample_name
+ESP_sample_names_18S_tags <- subset(ESP_CTD_18S_envt_metadata,CTD_or_ESP == "ESP")$sample_name
+
+# Look which phyla are the most abundant in the ESP vs. CTD samples SEPARATELY
+
+## ESP
+ESP_ONLY_18S_phylum_asv_table_combined <- subset(ESP_CTD_18S_phylum_asv_table_combined, sample_name %in% ESP_sample_names_18S_tags)
+ESP_ONLY_18S_phyla_sums <- as.data.frame(colSums(dplyr::select(ESP_ONLY_18S_phylum_asv_table_combined,-sample_name)))
+ESP_ONLY_18S_phyla_sums <- tibble::rownames_to_column(ESP_ONLY_18S_phyla_sums,"Phylum")
+colnames(ESP_ONLY_18S_phyla_sums)[2] <- "total_reads"
+ESP_ONLY_18S_phyla_sums <- ESP_ONLY_18S_phyla_sums[order(-ESP_ONLY_18S_phyla_sums$total_reads),]
+top_10_18S_ESP_ONLY_phyla <- subset(ESP_ONLY_18S_phyla_sums, Phylum != "unassigned")$Phylum[1:10] 
+
+## CTD
+CTD_ONLY_18S_phylum_asv_table_combined <- subset(ESP_CTD_18S_phylum_asv_table_combined, sample_name %in% CTD_sample_names_18S_tags)
+CTD_ONLY_18S_phyla_sums <- as.data.frame(colSums(dplyr::select(CTD_ONLY_18S_phylum_asv_table_combined,-sample_name)))
+CTD_ONLY_18S_phyla_sums <- tibble::rownames_to_column(CTD_ONLY_18S_phyla_sums,"Phylum")
+colnames(CTD_ONLY_18S_phyla_sums)[2] <- "total_reads"
+CTD_ONLY_18S_phyla_sums <- CTD_ONLY_18S_phyla_sums[order(-CTD_ONLY_18S_phyla_sums$total_reads),]
+top_10_18S_CTD_ONLY_phyla <- subset(CTD_ONLY_18S_phyla_sums, Phylum != "unassigned")$Phylum[1:10] 
+
+# Phyla that are top ten in ESP that aren't top ten overall
+setdiff(top_10_18S_ESP_ONLY_phyla, top_10_18S_phyla)
+# Phyla that are top ten in CTD that aren't top ten overall
+setdiff(top_10_18S_CTD_ONLY_phyla, top_10_18S_phyla)
+# Phyla that are top ten overall that aren't top ten in ESP or CTD
+setdiff(top_10_18S_phyla, c(top_10_18S_ESP_ONLY_phyla, top_10_18S_CTD_ONLY_phyla))
+setdiff(top_10_18S_phyla, top_10_18S_CTD_ONLY_phyla)
+setdiff(top_10_18S_phyla, top_10_18S_ESP_ONLY_phyla)
 
 ### Plot in ggplot
 
@@ -423,6 +524,41 @@ setdiff(CTD_sample_names_12S, unique(colnames(ESP_CTD_12S_family_superheat_df_to
 
 setdiff(CTD_sample_names_12S, unique(ESP_CTD_12S_family_superheat_df_top10family_gather$sample))
 unique(ESP_CTD_12S_family_superheat_df_top10family_gather$sample)
+
+# Extract sample names that have library tags in them
+CTD_sample_names_12S_tags <- subset(ESP_CTD_12S_envt_metadata,CTD_or_ESP == "CTD")$sample_name
+ESP_sample_names_12S_tags <- subset(ESP_CTD_12S_envt_metadata,CTD_or_ESP == "ESP")$sample_name
+
+# Extract sample names that have library tags in them
+CTD_sample_names_12S_tags <- subset(ESP_CTD_12S_envt_metadata,CTD_or_ESP == "CTD")$sample_name
+ESP_sample_names_12S_tags <- subset(ESP_CTD_12S_envt_metadata,CTD_or_ESP == "ESP")$sample_name
+
+# Look which family are the most abundant in the ESP vs. CTD samples SEPARATELY
+
+## ESP
+ESP_ONLY_12S_family_asv_table_combined <- subset(ESP_CTD_12S_family_asv_table_combined, sample_name %in% ESP_sample_names_12S_tags)
+ESP_ONLY_12S_family_sums <- as.data.frame(colSums(dplyr::select(ESP_ONLY_12S_family_asv_table_combined,-sample_name)))
+ESP_ONLY_12S_family_sums <- tibble::rownames_to_column(ESP_ONLY_12S_family_sums,"family")
+colnames(ESP_ONLY_12S_family_sums)[2] <- "total_reads"
+ESP_ONLY_12S_family_sums <- ESP_ONLY_12S_family_sums[order(-ESP_ONLY_12S_family_sums$total_reads),]
+top_10_12S_ESP_ONLY_family <- subset(ESP_ONLY_12S_family_sums, family != "unassigned")$family[1:10] 
+
+## CTD
+CTD_ONLY_12S_family_asv_table_combined <- subset(ESP_CTD_12S_family_asv_table_combined, sample_name %in% CTD_sample_names_12S_tags)
+CTD_ONLY_12S_family_sums <- as.data.frame(colSums(dplyr::select(CTD_ONLY_12S_family_asv_table_combined,-sample_name)))
+CTD_ONLY_12S_family_sums <- tibble::rownames_to_column(CTD_ONLY_12S_family_sums,"family")
+colnames(CTD_ONLY_12S_family_sums)[2] <- "total_reads"
+CTD_ONLY_12S_family_sums <- CTD_ONLY_12S_family_sums[order(-CTD_ONLY_12S_family_sums$total_reads),]
+top_10_12S_CTD_ONLY_family <- subset(CTD_ONLY_12S_family_sums, family != "unassigned")$family[1:10] 
+
+# family that are top ten in ESP that aren't top ten overall
+setdiff(top_10_12S_ESP_ONLY_family, top_10_12S_family)
+# family that are top ten in CTD that aren't top ten overall
+setdiff(top_10_12S_CTD_ONLY_family, top_10_12S_family)
+# family that are top ten overall that aren't top ten in ESP or CTD
+# setdiff(top_10_12S_family, c(top_10_12S_ESP_ONLY_family, top_10_12S_CTD_ONLY_family))
+setdiff(top_10_12S_family, top_10_12S_ESP_ONLY_family)
+setdiff(top_10_12S_family, top_10_12S_CTD_ONLY_family)
 
 ### Plot in ggplot
 
@@ -565,6 +701,36 @@ ESP_CTD_16S_phylum_superheat_df_top10phyla <- as.data.frame(t(ESP_CTD_16S_phylum
 CTD_sample_names_16S <- subset(ESP_CTD_16S_envt_metadata,CTD_or_ESP == "CTD")$name
 ESP_sample_names_16S <- subset(ESP_CTD_16S_envt_metadata,CTD_or_ESP == "ESP")$name
 
+# Extract sample names that have library tags in them
+CTD_sample_names_16S_tags <- subset(ESP_CTD_16S_envt_metadata,CTD_or_ESP == "CTD")$sample_name
+ESP_sample_names_16S_tags <- subset(ESP_CTD_16S_envt_metadata,CTD_or_ESP == "ESP")$sample_name
+
+# Look which phyla are the most abundant in the ESP vs. CTD samples SEPARATELY
+
+## ESP
+ESP_ONLY_16S_phylum_asv_table_combined <- subset(ESP_CTD_16S_phylum_asv_table_combined, sample_name %in% ESP_sample_names_16S_tags)
+ESP_ONLY_16S_phyla_sums <- as.data.frame(colSums(dplyr::select(ESP_ONLY_16S_phylum_asv_table_combined,-sample_name)))
+ESP_ONLY_16S_phyla_sums <- tibble::rownames_to_column(ESP_ONLY_16S_phyla_sums,"Phylum")
+colnames(ESP_ONLY_16S_phyla_sums)[2] <- "total_reads"
+ESP_ONLY_16S_phyla_sums <- ESP_ONLY_16S_phyla_sums[order(-ESP_ONLY_16S_phyla_sums$total_reads),]
+top_10_16S_ESP_ONLY_phyla <- subset(ESP_ONLY_16S_phyla_sums, Phylum != "unassigned")$Phylum[1:10] 
+
+## CTD
+CTD_ONLY_16S_phylum_asv_table_combined <- subset(ESP_CTD_16S_phylum_asv_table_combined, sample_name %in% CTD_sample_names_16S_tags)
+CTD_ONLY_16S_phyla_sums <- as.data.frame(colSums(dplyr::select(CTD_ONLY_16S_phylum_asv_table_combined,-sample_name)))
+CTD_ONLY_16S_phyla_sums <- tibble::rownames_to_column(CTD_ONLY_16S_phyla_sums,"Phylum")
+colnames(CTD_ONLY_16S_phyla_sums)[2] <- "total_reads"
+CTD_ONLY_16S_phyla_sums <- CTD_ONLY_16S_phyla_sums[order(-CTD_ONLY_16S_phyla_sums$total_reads),]
+top_10_16S_CTD_ONLY_phyla <- subset(CTD_ONLY_16S_phyla_sums, Phylum != "unassigned")$Phylum[1:10] 
+
+# Phyla that are top ten in ESP that aren't top ten overall
+setdiff(top_10_16S_ESP_ONLY_phyla, top_10_16S_phyla)
+# Phyla that are top ten in CTD that aren't top ten overall
+setdiff(top_10_16S_CTD_ONLY_phyla, top_10_16S_phyla)
+# Phyla that are top ten overall that aren't top ten in ESP or CTD
+setdiff(top_10_16S_phyla, c(top_10_16S_ESP_ONLY_phyla, top_10_16S_CTD_ONLY_phyla))
+setdiff(top_10_16S_phyla, top_10_16S_ESP_ONLY_phyla)
+setdiff(top_10_16S_phyla, top_10_16S_CTD_ONLY_phyla)
 
 ### Plot in ggplot
 
