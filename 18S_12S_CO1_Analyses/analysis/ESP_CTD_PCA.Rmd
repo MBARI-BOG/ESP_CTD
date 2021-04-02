@@ -22,7 +22,7 @@ library(ggpubr)
 
 ### Load data
 
-```{r}
+```{r eval = FALSE}
 #### COI
 asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
 tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
@@ -76,7 +76,7 @@ fig_dir <- here::here("figures", "PCAs")
 # COI
 
 ### Prep data for DEICODE
-```{r}
+```{r  eval = FALSE}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "COI")
 
@@ -143,7 +143,7 @@ qiime deicode rpca \
 
 
 ### Run PERMANOVA
-```{r}
+```{r  eval = FALSE}
 # Extract metadata
 pca_metadata <- ESP_CTD_COI_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -198,20 +198,22 @@ pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
-  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                     ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a")))+
+ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -222,8 +224,9 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("COI: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
 
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
@@ -232,7 +235,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width =
 # 18S
 
 ### Prep data for DEICODE
-```{r}
+```{r  eval = FALSE}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "18S")
 
@@ -297,7 +300,7 @@ qiime DEICODE RPCA + run PERMANOVA \
 
 
 ### Run PERMANOVA
-```{r}
+```{r  eval = FALSE}
 # Extract metadata
 pca_metadata <- ESP_CTD_18S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -354,20 +357,22 @@ pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
-  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                                 ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a")))+
+ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -378,8 +383,9 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("18S: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_18S_PCA
 
@@ -390,7 +396,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA.png", ESP_CTD_18S_PCA,width =
 # 12S
 
 ### Prep data for DEICODE
-```{r}
+```{r  eval = FALSE}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "12S")
 
@@ -454,7 +460,7 @@ qiime deicode rpca \
 ```
 
 ### Run PERMANOVA
-```{r}
+```{r  eval = FALSE}
 # Extract metadata
 pca_metadata <- ESP_CTD_12S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -512,20 +518,22 @@ pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN12S, then make it the color corresponding to ESP or CTD
-  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                                 ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a")))+
+ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -536,8 +544,9 @@ ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("12S: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_12S_PCA
 
@@ -547,7 +556,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA.png", ESP_CTD_12S_PCA,width =
 # 16S
 
 ### Prep data for DEICODE
-```{r}
+```{r  eval = FALSE}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("16S_Analyses", "DEICODE")
 
@@ -614,7 +623,7 @@ qiime diversity beta-group-significance \
 ```
 
 ### Run PERMANOVA
-```{r}
+```{r  eval = FALSE}
 # Extract metadata
 pca_metadata <- ESP_CTD_16S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -672,21 +681,22 @@ pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 pca_data$depth <- extract_numeric(pca_data$Depth)
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c")
-
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
-  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                                 ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a")))+
+ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -697,8 +707,9 @@ ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("16S: PERMANOVA (Automated vs. Manual), p = ",permanova_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
 
 ESP_CTD_16S_PCA
 
@@ -706,32 +717,30 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA.png", ESP_CTD_16S_PCA,width =
 ```
 
 
-
-
-
 # Create a legend manually
 ```{r}
 PCA_legend <- ggplot(pca_data) +
   # ESP vs. CTD
-  annotate("text",label = "Sampling Method", x = 0.9, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
-  annotate("point", x = 1, y = 1, shape = 21, colour = "#33a02c", fill = "#33a02c", size = 7, stroke = 3)+ # ESP
-  annotate("point", x = 1, y = 2, shape = 21, colour = "#6a3d9a", fill = "#6a3d9a", size = 7, stroke = 3)+ # CTD
-  annotate("text",label = "Automated", x = 1.2, y = 2,size = 7.5,adj = 0)+ #ESP
-  annotate("text",label = "Manual", x = 1.2, y = 1,size = 7.5,adj = 0)+ #CTD
-  # Spring vs. Fall
-  annotate("text",label = "Season", x = 4.9, y = 2.8,size = 10,adj = 0)+ # Title seasonality
-  annotate("point", x = 5, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # Spring
-  annotate("point", x = 5, y = 1, shape = 21, colour = "black", fill = "white", size = 7, stroke = 3)+ # Fall
-  annotate("text",label = "Spring", x = 5.2, y = 2,size = 7.5,adj = 0)+ #Spring
-  annotate("text",label = "Fall", x = 5.2, y = 1,size = 7.5,adj = 0)+ #Fall
-  # Depths depth_shapes <- c("0-25" = 21, "25-50" = 22, "195-200" = 24)
-  annotate("text",label = "Depth", x = 7.9, y = 2.8,size = 10,adj = 0)+ # Title depths
-  annotate("point", x = 8, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # 0-25 m
-  annotate("text",label = "0-25 m", x = 8.2, y = 2,size = 7.5,adj = 0)+ #0-25 m
-  annotate("point", x = 8, y = 1.2, shape = 22, colour = "black", fill = "black", size = 7, stroke = 3)+ # 25-50 m
-  annotate("text",label = "27-50 m", x = 8.2, y = 1.2,size = 7.5,adj = 0)+ #25-50 m
-  annotate("point", x = 8, y = 0.4, shape = 24, colour = "black", fill = "black", size = 7, stroke = 3)+ # 195-200 m
-  annotate("text",label = "195-200 m", x = 8.2, y = 0.4,size = 7.5,adj = 0)+ #195-200 m
+  annotate("text",label = "Sampling Method", x = 0, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
+  annotate("point", x = 0.2, y = 0.9, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # CTD
+  annotate("text",label = "Shipboard", x = 0.6, y = 0.9,size = 7.5,adj = 0)+ #CTD
+  annotate("point", x = 0.2, y = 1.9, shape = 24, colour = "black", fill = "black", size = 6, stroke = 3)+ # ESP
+  annotate("text",label = "Autonomous", x = 0.6, y = 1.9,size = 7.5,adj = 0)+ #ESP
+  # Season and depth
+  annotate("text",label = "Season/Depth", x = 6.1, y = 2.8,size = 10,adj = 0)+ # Title 
+  annotate("point", x = 7, y = 2, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "/", x = 6.6, y = 2.01,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 6.3, y = 1.95, shape = 24, colour = "#ff7f00", fill = "#ff7f00", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "Fall (shallow)", x = 7.3, y = 2,size = 7.5,adj = 0)+ # fall (shallow)
+  annotate("point", x = 7, y = 1.2, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "/", x = 6.6, y = 1.21,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 6.3, y = 1.15, shape = 24, colour = "#1f78b4", fill = "#1f78b4", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "Spring (shallow)", x = 7.3, y = 1.2,size = 7.5,adj = 0)+ # spring (shallow)
+  annotate("point", x = 7, y = 0.4, shape = 21, colour = "#1f78b4", fill = "white", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "/", x = 6.6, y = 0.351,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 6.3, y = 0.35, shape = 24, colour = "#1f78b4", fill = "white", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "Spring (deep)", x = 7.3, y = 0.4,size = 7.5,adj = 0)+ # spring (deep)
+  
   
   xlim(0,10)+
   ylim(0.2,3.2)+
@@ -741,17 +750,25 @@ PCA_legend <- ggplot(pca_data) +
         axis.title = element_blank(),
         axis.ticks = element_blank(), 
         legend.position = "none",
-        plot.margin = unit(c(0,3,0,3),"cm"))
+        plot.margin = unit(c(0,10,0,10),"cm"))
 ```
 
 # Combine all PCA figures
 ```{r}
-combined_PCA_gg <- annotate_figure(ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA, 
+combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA, 
                                                  ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ESP_CTD_16S_PCA, ncol = 2, nrow = 2,
-                                                 labels = c("(a)", "(b)", "(c)", "(d)"), label.x = 0.05, label.y = 0.985,
-                                                 font.label = list(size = 35, color = "black", face = "bold")),
+                                                 labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
+                                                 font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
                                                  PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
-                                   )
+
+# Reorder according to organism size
+
+combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA, 
+                                                 ESP_CTD_18S_PCA, ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
+                                                 labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"), label.x = 0.05, label.y = 0.985,
+                                                 font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
+                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
+                                   
 
 
 ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "combined_PCA_fig.png", device = "png")
