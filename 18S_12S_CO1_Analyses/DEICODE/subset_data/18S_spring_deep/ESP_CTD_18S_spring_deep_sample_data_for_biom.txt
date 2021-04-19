@@ -1,0 +1,13 @@
+#SampleID	SAMPLING_cruise	depth	library	libraryID	locus	original_name	samp_collection_device	sample_type.x	sample_type.y	CTD_or_ESP	ESP_CTD	ESP_CTD_ID	matching_ID	depth_cat
+CN18SESPkoa_SC37_AA	CN18S	200.0087	AA79	AA	18S	CN18SESPkoa_SC37	3G_ESP	environmental	environmental	ESP		ESP2	CN18S2	195-200
+CN18SESPkoa_SC40_AA	CN18S	200.0025	AA77	AA	18S	CN18SESPkoa_SC40	3G_ESP	environmental	environmental	ESP		ESP4	CN18S4	195-200
+CN18SESPkoa_SC42_AA	CN18S	200.0035	AA75	AA	18S	CN18SESPkoa_SC42	3G_ESP	environmental	environmental	ESP		ESP6	CN18S6	195-200
+CN18SESPkoa_SC45_AA	CN18S	199.9965	AA73	AA	18S	CN18SESPkoa_SC45	3G_ESP	environmental	environmental	ESP		ESP8	CN18S8	195-200
+CN18SESPkoa_SC47_AA	CN18S	200.0084	AA72	AA	18S	CN18SESPkoa_SC47	3G_ESP	environmental	environmental	ESP		ESP9	CN18S9	195-200
+CN18SESPkoa_SC49_AA	CN18S	200.005	AA71	AA	18S	CN18SESPkoa_SC49	3G_ESP	environmental	environmental	ESP		ESP10	CN18S10	195-200
+CN18Sc09_2_eDNA_AA	CN18S	200	AA1	AA	18S	CN18Sc09_2_eDNA	CTD/SBE911_Rosette_with_Niskin_bottle	environmental	environmental	CTD		CTD10	CN18S10	195-200
+CN18Sc10_2_eDNA_AA	CN18S	200	AA3	AA	18S	CN18Sc10_2_eDNA	CTD/SBE911_Rosette_with_Niskin_bottle	environmental	environmental	CTD		CTD9	CN18S9	195-200
+CN18Sc14_2_eDNA_AA	CN18S	195	AA15	AA	18S	CN18Sc14_2_eDNA	CTD/SBE911_Rosette_with_Niskin_bottle	environmental	environmental	CTD		CTD8	CN18S8	195-200
+CN18Sc15_2_eDNA_AA	CN18S	195	AA21	AA	18S	CN18Sc15_2_eDNA	CTD/SBE911_Rosette_with_Niskin_bottle	environmental	environmental	CTD		CTD6	CN18S6	195-200
+CN18Sc18_2_eDNA_AA	CN18S	200	AA34	AA	18S	CN18Sc18_2_eDNA	CTD/SBE911_Rosette_with_Niskin_bottle	environmental	environmental	CTD		CTD4	CN18S4	195-200
+CN18Sc27_2_eDNA_AA	CN18S	200	AA38	AA	18S	CN18Sc27_2_eDNA	CTD/SBE911_Rosette_with_Niskin_bottle	environmental	environmental	CTD		CTD2	CN18S2	195-200

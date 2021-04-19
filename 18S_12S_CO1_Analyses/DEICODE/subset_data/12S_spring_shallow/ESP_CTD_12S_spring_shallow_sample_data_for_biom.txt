@@ -1,0 +1,9 @@
+#SampleID	SAMPLING_cruise	depth	library	libraryID	locus	original_name	samp_collection_device	sample_type.x	sample_type.y	CTD_or_ESP	ESP_CTD	ESP_CTD_ID	matching_ID	depth_cat
+CN18SKOA_ESP36_NN	CN18S	29.96195	NN75	NN		CN18SKOA_ESP36	NA	environmental	environmental	ESP		ESP1	CN18S1	27-50
+CN18SKOA_ESP39_NN	CN18S	29.99481	NN73	NN		CN18SKOA_ESP39	NA	environmental	environmental	ESP		ESP3	CN18S3	27-50
+CN18SKOA_ESP41_NN	CN18S	29.97453	NN71	NN		CN18SKOA_ESP41	NA	environmental	environmental	ESP		ESP5	CN18S5	27-50
+CN18SKOA_ESP44_NN	CN18S	30.00031	NN70	NN		CN18SKOA_ESP44	NA	environmental	environmental	ESP		ESP7	CN18S7	27-50
+CN18Sc14_8_eDNA_NN	CN18S	30	NN58	NN		CN18Sc14_8_eDNA	NA	environmental	environmental	CTD		CTD7	CN18S7	27-50
+CN18Sc15_8_eDNA_NN	CN18S	30	NN60	NN		CN18Sc15_8_eDNA	NA	environmental	environmental	CTD		CTD5	CN18S5	27-50
+CN18Sc18_8_eDNA_NN	CN18S	30	NN62	NN		CN18Sc18_8_eDNA	NA	environmental	environmental	CTD		CTD3	CN18S3	27-50
+CN18Sc27_8_eDNA_NN	CN18S	30	NN65	NN		CN18Sc27_8_eDNA	NA	environmental	environmental	CTD		CTD1	CN18S1	27-50

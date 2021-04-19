@@ -2,6 +2,7 @@
 
 library(tidyverse)
 library(phyloseq)
+library(ggpubr)
 library(here)
 
 ## ----Load data----------------------------------------------------------------
@@ -41,6 +42,9 @@ metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
 ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_16S, row.names = 1),taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_16S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_16S, row.names = 1)))
+
+# Remove sample that has no reads
+ESP_CTD_16S_phyloseq <- subset_samples(ESP_CTD_16S_phyloseq, sample_names(ESP_CTD_16S_phyloseq) != "CN18Fc35_5_eDNA")
 
 
 # Set figure directory
@@ -168,13 +172,13 @@ shannon_ttest_12S <- t.test(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP")$Sha
 
 ESP_CTD_shannon <- rbind(ESP_CTD_COI_shannon, ESP_CTD_18S_shannon, ESP_CTD_12S_shannon, ESP_CTD_16S_shannon)
 
-# Change CTD to "manual" and ESP to "automated"
+# Change CTD to "Shipboard" and ESP to "Autonomous"
 ESP_CTD_shannon %>%
-  mutate(CTD_or_ESP = ifelse(CTD_or_ESP == "CTD", "Manual", "Automated")) -> ESP_CTD_shannon
+  mutate(CTD_or_ESP = ifelse(CTD_or_ESP == "CTD", "Shipboard", "Autonomous")) -> ESP_CTD_shannon
 
 ##----Violin Plots--------------------------------------------------------------
 
-CTD_ESP_colors = c("Manual" = "#6a3d9a", "Automated" = "#33a02c")
+CTD_ESP_colors = c("Shipboard" = "#6a3d9a", "Autonomous" = "#33a02c")
 
 ## Plot four markers in a for loop
 markers <- c("16S", "18S", "COI", "12S")

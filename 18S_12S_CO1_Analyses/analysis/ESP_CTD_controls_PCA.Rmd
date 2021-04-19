@@ -143,7 +143,6 @@ qiime deicode rpca \
 ```
 
 
-
 ### Plot COI DEICODE RPCA
 ```{r}
 pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI_controls","ordination.qza"))
@@ -157,18 +156,24 @@ label.PC3
 
 ## Prepare PCA data for ggplot
 
-pca_metadata <- ESP_CTD_COI_envt_negative_metadata
-pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
 pca_data <- pco$data$Vectors
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_COI_envt_negative_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
 pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+# subset(pca_data, sample_type.x == "negative")
+# colnames(pca_data)
 
 # Add negative to CTD_or_ESP field
 pca_data %>%
-  mutate(CTD_or_ESP = ifelse(is.na(CTD_or_ESP) | CTD_or_ESP == "", "control", CTD_or_ESP)) -> pca_data
+  mutate(CTD_or_ESP = ifelse(sample_type.x == "negative", "control", CTD_or_ESP)) -> pca_data
+
+# Add negative to SAMPLING_CRUISE field
+pca_data %>%
+  mutate(SAMPLING_cruise = ifelse(sample_type.x == "negative", "control", SAMPLING_cruise)) -> pca_data
 
 # Create a categorical depth
-table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
   mutate(depth_cat = ifelse(CTD_or_ESP == "control", "control",
@@ -177,8 +182,10 @@ pca_data %>%
                                    ifelse(depth <= 201 & depth >=195, "195-200", "unknown"))))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24, "control" = 23)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c", "control" = "#e41a1c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4", "control" = "#e41a1c")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "control" = 23)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
 ##----Run PERMANOVA-------------------------------------------------------------
 distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI_controls","distance.qza"))
@@ -196,16 +203,18 @@ permanova_control_envt_COI_value <- permanova_control_envt_COI$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat, label = SampleID))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
+ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  # geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+  #                                    ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$CTD_or_ESP == "control", "#e41a1c",
-                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                     ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a"))))+
+                                                 ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4"))))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -216,13 +225,12 @@ ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("COI: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_COI_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)+ annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Control), p = ", permanova_control_envt_COI_value), hjust = 1, size = 5)
+
+ESP_CTD_COI_PCA
 
 ggsave(path = fig_dir, filename = "ESP_CTD_COI_controls_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
 ```
-
-
 
 
 
@@ -314,12 +322,18 @@ pca_metadata <- subset(ESP_CTD_18S_envt_negative_metadata, `#SampleID` %in% pca_
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
 pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 
+# subset(pca_data, sample_type.x == "negative")
+# colnames(pca_data)
+
 # Add negative to CTD_or_ESP field
 pca_data %>%
-  mutate(CTD_or_ESP = ifelse(is.na(CTD_or_ESP) | CTD_or_ESP == "", "control", CTD_or_ESP)) -> pca_data
+  mutate(CTD_or_ESP = ifelse(sample_type.x == "negative", "control", CTD_or_ESP)) -> pca_data
+
+# Add negative to SAMPLING_CRUISE field
+pca_data %>%
+  mutate(SAMPLING_cruise = ifelse(sample_type.x == "negative", "control", SAMPLING_cruise)) -> pca_data
 
 # Create a categorical depth
-table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
   mutate(depth_cat = ifelse(CTD_or_ESP == "control", "control",
@@ -328,8 +342,11 @@ pca_data %>%
                                           ifelse(depth <= 201 & depth >=195, "195-200", "unknown"))))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24, "control" = 23)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c", "control" = "#e41a1c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4", "control" = "#e41a1c")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "control" = 23)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
 
 ##----Run PERMANOVA-------------------------------------------------------------
 distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","18S_controls","distance.qza"))
@@ -347,16 +364,18 @@ permanova_control_envt_18S_value <- permanova_control_envt_18S$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
+ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  # geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+  #                                    ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$CTD_or_ESP == "control", "#e41a1c",
-                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                                        ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a"))))+
+                                                 ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                        ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4"))))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -367,9 +386,10 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("18S: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_18S_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)+
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Control), p = ", permanova_control_envt_18S_value), hjust = 1, size = 5)
 
+ESP_CTD_18S_PCA
 ggsave(path = fig_dir, filename = "ESP_CTD_18S_controls_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
 ```
 
@@ -466,10 +486,13 @@ pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 
 # Add negative to CTD_or_ESP field
 pca_data %>%
-  mutate(CTD_or_ESP = ifelse(is.na(CTD_or_ESP) | CTD_or_ESP == "", "control", CTD_or_ESP)) -> pca_data
+  mutate(CTD_or_ESP = ifelse(sample_type.x == "negative" | CTD_or_ESP == "", "control", CTD_or_ESP)) -> pca_data
+
+# Add negative to SAMPLING_CRUISE field
+pca_data %>%
+  mutate(SAMPLING_cruise = ifelse(sample_type.x == "negative" | CTD_or_ESP == "", "control", SAMPLING_cruise)) -> pca_data
 
 # Create a categorical depth
-table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
   mutate(depth_cat = ifelse(CTD_or_ESP == "control", "control",
@@ -478,8 +501,11 @@ pca_data %>%
                                           ifelse(depth <= 201 & depth >=195, "195-200", "unknown"))))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24, "control" = 23)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c", "control" = "#e41a1c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4", "control" = "#e41a1c")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "control" = 23)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
 
 ##----Run PERMANOVA-------------------------------------------------------------
 distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","12S_controls","distance.qza"))
@@ -497,16 +523,18 @@ permanova_control_envt_12S_value <- permanova_control_envt_12S$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
+ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  # geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+  #                                    ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$CTD_or_ESP == "control", "#e41a1c",
-                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                                        ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a"))))+
+                                                 ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                        ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4"))))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -517,13 +545,12 @@ ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("12S: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_12S_value), hjust = 1, size = 5)
-        
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)+
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Control), p = ", permanova_control_envt_12S_value), hjust = 1, size = 5)
+
+ESP_CTD_12S_PCA
 ggsave(path = fig_dir, filename = "ESP_CTD_12S_controls_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
 ```
-
-
 
 # 16S
 
@@ -549,6 +576,15 @@ ESP_CTD_16S_envt_negative_metadata <- tibble::rownames_to_column(ESP_CTD_16S_env
 # Make new sample_type_2 column that has either negative or environmental
 ESP_CTD_16S_envt_negative_metadata %>% 
   mutate(sample_type_2 = ifelse(sample_type == "environmental", "environmental", "negative")) -> ESP_CTD_16S_envt_negative_metadata
+
+# Add a categorical depth field to the metadata
+ESP_CTD_16S_envt_negative_metadata$depth <- extract_numeric(ESP_CTD_16S_envt_negative_metadata$Depth)
+ESP_CTD_16S_envt_negative_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_16S_envt_negative_metadata
 write.table(ESP_CTD_16S_envt_negative_metadata, paste0(deicode_dir, "/ESP_CTD_16S_envt_negative_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ```
 
@@ -593,6 +629,7 @@ qiime deicode rpca \
 
 
 
+
 ### Plot 16S DEICODE RPCA
 ```{r}
 pco <- read_qza(here::here("16S_Analyses", "DEICODE","16S_controls","ordination.qza"))
@@ -604,6 +641,7 @@ label.PC2
 label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
 label.PC3
 
+
 ## Prepare PCA data for ggplot
 
 pca_data <- pco$data$Vectors
@@ -613,15 +651,18 @@ pca_metadata <- subset(ESP_CTD_16S_envt_negative_metadata, `#SampleID` %in% pca_
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
 pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 
+# subset(pca_data, sample_type.x == "negative")
+# colnames(pca_data)
+
 # Add negative to CTD_or_ESP field
 pca_data %>%
   mutate(CTD_or_ESP = ifelse(is.na(CTD_or_ESP) | CTD_or_ESP == "", "control", CTD_or_ESP)) -> pca_data
 
-# Extract depth data
-pca_data$depth <- extract_numeric(pca_data$Depth)
+# Add negative to SAMPLING_CRUISE field
+pca_data %>%
+  mutate(SAMPLING_cruise = ifelse(CTD_or_ESP == "control", "control", SAMPLING_cruise)) -> pca_data
 
 # Create a categorical depth
-table(pca_data$depth)
 pca_data %>%
   mutate(depth = as.numeric(depth)) %>%
   mutate(depth_cat = ifelse(CTD_or_ESP == "control", "control",
@@ -630,8 +671,10 @@ pca_data %>%
                                           ifelse(depth <= 201 & depth >=195, "195-200", "unknown"))))) -> pca_data
 
 # Shape guide for depths
-depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24, "control" = 23)
-CTD_ESP_colors = c("CTD" = "#6a3d9a", "ESP" = "#33a02c", "control" = "#e41a1c")
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4", "control" = "#e41a1c")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "control" = 23)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
 ##----Run PERMANOVA-------------------------------------------------------------
 distance <- read_qza(here::here("16S_Analyses", "DEICODE","16S_controls","distance.qza"))
@@ -649,16 +692,18 @@ permanova_control_envt_16S_value <- permanova_control_envt_16S$`Pr(>F)`[1]
 
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = depth_cat))+
-  # Make fill for geom point be white if CN18F; if CN18S, then make it the color corresponding to ESP or CTD
+ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  # geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+  #                                    ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$CTD_or_ESP == "control", "#e41a1c",
-                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "white", 
-                                                        ifelse(pca_data$CTD_or_ESP == "ESP", "#33a02c", "#6a3d9a"))))+
+                                                 ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                        ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4"))))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  # annotate("text",  x=Inf, y = Inf, label = "(a)", vjust=1.5, hjust=1.3,size = 12)+
-  scale_color_manual(values = CTD_ESP_colors)+
-  scale_shape_manual(values = depth_shapes)+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -669,50 +714,49 @@ ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = CTD_or_ESP,shape = de
         axis.line.x.bottom = element_line(color = "black", size = 1),
         axis.line.y.left = element_line(color = "black", size = 1),
         legend.position = "none")+
-  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15)+
-  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("16S: PERMANOVA (Environment vs. Controls), p = ",permanova_control_envt_16S_value), hjust = 1, size = 5)
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)+
+  annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Control), p = ",permanova_control_envt_16S_value), hjust = 1, size = 5)
 
+ESP_CTD_16S_PCA
 ggsave(path = fig_dir, filename = "ESP_CTD_16S_controls_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
 ```
-
-
-
 
 # Create a legend manually
 ```{r}
 PCA_legend <- ggplot(pca_data) +
   # ESP vs. CTD
-  annotate("text",label = "Sampling Method", x = 0.9, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
-  annotate("point", x = 1, y = 1.2, shape = 21, colour = "#33a02c", fill = "#33a02c", size = 7, stroke = 3)+ # ESP
-  annotate("point", x = 1, y = 2, shape = 21, colour = "#6a3d9a", fill = "#6a3d9a", size = 7, stroke = 3)+ # CTD
-  annotate("point", x = 1, y = 0.4, shape = 23, colour = "#e41a1c", fill = "#e41a1c", size = 7, stroke = 3)+ # Control
-  annotate("text",label = "Negative Control", x = 1.2, y = 0.4,size = 7.5,adj = 0)+ # control
-  annotate("text",label = "Automated", x = 1.2, y = 2,size = 7.5,adj = 0)+ #ESP
-  annotate("text",label = "Manual", x = 1.2, y = 1.2,size = 7.5,adj = 0)+ #CTD
-  # Spring vs. Fall
-  annotate("text",label = "Season", x = 4.9, y = 2.8,size = 10,adj = 0)+ # Title seasonality
-  annotate("point", x = 5, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # Spring
-  annotate("point", x = 5, y = 1, shape = 21, colour = "black", fill = "white", size = 7, stroke = 3)+ # Fall
-  annotate("text",label = "Spring", x = 5.2, y = 2,size = 7.5,adj = 0)+ #Spring
-  annotate("text",label = "Fall", x = 5.2, y = 1,size = 7.5,adj = 0)+ #Fall
-  # Depths depth_shapes <- c("0-25" = 21, "25-50" = 22, "195-200" = 24)
-  annotate("text",label = "Depth", x = 7.9, y = 2.8,size = 10,adj = 0)+ # Title depths
-  annotate("point", x = 8, y = 2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # 0-25 m
-  annotate("text",label = "0-25 m", x = 8.2, y = 2,size = 7.5,adj = 0)+ #0-25 m
-  annotate("point", x = 8, y = 1.2, shape = 22, colour = "black", fill = "black", size = 7, stroke = 3)+ # 25-50 m
-  annotate("text",label = "27-50 m", x = 8.2, y = 1.2,size = 7.5,adj = 0)+ #25-50 m
-  annotate("point", x = 8, y = 0.4, shape = 24, colour = "black", fill = "black", size = 7, stroke = 3)+ # 195-200 m
-  annotate("text",label = "195-200 m", x = 8.2, y = 0.4,size = 7.5,adj = 0)+ #195-200 m
+  annotate("text",label = "Sampling Method", x = 0, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
+  annotate("point", x = 0.2, y = 1.25, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # CTD
+  annotate("text",label = "Shipboard", x = 0.6, y = 1.25,size = 7.5,adj = 0)+ #CTD
+  annotate("point", x = 0.2, y = 1.95, shape = 24, colour = "black", fill = "black", size = 6, stroke = 3)+ # ESP
+  annotate("text",label = "Autonomous", x = 0.6, y = 2,size = 7.5,adj = 0)+ #ESP
+  annotate("point", x = 0.2, y = 0.45, shape = 23, colour = "#e41a1c", fill = "#e41a1c", size = 6, stroke = 3)+ # negative control
+  annotate("text",label = "Negative Control", x = 0.6, y = 0.45,size = 7.5,adj = 0)+ #negative control
+  # Season and depth
+  annotate("text",label = "Season/Depth", x = 6.1, y = 2.8,size = 10,adj = 0)+ # Title 
+  annotate("point", x = 7, y = 2, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "/", x = 6.6, y = 2.01,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 6.3, y = 1.95, shape = 24, colour = "#ff7f00", fill = "#ff7f00", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "Fall (shallow)", x = 7.3, y = 2,size = 7.5,adj = 0)+ # fall (shallow)
+  annotate("point", x = 7, y = 1.2, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "/", x = 6.6, y = 1.21,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 6.3, y = 1.15, shape = 24, colour = "#1f78b4", fill = "#1f78b4", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "Spring (shallow)", x = 7.3, y = 1.2,size = 7.5,adj = 0)+ # spring (shallow)
+  annotate("point", x = 7, y = 0.4, shape = 21, colour = "#1f78b4", fill = "white", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "/", x = 6.6, y = 0.351,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 6.3, y = 0.35, shape = 24, colour = "#1f78b4", fill = "white", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "Spring (deep)", x = 7.3, y = 0.4,size = 7.5,adj = 0)+ # spring (deep)
+  
   
   xlim(0,10)+
-  ylim(0.1,3.2)+
+  ylim(0.2,3.2)+
     theme(panel.background = element_rect(fill="white"),
         panel.border = element_rect(colour = "black", fill=NA, size=2),
         axis.text = element_blank(),
         axis.title = element_blank(),
         axis.ticks = element_blank(), 
         legend.position = "none",
-        plot.margin = unit(c(0,3,0,3),"cm"))
+        plot.margin = unit(c(0,10,0,10),"cm"))
 ```
 
 # Combine all PCA figures
@@ -723,6 +767,14 @@ combined_PCA_gg <- annotate_figure(ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_1
                                                  font.label = list(size = 35, color = "black", face = "bold")),
                                                  PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
                                    )
+
+# Reorder according to organism size
+
+combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA, 
+                                                 ESP_CTD_18S_PCA, ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
+                                                 labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"), label.x = 0.05, label.y = 0.985,
+                                                 font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
+                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
 
 
 ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "supplemental_PCA_fig.png", device = "png")
