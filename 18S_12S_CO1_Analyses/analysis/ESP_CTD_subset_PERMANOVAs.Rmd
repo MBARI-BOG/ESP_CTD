@@ -1,0 +1,1863 @@
+---
+title: "ESP_CTD_subset_PERMANOVA"
+author: "Markus Min"
+date: "4/19/2021"
+output: html_document
+---
+
+### Description
+This R markdown file is for running PERMANOVAs for different subdivisions of the data
+\\
+For each marker, we will slice the data the following ways:
+- Each cruise individually
+- By the three season/depth categories, which are the three clusters on the PCA: 1) Fall (shallow), Spring (shallow), and Spring (deep)
+
+
+### Dependencies
+
+In addition to the R packages required for this script, you will also need to install **qiime2** and **DEICODE** (a qiime2 plugin) and create a qiime2 environment to run DEICODE within.
+
+### Load libraries
+```{r}
+library(tidyverse)
+library(phyloseq)
+library(qiime2R)
+library(here)
+library(vegan)
+library(ggpubr)
+```
+
+### Load data
+
+```{r}
+#### COI
+asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
+tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
+metadata_path_COI <- here::here("data", "COI", "ESP_CTD_COI_metadata.csv")
+
+ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_COI, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_COI, row.names = 1)))
+
+#### 18S
+asv_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_asv_table.csv")
+tax_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_tax_table.csv")
+metadata_path_18S <- here::here("data", "18S", "ESP_CTD_18S_metadata.csv")
+
+ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_18S, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_18S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_18S, row.names = 1)))
+
+#### 12S
+asv_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_asv_table.csv")
+tax_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_tax_table.csv")
+metadata_path_12S <- here::here("data", "12S", "ESP_CTD_12S_metadata.csv")
+
+ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_12S, row.names = 1)))
+
+### 16S
+# Read in combined taxonomy + ASV table
+asv_tax_combined_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table_with_tax.csv")
+asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
+# Split off asv table
+dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
+  column_to_rownames("FeatureID") -> asv_table_16S
+# Split off taxonomy, separate into fields per rank
+tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
+tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
+tax_table_16S %>% separate(., Taxon, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  column_to_rownames("FeatureID") -> tax_table_16S
+  
+metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
+
+# Change depth to numeric
+metadata_16S <- read.csv(metadata_path_16S, row.names = 1)
+metadata_16S$depth <- extract_numeric(metadata_16S$Depth)
+ 
+
+
+ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(tax_table_16S)),
+                                       sample_data(metadata_16S))
+
+# Set figure directory
+fig_dir <- here::here("figures", "subset_PERMANOVAs")
+```
+
+
+
+# COI
+
+##  Fall (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_fall_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_COI_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_COI_phyloseq)
+ESP_CTD_COI_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_COI_envt_phyloseq) > 0, ESP_CTD_COI_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_COI_fall_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_envt_phyloseq)$SAMPLING_cruise == "CN18F",ESP_CTD_COI_envt_phyloseq)
+
+ESP_CTD_COI_fall_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_COI_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_COI_fall_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_COI_fall_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_COI_fall_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_COI_fall_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_fall_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_COI_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_COI_fall_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_COI_fall_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_COI_fall_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_COI_fall_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_fall_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_COI_fall_shallow_phyloseq)))
+ESP_CTD_COI_fall_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_COI_fall_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_COI_fall_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_COI_fall_shallowsamples_metadata
+write.table(ESP_CTD_COI_fall_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_fall_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/COI_fall_shallow/ESP_CTD_COI_fall_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/COI_fall_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/COI_fall_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/COI_fall_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/COI_fall_shallow/ESP_CTD_COI_fall_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/COI_fall_shallow/ESP_CTD_COI_fall_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+ --input-path ../DEICODE/subset_data/COI_fall_shallow/table.w_md.biom \
+ --output-path ../DEICODE/subset_data/COI_fall_shallow/ESP_CTD_COI_master.biom.qza \
+ --type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+    --i-table ../DEICODE/subset_data/COI_fall_shallow/ESP_CTD_COI_master.biom.qza \
+    --p-n-components 3 \
+    --p-min-feature-count 10 \
+    --p-min-sample-count 1000 \
+    --o-biplot ../DEICODE/subset_data/COI_fall_shallow/ordination.qza \
+    --o-distance-matrix ../DEICODE/subset_data/COI_fall_shallow/distance.qza
+    
+# Run PERMANOVA
+ qiime diversity beta-group-significance \
+    --i-distance-matrix ../DEICODE/subset_data/COI_fall_shallow/distance.qza \
+    --m-metadata-file ../DEICODE/subset_data/COI_fall_shallow/ESP_CTD_COI_fall_shallow_sample_data_for_biom.txt \
+    --m-metadata-column CTD_or_ESP \
+    --p-method permanova \
+    --o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_COI_fall_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load COI Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_fall_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_permanova_fall_shallow_COI <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot COI DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_fall_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_COI_fall_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_COI_fall_shallow_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
+```
+
+
+
+##  Spring (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_spring_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_COI_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_COI_phyloseq)
+ESP_CTD_COI_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_COI_envt_phyloseq) > 0, ESP_CTD_COI_envt_phyloseq)
+
+sample_data(ESP_CTD_COI_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_COI_spring_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_COI_envt_phyloseq)$depth <= 50,ESP_CTD_COI_envt_phyloseq)
+
+ESP_CTD_COI_spring_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_COI_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_COI_spring_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_COI_spring_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_COI_spring_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_COI_spring_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_spring_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_COI_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_COI_spring_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_COI_spring_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_COI_spring_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_COI_spring_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_spring_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_COI_spring_shallow_phyloseq)))
+ESP_CTD_COI_spring_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_COI_spring_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_COI_spring_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_COI_spring_shallowsamples_metadata
+write.table(ESP_CTD_COI_spring_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_spring_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/COI_spring_shallow/ESP_CTD_COI_spring_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/COI_spring_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/COI_spring_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/COI_spring_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/COI_spring_shallow/ESP_CTD_COI_spring_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/COI_spring_shallow/ESP_CTD_COI_spring_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+ --input-path ../DEICODE/subset_data/COI_spring_shallow/table.w_md.biom \
+ --output-path ../DEICODE/subset_data/COI_spring_shallow/ESP_CTD_COI_master.biom.qza \
+ --type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+    --i-table ../DEICODE/subset_data/COI_spring_shallow/ESP_CTD_COI_master.biom.qza \
+    --p-n-components 3 \
+    --p-min-feature-count 10 \
+    --p-min-sample-count 1000 \
+    --o-biplot ../DEICODE/subset_data/COI_spring_shallow/ordination.qza \
+    --o-distance-matrix ../DEICODE/subset_data/COI_spring_shallow/distance.qza
+    
+# Run PERMANOVA
+ qiime diversity beta-group-significance \
+    --i-distance-matrix ../DEICODE/subset_data/COI_spring_shallow/distance.qza \
+    --m-metadata-file ../DEICODE/subset_data/COI_spring_shallow/ESP_CTD_COI_spring_shallow_sample_data_for_biom.txt \
+    --m-metadata-column CTD_or_ESP \
+    --p-method permanova \
+    --o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_COI_spring_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load COI Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_spring_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_shallow_permanova_COI <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot COI DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_spring_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_COI_spring_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_COI_spring_shallow_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
+```
+
+
+##  Spring (deep)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_spring_deep")
+
+# Subset environmental samples for comparison
+ESP_CTD_COI_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_COI_phyloseq)
+ESP_CTD_COI_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_COI_envt_phyloseq) > 0, ESP_CTD_COI_envt_phyloseq)
+
+sample_data(ESP_CTD_COI_envt_phyloseq)
+
+# Subset Fall (deep)
+ESP_CTD_COI_spring_deep_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_COI_envt_phyloseq)$depth > 50,ESP_CTD_COI_envt_phyloseq)
+
+ESP_CTD_COI_spring_deep_asv_table <- as.data.frame(as(otu_table(ESP_CTD_COI_spring_deep_phyloseq),"matrix"))
+ESP_CTD_COI_spring_deep_asv_table <- tibble::rownames_to_column(ESP_CTD_COI_spring_deep_asv_table,"#OTUID")
+write.table(ESP_CTD_COI_spring_deep_asv_table, paste0(deicode_dir, "/ESP_CTD_COI_spring_deep_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_spring_deep_tax_table <- as.data.frame(as(tax_table(ESP_CTD_COI_spring_deep_phyloseq),"matrix"))
+ESP_CTD_COI_spring_deep_tax_table <- tibble::rownames_to_column(ESP_CTD_COI_spring_deep_tax_table,"#OTUID")
+write.table(ESP_CTD_COI_spring_deep_tax_table,paste0(deicode_dir, "/ESP_CTD_COI_spring_deep_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_COI_spring_deepsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_COI_spring_deep_phyloseq)))
+ESP_CTD_COI_spring_deepsamples_metadata <- tibble::rownames_to_column(ESP_CTD_COI_spring_deepsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_COI_spring_deepsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_COI_spring_deepsamples_metadata
+write.table(ESP_CTD_COI_spring_deepsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_spring_deep_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/COI_spring_deep/ESP_CTD_COI_spring_deep_asv_table_for_biom.txt -o ../DEICODE/subset_data/COI_spring_deep/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/COI_spring_deep/table.from_txt_json.biom -o ../DEICODE/subset_data/COI_spring_deep/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/COI_spring_deep/ESP_CTD_COI_spring_deep_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/COI_spring_deep/ESP_CTD_COI_spring_deep_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/COI_spring_deep/table.w_md.biom \
+--output-path ../DEICODE/subset_data/COI_spring_deep/ESP_CTD_COI_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/COI_spring_deep/ESP_CTD_COI_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/COI_spring_deep/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/COI_spring_deep/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/COI_spring_deep/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/COI_spring_deep/ESP_CTD_COI_spring_deep_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_COI_spring_deepsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load COI Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_spring_deep","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_deep_permanova_COI <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot COI DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "COI_spring_deep","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_COI_spring_deepsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is deep, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_COI_spring_deep_PCA.png", ESP_CTD_COI_PCA,width = 7,height = 5)
+```
+
+
+
+
+
+# 18S
+
+##  Fall (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_fall_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_18S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_18S_phyloseq)
+ESP_CTD_18S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_18S_envt_phyloseq) > 0, ESP_CTD_18S_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_18S_fall_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_envt_phyloseq)$SAMPLING_cruise == "CN18F",ESP_CTD_18S_envt_phyloseq)
+
+ESP_CTD_18S_fall_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_18S_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_18S_fall_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_18S_fall_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_18S_fall_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_18S_fall_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_18S_fall_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_18S_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_18S_fall_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_18S_fall_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_18S_fall_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_18S_fall_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_18S_fall_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_18S_fall_shallow_phyloseq)))
+ESP_CTD_18S_fall_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_18S_fall_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_18S_fall_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_18S_fall_shallowsamples_metadata
+write.table(ESP_CTD_18S_fall_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_fall_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/18S_fall_shallow/ESP_CTD_18S_fall_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/18S_fall_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/18S_fall_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/18S_fall_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/18S_fall_shallow/ESP_CTD_18S_fall_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/18S_fall_shallow/ESP_CTD_18S_fall_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/18S_fall_shallow/table.w_md.biom \
+--output-path ../DEICODE/subset_data/18S_fall_shallow/ESP_CTD_18S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/18S_fall_shallow/ESP_CTD_18S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/18S_fall_shallow/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/18S_fall_shallow/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/18S_fall_shallow/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/18S_fall_shallow/ESP_CTD_18S_fall_shallow_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/18S_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_18S_fall_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 18S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_fall_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_permanova_fall_shallow_18S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot 18S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_fall_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_18S_fall_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_18S_fall_shallow_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
+```
+
+
+
+##  Spring (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_spring_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_18S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_18S_phyloseq)
+ESP_CTD_18S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_18S_envt_phyloseq) > 0, ESP_CTD_18S_envt_phyloseq)
+
+sample_data(ESP_CTD_18S_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_18S_spring_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_18S_envt_phyloseq)$depth <= 50,ESP_CTD_18S_envt_phyloseq)
+
+ESP_CTD_18S_spring_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_18S_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_18S_spring_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_18S_spring_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_18S_spring_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_18S_spring_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_18S_spring_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_18S_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_18S_spring_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_18S_spring_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_18S_spring_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_18S_spring_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_18S_spring_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_18S_spring_shallow_phyloseq)))
+ESP_CTD_18S_spring_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_18S_spring_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_18S_spring_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_18S_spring_shallowsamples_metadata
+write.table(ESP_CTD_18S_spring_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_spring_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/18S_spring_shallow/ESP_CTD_18S_spring_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/18S_spring_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/18S_spring_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/18S_spring_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/18S_spring_shallow/ESP_CTD_18S_spring_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/18S_spring_shallow/ESP_CTD_18S_spring_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/18S_spring_shallow/table.w_md.biom \
+--output-path ../DEICODE/subset_data/18S_spring_shallow/ESP_CTD_18S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/18S_spring_shallow/ESP_CTD_18S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/18S_spring_shallow/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/18S_spring_shallow/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/18S_spring_shallow/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/18S_spring_shallow/ESP_CTD_18S_spring_shallow_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/18S_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_18S_spring_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 18S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_spring_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_shallow_permanova_18S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot 18S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_spring_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_18S_spring_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_18S_spring_shallow_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
+```
+
+
+##  Spring (deep)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_spring_deep")
+
+# Subset environmental samples for comparison
+ESP_CTD_18S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_18S_phyloseq)
+ESP_CTD_18S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_18S_envt_phyloseq) > 0, ESP_CTD_18S_envt_phyloseq)
+
+sample_data(ESP_CTD_18S_envt_phyloseq)
+
+# Subset Fall (deep)
+ESP_CTD_18S_spring_deep_phyloseq <- prune_samples(sample_data(ESP_CTD_18S_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_18S_envt_phyloseq)$depth > 50,ESP_CTD_18S_envt_phyloseq)
+
+ESP_CTD_18S_spring_deep_asv_table <- as.data.frame(as(otu_table(ESP_CTD_18S_spring_deep_phyloseq),"matrix"))
+ESP_CTD_18S_spring_deep_asv_table <- tibble::rownames_to_column(ESP_CTD_18S_spring_deep_asv_table,"#OTUID")
+write.table(ESP_CTD_18S_spring_deep_asv_table, paste0(deicode_dir, "/ESP_CTD_18S_spring_deep_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_18S_spring_deep_tax_table <- as.data.frame(as(tax_table(ESP_CTD_18S_spring_deep_phyloseq),"matrix"))
+ESP_CTD_18S_spring_deep_tax_table <- tibble::rownames_to_column(ESP_CTD_18S_spring_deep_tax_table,"#OTUID")
+write.table(ESP_CTD_18S_spring_deep_tax_table,paste0(deicode_dir, "/ESP_CTD_18S_spring_deep_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_18S_spring_deepsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_18S_spring_deep_phyloseq)))
+ESP_CTD_18S_spring_deepsamples_metadata <- tibble::rownames_to_column(ESP_CTD_18S_spring_deepsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_18S_spring_deepsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_18S_spring_deepsamples_metadata
+write.table(ESP_CTD_18S_spring_deepsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_spring_deep_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/18S_spring_deep/ESP_CTD_18S_spring_deep_asv_table_for_biom.txt -o ../DEICODE/subset_data/18S_spring_deep/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/18S_spring_deep/table.from_txt_json.biom -o ../DEICODE/subset_data/18S_spring_deep/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/18S_spring_deep/ESP_CTD_18S_spring_deep_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/18S_spring_deep/ESP_CTD_18S_spring_deep_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/18S_spring_deep/table.w_md.biom \
+--output-path ../DEICODE/subset_data/18S_spring_deep/ESP_CTD_18S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/18S_spring_deep/ESP_CTD_18S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/18S_spring_deep/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/18S_spring_deep/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/18S_spring_deep/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/18S_spring_deep/ESP_CTD_18S_spring_deep_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/18S_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_18S_spring_deepsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 18S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_spring_deep","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_deep_permanova_18S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot 18S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "18S_spring_deep","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_18S_spring_deepsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is deep, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_18S_spring_deep_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
+```
+
+
+# 12S
+
+##  Fall (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_fall_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_12S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_12S_phyloseq)
+ESP_CTD_12S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_12S_envt_phyloseq) > 0, ESP_CTD_12S_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_12S_fall_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_envt_phyloseq)$SAMPLING_cruise == "CN18F",ESP_CTD_12S_envt_phyloseq)
+
+ESP_CTD_12S_fall_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_12S_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_12S_fall_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_12S_fall_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_12S_fall_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_12S_fall_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_12S_fall_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_12S_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_12S_fall_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_12S_fall_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_12S_fall_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_12S_fall_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_12S_fall_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_12S_fall_shallow_phyloseq)))
+ESP_CTD_12S_fall_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_12S_fall_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_12S_fall_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_12S_fall_shallowsamples_metadata
+write.table(ESP_CTD_12S_fall_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_fall_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/12S_fall_shallow/ESP_CTD_12S_fall_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/12S_fall_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/12S_fall_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/12S_fall_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/12S_fall_shallow/ESP_CTD_12S_fall_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/12S_fall_shallow/ESP_CTD_12S_fall_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/12S_fall_shallow/table.w_md.biom \
+--output-path ../DEICODE/subset_data/12S_fall_shallow/ESP_CTD_12S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/12S_fall_shallow/ESP_CTD_12S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/12S_fall_shallow/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/12S_fall_shallow/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/12S_fall_shallow/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/12S_fall_shallow/ESP_CTD_12S_fall_shallow_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/12S_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_12S_fall_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 12S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_fall_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_permanova_fall_shallow_12S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot 12S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_fall_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_12S_fall_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_12S_fall_shallow_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
+```
+
+
+
+##  Spring (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_spring_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_12S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_12S_phyloseq)
+ESP_CTD_12S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_12S_envt_phyloseq) > 0, ESP_CTD_12S_envt_phyloseq)
+
+sample_data(ESP_CTD_12S_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_12S_spring_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_12S_envt_phyloseq)$depth <= 50,ESP_CTD_12S_envt_phyloseq)
+
+ESP_CTD_12S_spring_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_12S_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_12S_spring_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_12S_spring_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_12S_spring_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_12S_spring_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_12S_spring_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_12S_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_12S_spring_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_12S_spring_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_12S_spring_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_12S_spring_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_12S_spring_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_12S_spring_shallow_phyloseq)))
+ESP_CTD_12S_spring_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_12S_spring_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_12S_spring_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_12S_spring_shallowsamples_metadata
+write.table(ESP_CTD_12S_spring_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_spring_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/12S_spring_shallow/ESP_CTD_12S_spring_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/12S_spring_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/12S_spring_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/12S_spring_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/12S_spring_shallow/ESP_CTD_12S_spring_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/12S_spring_shallow/ESP_CTD_12S_spring_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/12S_spring_shallow/table.w_md.biom \
+--output-path ../DEICODE/subset_data/12S_spring_shallow/ESP_CTD_12S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/12S_spring_shallow/ESP_CTD_12S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/12S_spring_shallow/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/12S_spring_shallow/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/12S_spring_shallow/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/12S_spring_shallow/ESP_CTD_12S_spring_shallow_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/12S_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_12S_spring_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 12S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_spring_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_shallow_permanova_12S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot 12S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_spring_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_12S_spring_shallowsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_12S_spring_shallow_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
+```
+
+
+##  Spring (deep)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_spring_deep")
+
+# Subset environmental samples for comparison
+ESP_CTD_12S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_12S_phyloseq)
+ESP_CTD_12S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_12S_envt_phyloseq) > 0, ESP_CTD_12S_envt_phyloseq)
+
+sample_data(ESP_CTD_12S_envt_phyloseq)
+
+# Subset Fall (deep)
+ESP_CTD_12S_spring_deep_phyloseq <- prune_samples(sample_data(ESP_CTD_12S_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_12S_envt_phyloseq)$depth > 50,ESP_CTD_12S_envt_phyloseq)
+
+ESP_CTD_12S_spring_deep_asv_table <- as.data.frame(as(otu_table(ESP_CTD_12S_spring_deep_phyloseq),"matrix"))
+ESP_CTD_12S_spring_deep_asv_table <- tibble::rownames_to_column(ESP_CTD_12S_spring_deep_asv_table,"#OTUID")
+write.table(ESP_CTD_12S_spring_deep_asv_table, paste0(deicode_dir, "/ESP_CTD_12S_spring_deep_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_12S_spring_deep_tax_table <- as.data.frame(as(tax_table(ESP_CTD_12S_spring_deep_phyloseq),"matrix"))
+ESP_CTD_12S_spring_deep_tax_table <- tibble::rownames_to_column(ESP_CTD_12S_spring_deep_tax_table,"#OTUID")
+write.table(ESP_CTD_12S_spring_deep_tax_table,paste0(deicode_dir, "/ESP_CTD_12S_spring_deep_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_12S_spring_deepsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_12S_spring_deep_phyloseq)))
+ESP_CTD_12S_spring_deepsamples_metadata <- tibble::rownames_to_column(ESP_CTD_12S_spring_deepsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_12S_spring_deepsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_12S_spring_deepsamples_metadata
+write.table(ESP_CTD_12S_spring_deepsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_spring_deep_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/12S_spring_deep/ESP_CTD_12S_spring_deep_asv_table_for_biom.txt -o ../DEICODE/subset_data/12S_spring_deep/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/12S_spring_deep/table.from_txt_json.biom -o ../DEICODE/subset_data/12S_spring_deep/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/12S_spring_deep/ESP_CTD_12S_spring_deep_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/12S_spring_deep/ESP_CTD_12S_spring_deep_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/12S_spring_deep/table.w_md.biom \
+--output-path ../DEICODE/subset_data/12S_spring_deep/ESP_CTD_12S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/12S_spring_deep/ESP_CTD_12S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/12S_spring_deep/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/12S_spring_deep/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/12S_spring_deep/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/12S_spring_deep/ESP_CTD_12S_spring_deep_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/12S_ESP_CTD_PERMANOVA.qzv
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+pca_metadata <- ESP_CTD_12S_spring_deepsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 12S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_spring_deep","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_deep_permanova_12S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+
+### Plot 12S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "12S_spring_deep","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_12S_spring_deepsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_12S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is deep, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_12S_spring_deep_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
+```
+
+
+
+
+# 16S
+
+##  Fall (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_fall_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_16S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_16S_phyloseq)
+ESP_CTD_16S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_16S_envt_phyloseq) > 0, ESP_CTD_16S_envt_phyloseq)
+
+# Subset Fall (shallow)
+ESP_CTD_16S_fall_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_envt_phyloseq)$SAMPLING_cruise == "CN18F",ESP_CTD_16S_envt_phyloseq)
+
+ESP_CTD_16S_fall_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_16S_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_16S_fall_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_16S_fall_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_16S_fall_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_16S_fall_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_16S_fall_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_16S_fall_shallow_phyloseq),"matrix"))
+ESP_CTD_16S_fall_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_16S_fall_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_16S_fall_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_16S_fall_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_16S_fall_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_16S_fall_shallow_phyloseq)))
+ESP_CTD_16S_fall_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_16S_fall_shallowsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_16S_fall_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_16S_fall_shallowsamples_metadata
+write.table(ESP_CTD_16S_fall_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_fall_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/16S_fall_shallow/ESP_CTD_16S_fall_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/16S_fall_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/16S_fall_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/16S_fall_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/16S_fall_shallow/ESP_CTD_16S_fall_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/16S_fall_shallow/ESP_CTD_16S_fall_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/16S_fall_shallow/table.w_md.biom \
+--output-path ../DEICODE/subset_data/16S_fall_shallow/ESP_CTD_16S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/16S_fall_shallow/ESP_CTD_16S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/16S_fall_shallow/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/16S_fall_shallow/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/16S_fall_shallow/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/16S_fall_shallow/ESP_CTD_16S_fall_shallow_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/16S_ESP_CTD_PERMANOVA.qzv
+```
+
+
+### Plot 16S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_fall_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+pca_data <- pco$data$Vectors
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_16S_fall_shallowsamples_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_16S_fall_shallow_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
+```
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_16S_fall_shallowsamples_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 16S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_fall_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_permanova_fall_shallow_16S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+##  Spring (shallow)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_spring_shallow")
+
+# Subset environmental samples for comparison
+ESP_CTD_16S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_16S_phyloseq)
+ESP_CTD_16S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_16S_envt_phyloseq) > 0, ESP_CTD_16S_envt_phyloseq)
+
+sample_data(ESP_CTD_16S_envt_phyloseq)
+
+# Subset spring (shallow)
+ESP_CTD_16S_spring_shallow_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_16S_envt_phyloseq)$depth <= 50,ESP_CTD_16S_envt_phyloseq)
+
+ESP_CTD_16S_spring_shallow_asv_table <- as.data.frame(as(otu_table(ESP_CTD_16S_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_16S_spring_shallow_asv_table <- tibble::rownames_to_column(ESP_CTD_16S_spring_shallow_asv_table,"#OTUID")
+write.table(ESP_CTD_16S_spring_shallow_asv_table, paste0(deicode_dir, "/ESP_CTD_16S_spring_shallow_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_16S_spring_shallow_tax_table <- as.data.frame(as(tax_table(ESP_CTD_16S_spring_shallow_phyloseq),"matrix"))
+ESP_CTD_16S_spring_shallow_tax_table <- tibble::rownames_to_column(ESP_CTD_16S_spring_shallow_tax_table,"#OTUID")
+write.table(ESP_CTD_16S_spring_shallow_tax_table,paste0(deicode_dir, "/ESP_CTD_16S_spring_shallow_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_16S_spring_shallowsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_16S_spring_shallow_phyloseq)))
+ESP_CTD_16S_spring_shallowsamples_metadata <- tibble::rownames_to_column(ESP_CTD_16S_spring_shallowsamples_metadata,"#SampleID")
+
+# Add a categorical depth field to the metadata
+ESP_CTD_16S_spring_shallowsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_16S_spring_shallowsamples_metadata
+
+write.table(ESP_CTD_16S_spring_shallowsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_spring_shallow_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/16S_spring_shallow/ESP_CTD_16S_spring_shallow_asv_table_for_biom.txt -o ../DEICODE/subset_data/16S_spring_shallow/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/16S_spring_shallow/table.from_txt_json.biom -o ../DEICODE/subset_data/16S_spring_shallow/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/16S_spring_shallow/ESP_CTD_16S_spring_shallow_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/16S_spring_shallow/ESP_CTD_16S_spring_shallow_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/16S_spring_shallow/table.w_md.biom \
+--output-path ../DEICODE/subset_data/16S_spring_shallow/ESP_CTD_16S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/16S_spring_shallow/ESP_CTD_16S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/16S_spring_shallow/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/16S_spring_shallow/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/16S_spring_shallow/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/16S_spring_shallow/ESP_CTD_16S_spring_shallow_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/16S_ESP_CTD_PERMANOVA.qzv
+```
+
+
+### Plot 16S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_spring_shallow","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+pca_data <- pco$data$Vectors
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_16S_spring_shallowsamples_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_16S_spring_shallow_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
+```
+
+### Run PERMANOVA
+```{r}
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_16S_spring_shallowsamples_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 16S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_spring_shallow","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_shallow_permanova_16S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+##  Spring (deep)
+```{r}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_spring_deep")
+
+# Subset environmental samples for comparison
+ESP_CTD_16S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_16S_phyloseq)
+ESP_CTD_16S_envt_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_16S_envt_phyloseq) > 0, ESP_CTD_16S_envt_phyloseq)
+
+sample_data(ESP_CTD_16S_envt_phyloseq)
+
+# Subset spring (deep)
+ESP_CTD_16S_spring_deep_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_envt_phyloseq)$SAMPLING_cruise == "CN18S" & sample_data(ESP_CTD_16S_envt_phyloseq)$depth > 50,ESP_CTD_16S_envt_phyloseq)
+
+ESP_CTD_16S_spring_deep_asv_table <- as.data.frame(as(otu_table(ESP_CTD_16S_spring_deep_phyloseq),"matrix"))
+ESP_CTD_16S_spring_deep_asv_table <- tibble::rownames_to_column(ESP_CTD_16S_spring_deep_asv_table,"#OTUID")
+write.table(ESP_CTD_16S_spring_deep_asv_table, paste0(deicode_dir, "/ESP_CTD_16S_spring_deep_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_16S_spring_deep_tax_table <- as.data.frame(as(tax_table(ESP_CTD_16S_spring_deep_phyloseq),"matrix"))
+ESP_CTD_16S_spring_deep_tax_table <- tibble::rownames_to_column(ESP_CTD_16S_spring_deep_tax_table,"#OTUID")
+write.table(ESP_CTD_16S_spring_deep_tax_table,paste0(deicode_dir, "/ESP_CTD_16S_spring_deep_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+ESP_CTD_16S_spring_deepsamples_metadata <- as.data.frame(as.matrix(sample_data(ESP_CTD_16S_spring_deep_phyloseq)))
+ESP_CTD_16S_spring_deepsamples_metadata <- tibble::rownames_to_column(ESP_CTD_16S_spring_deepsamples_metadata,"#SampleID")
+# Add a categorical depth field to the metadata
+ESP_CTD_16S_spring_deepsamples_metadata %>%
+  mutate(depth = as.numeric(depth)) %>%
+  mutate(depth_cat = ifelse(depth <= 25.5, "0-25",
+                            ifelse(depth <= 50, "27-50",
+                                   ifelse(depth <= 201 & depth >=195, "195-200",
+                                          "unknown")))) -> ESP_CTD_16S_spring_deepsamples_metadata
+write.table(ESP_CTD_16S_spring_deepsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_spring_deep_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+
+### Run DEICODE in Qiime2
+
+```{bash, engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/subset_data/16S_spring_deep/ESP_CTD_16S_spring_deep_asv_table_for_biom.txt -o ../DEICODE/subset_data/16S_spring_deep/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/subset_data/16S_spring_deep/table.from_txt_json.biom -o ../DEICODE/subset_data/16S_spring_deep/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/subset_data/16S_spring_deep/ESP_CTD_16S_spring_deep_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/subset_data/16S_spring_deep/ESP_CTD_16S_spring_deep_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+--input-path ../DEICODE/subset_data/16S_spring_deep/table.w_md.biom \
+--output-path ../DEICODE/subset_data/16S_spring_deep/ESP_CTD_16S_master.biom.qza \
+--type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+--i-table ../DEICODE/subset_data/16S_spring_deep/ESP_CTD_16S_master.biom.qza \
+--p-n-components 3 \
+--p-min-feature-count 10 \
+--p-min-sample-count 1000 \
+--o-biplot ../DEICODE/subset_data/16S_spring_deep/ordination.qza \
+--o-distance-matrix ../DEICODE/subset_data/16S_spring_deep/distance.qza
+
+# Run PERMANOVA
+qiime diversity beta-group-significance \
+--i-distance-matrix ../DEICODE/subset_data/16S_spring_deep/distance.qza \
+--m-metadata-file ../DEICODE/subset_data/16S_spring_deep/ESP_CTD_16S_spring_deep_sample_data_for_biom.txt \
+--m-metadata-column CTD_or_ESP \
+--p-method permanova \
+--o-visualization ../DEICODE/PERMANOVA_results/16S_ESP_CTD_PERMANOVA.qzv
+```
+
+
+### Plot 16S DEICODE RPCA
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_spring_deep","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+pca_data <- pco$data$Vectors
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_16S_spring_deepsamples_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is deep, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                                 ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_16S_spring_deep_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
+```
+
+
+
+### Run PERMANOVA
+```{r}
+# Extract metadata
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(ESP_CTD_16S_spring_deepsamples_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+## Load 16S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "subset_data", "16S_spring_deep","distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+##----Run individual PERMANOVAs-------------------------------------------------------------
+
+# PERMANOVA for CTD vs. ESP
+ESP_CTD_spring_deep_permanova_16S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, permutations=999)
+```
+
+ESP_CTD_spring_deep_permanova_16S
+ESP_CTD_spring_shallow_permanova_16S
+ESP_CTD_permanova_fall_shallow_16S
+
+# Combine all PERMANOVA results and export as table
+```{r}
+Marker <- c(rep("18S",3), rep("COI",3),  rep("12S",3), rep("16S",3))
+subset <- c(rep(c("Fall (shallow)", "Spring (shallow)", "Spring (deep)"),4))
+p_value <- c(ESP_CTD_permanova_fall_shallow_18S$`Pr(>F)`[1], ESP_CTD_spring_shallow_permanova_18S$`Pr(>F)`[1], ESP_CTD_spring_deep_permanova_18S$`Pr(>F)`[1],
+             ESP_CTD_permanova_fall_shallow_COI$`Pr(>F)`[1], ESP_CTD_spring_shallow_permanova_COI$`Pr(>F)`[1], ESP_CTD_spring_deep_permanova_COI$`Pr(>F)`[1],
+             ESP_CTD_permanova_fall_shallow_12S$`Pr(>F)`[1], ESP_CTD_spring_shallow_permanova_12S$`Pr(>F)`[1], ESP_CTD_spring_deep_permanova_12S$`Pr(>F)`[1],
+             ESP_CTD_permanova_fall_shallow_16S$`Pr(>F)`[1], ESP_CTD_spring_shallow_permanova_16S$`Pr(>F)`[1], ESP_CTD_spring_deep_permanova_16S$`Pr(>F)`[1])
+F_statistic <- c(ESP_CTD_permanova_fall_shallow_18S$F[1], ESP_CTD_spring_shallow_permanova_18S$F[1], ESP_CTD_spring_deep_permanova_18S$F[1],
+                 ESP_CTD_permanova_fall_shallow_COI$F[1], ESP_CTD_spring_shallow_permanova_COI$F[1], ESP_CTD_spring_deep_permanova_COI$F[1],
+                 ESP_CTD_permanova_fall_shallow_12S$F[1], ESP_CTD_spring_shallow_permanova_12S$F[1], ESP_CTD_spring_deep_permanova_12S$F[1],
+                 ESP_CTD_permanova_fall_shallow_16S$F[1], ESP_CTD_spring_shallow_permanova_16S$F[1], ESP_CTD_spring_deep_permanova_16S$F[1])
+
+individual_PERMANOVA_results_table <- data.frame(Marker, subset, p_value, F_statistic)
+
+write.csv(individual_PERMANOVA_results_table, here::here("figures", "subset_PERMANOVAs", "TableS4.csv"))
+```
+
