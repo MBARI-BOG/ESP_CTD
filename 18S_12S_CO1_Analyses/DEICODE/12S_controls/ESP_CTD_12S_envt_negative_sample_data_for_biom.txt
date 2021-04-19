@@ -1,5 +1,5 @@
 #SampleID	SAMPLING_cruise	depth	library	libraryID	locus	original_name	samp_collection_device	sample_type.x	sample_type.y	CTD_or_ESP	ESP_CTD	ESP_CTD_ID	matching_ID
-CN18FESPkoa_SC1_OO	CN18F	NA	OO61	OO		CN18FESPkoa_SC1	NA	environmental	environmental				
+CN18FESPkoa_SC1_OO	CN18F	NA	OO61	OO		CN18FESPkoa_SC1	NA	negative	environmental				
 CN18FESPkoa_SC24_OO	CN18F	 33.19233	OO38	OO		CN18FESPkoa_SC24	NA	environmental	environmental	ESP	ESP_Sample	ESP1	CN18F1
 CN18FESPkoa_SC26_OO	CN18F	 24.64198	OO36	OO		CN18FESPkoa_SC26	NA	environmental	environmental	ESP	ESP_Sample	ESP2	CN18F2
 CN18FESPkoa_SC29_OO	CN18F	 24.12127	OO33	OO		CN18FESPkoa_SC29	NA	environmental	environmental	ESP	ESP_Sample	ESP3	CN18F3
