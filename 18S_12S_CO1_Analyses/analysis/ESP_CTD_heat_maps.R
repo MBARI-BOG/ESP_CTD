@@ -70,6 +70,9 @@ ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = T
                                        tax_table(as.matrix(tax_table_16S)),
                                        sample_data(read.csv(metadata_path_16S, row.names = 1)))
 
+# Remove sample that has no reads
+ESP_CTD_16S_phyloseq <- subset_samples(ESP_CTD_16S_phyloseq, sample_names(ESP_CTD_16S_phyloseq) != "CN18Fc35_5_eDNA")
+
 # Set figure directory
 fig_dir <- here::here("figures", "heatmaps")
 
@@ -840,7 +843,7 @@ combined_heatmap_gg <- annotate_figure(ggpubr::ggarrange(egg::ggarrange(plots = 
                                                       label.args = list(gp = grid::gpar(fontsize = 20, fontface = "bold"),
                                                                         x = 0.01, y = 0.95)),
                                                  heatmap_legend, nrow = 2, ncol = 1, heights = c(10,1)),
-                                       top = text_grob("Manual                                         Automated             ", 
+                                       top = text_grob("Shipboard                                  Autonomous         ", 
                                       color = "black", face = "bold", size = 25, vjust = 2))
 
 
