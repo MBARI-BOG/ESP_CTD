@@ -1,0 +1,145 @@
+---
+title: "read_counts_tableS1"
+author: "Markus Min"
+date: "7/21/2021"
+output: html_document
+---
+
+### Description
+Here we are just pulling the read counts for the processed reads in Table S1.
+
+
+### Load libraries
+```{r}
+library(tidyverse)
+library(phyloseq)
+library(qiime2R)
+library(here)
+library(vegan)
+library(ggpubr)
+library(readxl)
+```
+
+### Load data
+
+```{r eval = FALSE}
+#### COI
+asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
+tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
+metadata_path_COI <- here::here("data", "COI", "ESP_CTD_COI_metadata.csv")
+
+ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_COI, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_COI, row.names = 1)))
+
+#### 18S
+asv_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_asv_table.csv")
+tax_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_tax_table.csv")
+metadata_path_18S <- here::here("data", "18S", "ESP_CTD_18S_metadata.csv")
+
+ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_18S, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_18S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_18S, row.names = 1)))
+
+#### 12S
+asv_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_asv_table.csv")
+tax_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_tax_table.csv")
+metadata_path_12S <- here::here("data", "12S", "ESP_CTD_12S_metadata.csv")
+
+ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, row.names = 1),taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_12S, row.names = 1)))
+
+### 16S
+# Read in combined taxonomy + ASV table
+asv_tax_combined_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table_with_tax.csv")
+asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
+# Split off asv table
+dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
+  column_to_rownames("FeatureID") -> asv_table_16S
+# Split off taxonomy, separate into fields per rank
+tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
+tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
+tax_table_16S %>% separate(., Taxon, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  column_to_rownames("FeatureID") -> tax_table_16S
+  
+metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
+
+ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(tax_table_16S)),
+                                       sample_data(read.csv(metadata_path_16S, row.names = 1)))
+
+# Set table directory
+table_dir <- here::here("tables")
+```
+
+### Count reads
+```{r count_reads}
+# COI
+as.data.frame(sample_sums(ESP_CTD_COI_phyloseq)) %>% 
+  rownames_to_column("sample_name") %>% 
+  dplyr::rename(COI_processed_reads = "sample_sums(ESP_CTD_COI_phyloseq)") %>% 
+  # Remove plate suffix
+  mutate(sample_name = sub("_[^_]+$", "", sample_name)) %>% 
+  # rename some samples to match with original table - namely BN post/pre samples
+  mutate(sample_name = gsub("post", "pst", sample_name)) %>% 
+  mutate(sample_name = gsub("ESPkoa_BN", "BN", sample_name)) -> readcounts_COI
+
+# 18S
+as.data.frame(sample_sums(ESP_CTD_18S_phyloseq)) %>% 
+  rownames_to_column("sample_name") %>% 
+  dplyr::rename(`18S_processed_reads` = "sample_sums(ESP_CTD_18S_phyloseq)") %>% 
+  # Remove plate suffix
+  mutate(sample_name = sub("_[^_]+$", "", sample_name)) %>% 
+  # rename some samples to match with original table - namely BN post/pre samples
+  mutate(sample_name = gsub("post", "pst", sample_name)) %>% 
+  mutate(sample_name = gsub("ESPkoa_BN", "BN", sample_name)) -> readcounts_18S
+
+# 12S
+as.data.frame(sample_sums(ESP_CTD_12S_phyloseq)) %>% 
+  rownames_to_column("sample_name") %>% 
+  dplyr::rename(`12S_processed_reads` = "sample_sums(ESP_CTD_12S_phyloseq)") %>% 
+  # Remove plate suffix
+  mutate(sample_name = sub("_[^_]+$", "", sample_name)) %>% 
+  # rename some samples to match with original table - namely BN post/pre samples
+  mutate(sample_name = gsub("post", "pst", sample_name)) %>% 
+  mutate(sample_name = gsub("ESPkoa_BN", "BN", sample_name)) %>% 
+  # rename ESP koa samples
+  mutate(sample_name = gsub("CN18SKOA_ESP", "CN18SESPkoa_SC", sample_name)) %>% 
+  # rename the six negative controls
+  mutate(sample_name = ifelse(str_detect(sample_name, c("29", "30", "31","57", "58", "59")), 
+                              gsub("CN18SESPkoa_SC", "CN18S_koa3G", sample_name), sample_name)) -> readcounts_12S
+
+# 16S
+as.data.frame(sample_sums(ESP_CTD_16S_phyloseq)) %>% 
+  rownames_to_column("sample_name") %>% 
+  # rename some samples to match with original table - namely BN post/pre samples
+  mutate(sample_name = gsub("post", "pst", sample_name)) %>% 
+  dplyr::rename(`16S_processed_reads` = "sample_sums(ESP_CTD_16S_phyloseq)") -> readcounts_16S
+
+# Join all markers
+readcounts_COI %>% 
+  left_join(., readcounts_18S, by = "sample_name") %>% 
+  left_join(., readcounts_12S, by = "sample_name") %>% 
+  left_join(., readcounts_16S, by = "sample_name") -> readcounts_allmarkers
+```
+
+
+
+
+
+### Load original table, merge
+```{r export_read_counts}
+read_excel(here("tables", "TableS1.xlsx"), skip = 2) %>% 
+  dplyr::rename(sample_name = `Sample name`) %>% 
+  mutate(sample_name = gsub("post", "pst", sample_name)) %>% 
+  # remove old columns
+  dplyr::select(-c(`COI_processed_reads`, `18S_processed_reads`, `12S_processed_reads`, `16S_processed_reads`)) %>% 
+  left_join(., readcounts_allmarkers, by = "sample_name") %>% 
+  # fix weird issue with volume filtered
+  dplyr::select(-`Volume filtered (mL)...13`) %>% 
+  dplyr::rename( `Volume filtered (mL)` = `Volume filtered (mL)...15`) -> TS1_updated
+
+write.csv(TS1_updated, here("tables", "TableS1_update_20210721.csv"))
+```
+
