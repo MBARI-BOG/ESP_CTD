@@ -10,5 +10,8 @@ The data directory contains the data to be used in the scripts in the analysis d
 ## Figures
 The figures directory contains the plotting outputs from the scripts in the analysis directory.
 
+## Tables
+The tables directory contains the tables for the manuscript, which are generated from the scripts in the analysis directory.
+
 ## DEICODE
 The DEICODE directory contains the intermediate files necessary for the DEICODE PCA scripts.
