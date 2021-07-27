@@ -21,23 +21,33 @@ library(readxl)
 ```
 
 ### Load data
-
+Make sure to remove leading Xs from column names in OTU tables
 ```{r eval = FALSE}
 #### COI
 asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
 tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
 metadata_path_COI <- here::here("data", "COI", "ESP_CTD_COI_metadata.csv")
 
-ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_COI, row.names = 1),taxa_are_rows = TRUE),
+# Remove leading Xs
+COI_otu_table <- read.csv(asv_table_path_COI, row.names = 1)
+names(COI_otu_table) <- sub("X", "", names(COI_otu_table))
+
+ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(COI_otu_table,taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
                                        sample_data(read.csv(metadata_path_COI, row.names = 1)))
+sample_names(ESP_CTD_COI_phyloseq)
+setdiff(colnames(read.csv(asv_table_path_COI, row.names = 1)), rownames(read.csv(metadata_path_COI, row.names = 1)))
 
 #### 18S
 asv_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_asv_table.csv")
 tax_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_tax_table.csv")
 metadata_path_18S <- here::here("data", "18S", "ESP_CTD_18S_metadata.csv")
 
-ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_18S, row.names = 1),taxa_are_rows = TRUE),
+# Remove leading Xs
+otu_table_18S <- read.csv(asv_table_path_18S, row.names = 1)
+names(otu_table_18S) <- sub("X", "", names(otu_table_18S))
+
+ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(otu_table_18S,taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_18S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_18S, row.names = 1)))
 
@@ -46,7 +56,11 @@ asv_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_asv_table.csv")
 tax_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_tax_table.csv")
 metadata_path_12S <- here::here("data", "12S", "ESP_CTD_12S_metadata.csv")
 
-ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(read.csv(asv_table_path_12S, row.names = 1),taxa_are_rows = TRUE),
+# Remove leading Xs
+otu_table_12S <- read.csv(asv_table_path_12S, row.names = 1)
+names(otu_table_12S) <- sub("X", "", names(otu_table_12S))
+
+ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(otu_table_12S,taxa_are_rows = TRUE),
                                        tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
                                        sample_data(read.csv(metadata_path_12S, row.names = 1)))
 
@@ -57,6 +71,10 @@ asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
 # Split off asv table
 dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
   column_to_rownames("FeatureID") -> asv_table_16S
+
+# Remove leading Xs
+names(asv_table_16S) <- sub("X", "", names(asv_table_16S))
+
 # Split off taxonomy, separate into fields per rank
 tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
 tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
@@ -68,9 +86,6 @@ metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
 ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
                                        tax_table(as.matrix(tax_table_16S)),
                                        sample_data(read.csv(metadata_path_16S, row.names = 1)))
-
-# Set table directory
-table_dir <- here::here("tables")
 ```
 
 ### Count reads
