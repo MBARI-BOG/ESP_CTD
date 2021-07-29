@@ -2,9 +2,11 @@
 
 library(tidyverse)
 library(phyloseq)
+library(here)
+library(readxl)
 
 # Load data
-## COI
+##### COI #####
 
 ### Prep metadata
 # Load master metadata
@@ -128,8 +130,34 @@ ESP_CTD_COI_metadata <- as.data.frame(sample_data(ESP_CTD_COI_phyloseq))
 write.csv(ESP_CTD_COI_metadata, here("data", "COI", "ESP_CTD_COI_metadata.csv"))
 
 
+##### COI: Subset and export direct comparison samples #####
 
-## 18S
+# Load the sample names from Katie's file, edit to match those in master files
+read_excel(here("data", "Katie_ESP_CTD_matched_samples_metadata.xlsx"), sheet = "CN17S") %>% 
+  subset(., Type %in% c("combination_depth", "bench_ESP")) %>% 
+  mutate(COI_name = paste0(sample_name, "_X")) -> match_metadata
+
+# Subset the samples from the master metadata, move sample names to row names
+subset(metadata_COI, sample_name %in% match_metadata$COI_name) -> matched_metadata_COI
+rownames(matched_metadata_COI) <- NULL
+matched_metadata_COI %>% 
+  column_to_rownames("sample_name") -> matched_metadata_COI
+
+# Join as phyloseq
+matched_COI_phyloseq <- merge_phyloseq(otu_table(asv_table_COI,taxa_are_rows = TRUE),tax_table(as.matrix(tax_table_COI)),sample_data(matched_metadata_COI))
+matched_COI_phyloseq <- prune_taxa(taxa_sums(matched_COI_phyloseq) > 0, matched_COI_phyloseq)
+
+# Export three datafiles (asv_table, tax_table, and metadata) for other scripts.
+matched_ESP_CTD_COI_tax_table <- as.data.frame(tax_table(matched_COI_phyloseq))
+write.csv(matched_ESP_CTD_COI_tax_table, here("data", "COI", "direct_comparisons", "directcomp_ESP_CTD_COI_tax_table.csv"))
+
+matched_ESP_CTD_COI_asv_table <- as.data.frame(otu_table(matched_COI_phyloseq))
+write.csv(matched_ESP_CTD_COI_asv_table, here("data", "COI", "direct_comparisons", "directcomp_ESP_CTD_COI_asv_table.csv"))
+
+matched_ESP_CTD_COI_metadata <- as.data.frame(sample_data(matched_COI_phyloseq))
+write.csv(matched_ESP_CTD_COI_metadata, here("data", "COI", "direct_comparisons", "directcomp_ESP_CTD_COI_metadata.csv"))
+
+##### 18S #####
 
 ### Prep metadata
 # Load master metadata
@@ -257,7 +285,7 @@ write.csv(ESP_CTD_18S_metadata, here("data", "18S", "ESP_CTD_18S_metadata.csv"))
 
 
 
-## 12S
+##### 12S #####
 
 ### Prep metadata
 
@@ -394,7 +422,7 @@ ESP_CTD_12S_metadata <- as.data.frame(sample_data(ESP_CTD_12S_phyloseq))
 write.csv(ESP_CTD_12S_metadata, here("data", "12S", "ESP_CTD_12S_metadata.csv"))
 
 
-## 16S
+##### 16S #####
 
 ### Prep metadata
 
