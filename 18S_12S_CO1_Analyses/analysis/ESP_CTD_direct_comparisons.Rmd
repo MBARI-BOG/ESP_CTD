@@ -1,0 +1,315 @@
+---
+title: "ESP_CTD_direct_comparisons"
+author: "Markus Min"
+date: "7/27/2021"
+output: html_document
+---
+
+
+### Description
+In this Rmd file, we are analyzing the direct comparison samples from the CANON17S cruise, which were 10L water samples that were sampled in two ways: through the ESP and via the peristaltic pump. We have six samples, and it appears that these samples were only ever sequenced for COI.
+
+### Load libraries
+```{r load_libraries}
+library(tidyverse)
+library(here)
+library(readxl)
+library(phyloseq)
+library(qiime2R)
+library(ggthemes)
+library(ggpubr)
+
+fig_dir <- here::here("figures", "direct_comparisons")
+```
+
+### load data
+```{r load_data}
+# load asv table
+directcomp_asv_table <- read.csv(here("data", "COI", "direct_comparisons", "directcomp_ESP_CTD_COI_asv_table.csv"), row.names = 1)
+
+# load tax table
+directcomp_tax_table <- read.csv(here("data", "COI", "direct_comparisons", "directcomp_ESP_CTD_COI_tax_table.csv"), row.names = 1)
+
+# load metadata
+directcomp_metadata <- read.csv(here("data", "COI", "direct_comparisons", "directcomp_ESP_CTD_COI_metadata.csv"), row.names = 1)
+
+### Merge into phyloseq
+directcomp_COI_phyloseq <- merge_phyloseq(otu_table(directcomp_asv_table,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(directcomp_tax_table)),
+                                       sample_data(directcomp_metadata))
+
+
+### Load other metadata (Kevan Yamahara's corrected data)
+directcomp_meta_yamahara <- read_excel(here("data", "ESP_CTD_matched_samples_metadata_YAMAHARACORRECTED.xlsx"), sheet = "CN17S")
+
+# Add another column to show which samples are paired
+directcomp_meta_yamahara %>% 
+  mutate(., sampling_pair = ifelse(sample_name %in% c("CANON_B1_22", "CANON_CBI1_22"), "1",
+                                   ifelse(sample_name %in% c("CANON_B10_22", "CANON_CBI4_22"), "2",
+                                          ifelse(sample_name %in% c("CANON_B13_22", "CANON_CBI5_22"), "3",
+                                                 ifelse(sample_name %in% c("CANON_B17_22", "CANON_CBI8_22"), "4",
+                                                        ifelse(sample_name %in% c("CANON_B20_22", "CANON_CBI9_22"), "5",
+                                                               ifelse(sample_name %in% c("CANON_B23_22", "CANON_CBI10_22"), "6", NA))))))) %>% 
+    mutate(., "SampleID" = paste0(sample_name, "_X"))-> directcomp_meta_yamahara
+```
+
+
+
+# DEICODE PCA
+
+### Prep data for DEICODE
+```{r prep_deicode_data}
+# Set directory for saving DEICODE data
+deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "COI_directcomp")
+
+# Reformat and export OTU Table
+directcomp_COI_asv_table <- as.data.frame(as(otu_table(directcomp_COI_phyloseq),"matrix"))
+directcomp_COI_asv_table <- tibble::rownames_to_column(directcomp_COI_asv_table,"#OTUID")
+write.table(directcomp_COI_asv_table, paste0(deicode_dir, "/directcomp_COI_asv_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+directcomp_COI_tax_table <- as.data.frame(as(tax_table(directcomp_COI_phyloseq),"matrix"))
+directcomp_COI_tax_table <- tibble::rownames_to_column(directcomp_COI_tax_table,"#OTUID")
+write.table(directcomp_COI_tax_table,paste0(deicode_dir, "/directcomp_COI_tax_table_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+directcomp_COI_metadata <- as.data.frame(as.matrix(sample_data(directcomp_COI_phyloseq)))
+directcomp_COI_metadata <- tibble::rownames_to_column(directcomp_COI_metadata,"#SampleID")
+write.table(directcomp_COI_metadata, paste0(deicode_dir, "/directcomp_COI_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
+```
+
+### Run DEICODE in Qiime2
+
+```{bash engine.opts = '-l'}
+# Enter qiime2 environment
+conda activate qiime2-2020.11
+
+#Make biom file
+biom convert -i ../DEICODE/COI_directcomp/directcomp_COI_asv_table_for_biom.txt -o ../DEICODE/COI_directcomp/table.from_txt_json.biom --table-type="OTU table" --to-json
+#add metadata files to biom file
+biom add-metadata -i ../DEICODE/COI_directcomp/table.from_txt_json.biom -o ../DEICODE/COI_directcomp/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/COI_directcomp/directcomp_COI_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/COI_directcomp/directcomp_COI_sample_data_for_biom.txt
+
+#import into Qiime2
+qiime tools import \
+ --input-path ../DEICODE/COI_directcomp/table.w_md.biom \
+ --output-path ../DEICODE/COI_directcomp/ESP_CTD_COI_master.biom.qza \
+ --type FeatureTable[Frequency]
+
+#run DEICODE
+qiime deicode rpca \
+    --i-table ../DEICODE/COI_directcomp/ESP_CTD_COI_master.biom.qza \
+    --p-n-components 3 \
+    --p-min-feature-count 10 \
+    --p-min-sample-count 1000 \
+    --o-biplot ../DEICODE/COI_directcomp/ordination.qza \
+    --o-distance-matrix ../DEICODE/COI_directcomp/distance.qza
+    
+# Run PERMANOVA
+# qiime diversity beta-group-significance \
+#    --i-distance-matrix ../DEICODE/COI_directcomp/distance.qza \
+#    --m-metadata-file ../DEICODE/COI_directcomp/directcomp_COI_sample_data_for_biom.txt \
+#    --m-metadata-column sample_type.x \
+#    --p-method permanova \
+#    --o-visualization ../DEICODE/PERMANOVA_results/COI_ESP_CTD_PERMANOVA.qzv
+```
+
+### Plot DEICODE
+
+```{r plot_COI_directcomp_PCA}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI_directcomp","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_data <- pco$data$Vectors
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+# Subset metadata to only those samples that had > 1000 reads and were included in DEICODE
+pca_metadata <- subset(directcomp_COI_metadata, `#SampleID` %in% pca_data$SampleID)
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+
+# Join data from Kevan Yamahara's metadata
+directcomp_meta_yamahara %>% 
+  right_join(., pca_data, by = "SampleID") -> pca_data
+
+# Use shapes for ESP vs. peristaltic pump
+# Use colors for each of the different pairs
+pair_colors <- c("1" = "#1f78b4" , "2" = "#33a02c", "3" = "#e31a1c", "4" = "#ff7f00", "5" = "#6a3d9a", "6" = "#b15928")
+type_shapes <- c("combination_depth" = 21, "bench_ESP" = 24)
+
+
+##----Run PERMANOVA-------------------------------------------------------------
+# distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE","COI_controls","distance.qza"))
+# 
+# # Extract distance matrix
+# distance_matrix <- distance$data
+# 
+# # convert DEICODE matrix to "dist" class object
+# PCA_dist <- as.dist(distance_matrix)
+# 
+# # PERMANOVA for control vs exp
+# 
+# permanova_control_envt_COI <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
+# permanova_control_envt_COI_value <- permanova_control_envt_COI$`Pr(>F)`[1]
+
+##----Make plot-----------------------------------------------------------------
+
+directcomp_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = sampling_pair, fill = sampling_pair, shape = Type))+
+  geom_point(size = 5, stroke = 2)+
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = pair_colors)+
+  scale_fill_manual(values = pair_colors)+
+  scale_shape_manual(values = type_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1))
+  # ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)+ annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Environment vs. Control), p = ", permanova_control_envt_COI_value), hjust = 1, size = 5)
+
+directcomp_COI_PCA
+
+ggsave(path = fig_dir, filename = "directcomp_COI_PCA.png", directcomp_COI_PCA,width = 7,height = 5)
+```
+
+
+# Compare taxa
+
+### Plot direct comparison taxa
+
+#### Make a function for plotting
+```{r plot_top_20ASVs_function}
+plot_top20ASVs_directcomp <- function(sample_names, plot_name){
+  # Subset the samples specified in the function
+  phyloseq <- prune_samples(sample_names(directcomp_COI_phyloseq) %in% sample_names, directcomp_COI_phyloseq)
+  
+  directcomp_COI_asv_table <- as.data.frame(otu_table(phyloseq))
+directcomp_COI_asv_table <- tibble::rownames_to_column(directcomp_COI_asv_table,"ASV")
+
+directcomp_COI_tax_table <- as.data.frame(as(tax_table(phyloseq),"matrix"))
+directcomp_COI_tax_table <- tibble::rownames_to_column(directcomp_COI_tax_table,"ASV")
+directcomp_COI_tax_table %>% mutate_all(as.character) -> directcomp_COI_tax_table
+
+# Rename ASVs with their taxonomy
+directcomp_COI_asv_table <- left_join(directcomp_COI_asv_table, directcomp_COI_tax_table, by = "ASV")
+
+directcomp_COI_asv_table %>% mutate(.,ASV_name = ifelse(!(Species %in% c("s_","unassigned")),paste0(ASV,"_",Species),
+                                                    ifelse(!(Genus %in% c("g_","unassigned")),paste0(ASV,"_",Genus),
+                                                           ifelse(!(Family == "unassigned"),paste0(ASV,"_",Family),
+                                                                  ifelse(!(Order == "unassigned"),paste0(ASV,"_",Order),
+                                                                         ifelse(!(Class == "unassigned"),paste0(ASV,"_",Class),
+                                                                                ifelse(!(Phylum == "unassigned"),paste0(ASV,"_",Phylum),
+                                                                                       paste0(ASV,"_","unassigned")))))))) -> directcomp_COI_asv_table
+# Convert to long form
+gathercols <- colnames(as.data.frame(otu_table(phyloseq)))
+
+directcomp_COI_asv_table_gather <- gather(directcomp_COI_asv_table, key = "sample", value = "reads", gathercols, factor_key=TRUE)
+
+
+# Figure out the top 20 ASVs total in the dataset to plot
+directcomp_COI_asv_table_asv_total_reads <- as.data.frame(sort(-taxa_sums(phyloseq)))
+top_19_CN18S_blanks_asvs <- rownames(directcomp_COI_asv_table_asv_total_reads)[1:19]
+
+directcomp_COI_asv_table_gather %>% mutate(.,ASV_name_updated = ifelse(ASV %in% top_19_CN18S_blanks_asvs,ASV_name,"other")) -> directcomp_COI_asv_table_gather_updated
+
+# Add metadata
+directcomp_meta_yamahara %>% 
+  dplyr::rename(sample = SampleID) %>% 
+  right_join(., directcomp_COI_asv_table_gather_updated, by = "sample") %>% 
+  mutate(Type = ifelse(Type == "combination_depth", "peristaltic_pump", "benchtop_ESP")) %>% 
+  mutate(pair = paste0(sampling_pair, "_", Type)) -> directcomp_COI_asv_table_gather_updated
+
+directcomp_COI_gg <- ggplot(directcomp_COI_asv_table_gather_updated,aes(x = pair, y = reads, fill = ASV_name_updated))+
+  geom_bar(stat = "identity")+
+  ggtitle(plot_name)+
+  scale_fill_tableau("Tableau 20")+
+  # ylim(0,20000)+
+  theme(legend.text = element_text(size = 7),
+        axis.text.x = element_text(angle = 90),
+        axis.title.x = element_blank())+
+  guides(fill = guide_legend(title = "ASV"))
+
+directcomp_COI_gg
+return(directcomp_COI_gg)
+ggsave(paste0(fig_dir, "/", plot_name, ".png"), directcomp_COI_gg, height = 6.5, width = 8)
+}
+
+```
+
+
+#### All samples together
+```{r}
+directcomp_COI_asv_table <- as.data.frame(otu_table(directcomp_COI_phyloseq))
+directcomp_COI_asv_table <- tibble::rownames_to_column(directcomp_COI_asv_table,"ASV")
+
+directcomp_COI_tax_table <- as.data.frame(as(tax_table(directcomp_COI_phyloseq),"matrix"))
+directcomp_COI_tax_table <- tibble::rownames_to_column(directcomp_COI_tax_table,"ASV")
+directcomp_COI_tax_table %>% mutate_all(as.character) -> directcomp_COI_tax_table
+
+# Rename ASVs with their taxonomy
+directcomp_COI_asv_table <- left_join(directcomp_COI_asv_table, directcomp_COI_tax_table, by = "ASV")
+
+directcomp_COI_asv_table %>% mutate(.,ASV_name = ifelse(!(Species %in% c("s_","unassigned")),paste0(ASV,"_",Species),
+                                                    ifelse(!(Genus %in% c("g_","unassigned")),paste0(ASV,"_",Genus),
+                                                           ifelse(!(Family == "unassigned"),paste0(ASV,"_",Family),
+                                                                  ifelse(!(Order == "unassigned"),paste0(ASV,"_",Order),
+                                                                         ifelse(!(Class == "unassigned"),paste0(ASV,"_",Class),
+                                                                                ifelse(!(Phylum == "unassigned"),paste0(ASV,"_",Phylum),
+                                                                                       paste0(ASV,"_","unassigned")))))))) -> directcomp_COI_asv_table
+# Convert to long form
+gathercols <- colnames(as.data.frame(otu_table(directcomp_COI_phyloseq)))
+
+directcomp_COI_asv_table_gather <- gather(directcomp_COI_asv_table, key = "sample", value = "reads", gathercols, factor_key=TRUE)
+
+
+# Figure out the top 20 ASVs total in the dataset to plot
+directcomp_COI_asv_table_asv_total_reads <- as.data.frame(sort(-taxa_sums(directcomp_COI_phyloseq)))
+top_19_CN18S_blanks_asvs <- rownames(directcomp_COI_asv_table_asv_total_reads)[1:19]
+
+directcomp_COI_asv_table_gather %>% mutate(.,ASV_name_updated = ifelse(ASV %in% top_19_CN18S_blanks_asvs,ASV_name,"other")) -> directcomp_COI_asv_table_gather_updated
+
+# Add metadata
+directcomp_meta_yamahara %>% 
+  dplyr::rename(sample = SampleID) %>% 
+  right_join(., directcomp_COI_asv_table_gather_updated, by = "sample") %>% 
+  mutate(Type = ifelse(Type == "combination_depth", "peristaltic_pump", "benchtop_ESP")) %>% 
+  mutate(pair = paste0(sampling_pair, "_", Type)) -> directcomp_COI_asv_table_gather_updated
+
+directcomp_COI_gg <- ggplot(directcomp_COI_asv_table_gather_updated,aes(x = pair, y = reads, fill = ASV_name_updated))+
+  geom_bar(stat = "identity")+
+  ggtitle("Direct comparisons")+
+  scale_fill_tableau("Tableau 20")+
+  # ylim(0,20000)+
+  theme(legend.text = element_text(size = 7),
+        axis.text.x = element_text(angle = 90),
+        axis.title.x = element_blank())+
+  guides(fill = guide_legend(title = "ASV"))
+
+directcomp_COI_gg
+
+ggsave(paste0(fig_dir, "/directcomp_COI_top20ASVs.png"), directcomp_COI_gg, height = 6.5, width = 8)
+```
+
+#### Plot individual sample pairs
+```{r plot_sample_pairs}
+plot_top20ASVs_directcomp(sample_names = subset(directcomp_meta_yamahara, sampling_pair == "1")$SampleID, plot_name = "directcomp_pair1")
+
+plot_top20ASVs_directcomp(sample_names = subset(directcomp_meta_yamahara, sampling_pair == "2")$SampleID, plot_name = "directcomp_pair2")
+
+plot_top20ASVs_directcomp(sample_names = subset(directcomp_meta_yamahara, sampling_pair == "3")$SampleID, plot_name = "directcomp_pair3")
+
+plot_top20ASVs_directcomp(sample_names = subset(directcomp_meta_yamahara, sampling_pair == "4")$SampleID, plot_name = "directcomp_pair4")
+
+plot_top20ASVs_directcomp(sample_names = subset(directcomp_meta_yamahara, sampling_pair == "5")$SampleID, plot_name = "directcomp_pair5")
+
+plot_top20ASVs_directcomp(sample_names = subset(directcomp_meta_yamahara, sampling_pair == "6")$SampleID, plot_name = "directcomp_pair6")
+```
+
