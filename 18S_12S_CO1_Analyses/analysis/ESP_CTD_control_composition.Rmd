@@ -1,0 +1,365 @@
+---
+title: "ESP_CTD_control_composition"
+author: "Markus Min"
+date: "7/29/2021"
+output: html_document
+---
+
+
+#### Description
+In this Rmd we will prepare and export a table with the composition of the various negative controls for this project.
+
+All of the CSVs exported in this Rmd are combined into one Excel file, TableS4.xlsx.
+
+#### Load libraries
+```{r load_libraries}
+library(tidyverse)
+library(phyloseq)
+library(qiime2R)
+library(here)
+library(vegan)
+```
+
+### Load data
+Make sure to remove leading Xs from column names in OTU tables
+```{r eval = FALSE}
+#### COI
+asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
+tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
+metadata_path_COI <- here::here("data", "COI", "ESP_CTD_COI_metadata.csv")
+
+# Remove leading Xs
+COI_otu_table <- read.csv(asv_table_path_COI, row.names = 1)
+names(COI_otu_table) <- sub("X", "", names(COI_otu_table))
+
+ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(COI_otu_table,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_COI, row.names = 1)))
+sample_names(ESP_CTD_COI_phyloseq)
+setdiff(colnames(read.csv(asv_table_path_COI, row.names = 1)), rownames(read.csv(metadata_path_COI, row.names = 1)))
+
+#### 18S
+asv_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_asv_table.csv")
+tax_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_tax_table.csv")
+metadata_path_18S <- here::here("data", "18S", "ESP_CTD_18S_metadata.csv")
+
+# Remove leading Xs
+otu_table_18S <- read.csv(asv_table_path_18S, row.names = 1)
+names(otu_table_18S) <- sub("X", "", names(otu_table_18S))
+
+ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(otu_table_18S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_18S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_18S, row.names = 1)))
+
+#### 12S
+asv_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_asv_table.csv")
+tax_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_tax_table.csv")
+metadata_path_12S <- here::here("data", "12S", "ESP_CTD_12S_metadata.csv")
+
+# Remove leading Xs
+otu_table_12S <- read.csv(asv_table_path_12S, row.names = 1)
+names(otu_table_12S) <- sub("X", "", names(otu_table_12S))
+
+ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(otu_table_12S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_12S, row.names = 1)))
+
+### 16S
+# Read in combined taxonomy + ASV table
+asv_tax_combined_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table_with_tax.csv")
+asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
+# Split off asv table
+dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
+  column_to_rownames("FeatureID") -> asv_table_16S
+
+# Remove leading Xs
+names(asv_table_16S) <- sub("X", "", names(asv_table_16S))
+
+# Split off taxonomy, separate into fields per rank
+tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
+tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
+tax_table_16S %>% separate(., Taxon, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  column_to_rownames("FeatureID") -> tax_table_16S
+  
+metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
+
+ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(tax_table_16S)),
+                                       sample_data(read.csv(metadata_path_16S, row.names = 1)))
+```
+
+## Prepare metadata for controls
+
+
+```{r prepare_control_metadata}
+################# COI
+as.data.frame(as.matrix(sample_data(ESP_CTD_COI_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+  subset(., sample_type.x %in%  c("negative", "blank")) %>% 
+  # Add column to describe blank type
+  mutate(blank_type = ifelse(grepl("CB", sample_name), "CTD collection blank", 
+                             ifelse(grepl("EB", sample_name), "DNA extraction blank", 
+                                    ifelse(grepl("post", sample_name), "Control for ESP post-blanks", 
+                                           ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
+                                                  ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
+                                                                              "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
+                                                                              ), "ESP Pre-experiment blank",
+                                                         ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
+                                                                              "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
+                                                                              ), "ESP Post-experiment blank",
+                                                                ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
+  # only keep the relevant columns
+  dplyr::select(sample_name, SAMPLING_cruise, library, libraryID, locus, original_name, blank_type) %>% 
+  dplyr::rename(COI_plate_name = sample_name) ->  blanks_metadata_COI
+
+# Join other plate metadata
+
+################# 18S
+
+# Make one DF for just joining sample names, for those samples that were sequenced for both markers
+as.data.frame(as.matrix(sample_data(ESP_CTD_18S_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+subset(., sample_type.x %in%  c("negative", "blank")) %>% 
+  dplyr::rename(`18S_plate_name` = sample_name) %>% 
+  dplyr::select(c("18S_plate_name", original_name)) -> sample_names_18S
+
+# Make another DF with complete metadata (for those samples not sequenced by both markers)
+as.data.frame(as.matrix(sample_data(ESP_CTD_18S_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+  subset(., sample_type.x %in%  c("negative", "blank")) %>% 
+  # Add column to describe blank type
+  mutate(blank_type = ifelse(grepl("CB", sample_name), "CTD collection blank", 
+                             ifelse(grepl("EB", sample_name), "DNA extraction blank", 
+                                    ifelse(grepl("post", sample_name), "Control for ESP post-blanks", 
+                                           ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
+                                                  ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
+                                                                              "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
+                                                                              ), "ESP Pre-experiment blank",
+                                                         ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
+                                                                              "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
+                                                                              ), "ESP Post-experiment blank",
+                                                                ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
+  # only keep the relevant columns
+  dplyr::select(sample_name, SAMPLING_cruise, library, libraryID, locus, original_name, blank_type) %>% 
+  dplyr::rename(`18S_plate_name` = sample_name) ->  blanks_metadata_18S
+
+
+################# 12S
+
+# Make one DF for just joining sample names, for those samples that were sequenced for both markers
+as.data.frame(as.matrix(sample_data(ESP_CTD_12S_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+subset(., sample_type.x %in%  c("negative", "blank")) %>% 
+  dplyr::rename(`12S_plate_name` = sample_name) %>% 
+  dplyr::select(c("12S_plate_name", original_name)) -> sample_names_12S
+
+# Make another DF with complete metadata (for those samples not sequenced by both markers)
+as.data.frame(as.matrix(sample_data(ESP_CTD_12S_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+  subset(., sample_type.x %in%  c("negative", "blank")) %>% 
+  # Add column to describe blank type
+  mutate(blank_type = ifelse(grepl("CB", sample_name), "CTD collection blank", 
+                             ifelse(grepl("EB", sample_name), "DNA extraction blank", 
+                                    ifelse(grepl("post", sample_name), "Control for ESP post-blanks", 
+                                           ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
+                                                  ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
+                                                                              "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
+                                                                              ), "ESP Pre-experiment blank",
+                                                         ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
+                                                                              "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
+                                                                              ), "ESP Post-experiment blank",
+                                                                ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
+  # only keep the relevant columns
+  dplyr::select(sample_name, SAMPLING_cruise, library, libraryID, locus, original_name, blank_type) %>% 
+  dplyr::rename(`12S_plate_name` = sample_name) ->  blanks_metadata_12S
+
+
+################# 16S
+
+# Make one DF for just joining sample names, for those samples that were sequenced for both markers
+as.data.frame(as.matrix(sample_data(ESP_CTD_16S_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+subset(., sample_type !=  "environmental") %>% 
+  # change "pst" to "post" 
+  mutate(sample_name = gsub("pst", "post", sample_name)) %>% 
+  # Fix pre/post blank names so they're consistent
+  mutate(sample_name = gsub("CN18FBN1", "CN18FESPkoa_BN1", sample_name)) %>% 
+  dplyr::mutate(original_name = sample_name) %>% 
+  dplyr::rename(`16S_plate_name` = sample_name) %>% 
+  dplyr::select(c("16S_plate_name", original_name)) -> sample_names_16S
+
+# Make another DF with complete metadata (for those samples not sequenced by both markers)
+as.data.frame(as.matrix(sample_data(ESP_CTD_16S_phyloseq))) %>% 
+  rownames_to_column(., "sample_name") %>% 
+subset(., sample_type !=  "environmental") %>% 
+  # change "pst" to "post" 
+  mutate(sample_name = gsub("pst", "post", sample_name)) %>% 
+  # Fix pre/post blank names so they're consistent
+mutate(sample_name = gsub("CN18FBN1", "CN18FESPkoa_BN1", sample_name)) %>% 
+  dplyr::mutate(original_name = sample_name) %>% 
+  # Add column to describe blank type
+  mutate(blank_type = ifelse(grepl("CB", sample_name), "CTD collection blank", 
+                             ifelse(grepl("EB", sample_name), "DNA extraction blank", 
+                                    ifelse(grepl("post", sample_name), "Control for ESP post-blanks", 
+                                           ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
+                                                  ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
+                                                                              "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
+                                                                              ), "ESP Pre-experiment blank",
+                                                         ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
+                                                                              "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
+                                                                              ), "ESP Post-experiment blank",
+                                                                ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
+  dplyr::rename(`16S_plate_name` = sample_name) %>% 
+  # only keep the relevant columns
+  dplyr::select(`16S_plate_name`, SAMPLING_cruise, library, locus, original_name, blank_type) ->  blanks_metadata_16S
+```
+
+
+``` {r join_control_plate_metadata}
+
+# First join all those that have the exact same original name (ignoring PCR blanks, since these are unique for each marker)
+blanks_metadata_COI %>% 
+  subset(., blank_type != "PCR blank") %>% 
+  left_join(., sample_names_18S, by = "original_name") %>% 
+  left_join(., sample_names_12S, by = "original_name") %>% 
+  left_join(., sample_names_16S, by = "original_name") -> blank_metadata_combined
+
+
+# bind rows to attach all remaining samples
+blank_metadata_combined %>% 
+  bind_rows(., subset(blanks_metadata_COI, !(COI_plate_name %in% blank_metadata_combined$COI_plate_name))) %>% 
+  bind_rows(., subset(blanks_metadata_18S, !(`18S_plate_name` %in% blank_metadata_combined$`18S_plate_name`))) %>% 
+  bind_rows(., subset(blanks_metadata_12S, !(`12S_plate_name` %in% blank_metadata_combined$`12S_plate_name`))) %>% 
+  bind_rows(., subset(blanks_metadata_16S, !(`16S_plate_name` %in% blank_metadata_combined$`16S_plate_name`))) -> blank_metadata_combined
+
+# Reorder the columns, remove some
+blank_metadata_combined <- blank_metadata_combined[,c("original_name", "blank_type", "COI_plate_name", "18S_plate_name", "12S_plate_name", "16S_plate_name", "SAMPLING_cruise")]
+
+write.csv(blank_metadata_combined, here(fig_dir, "blanks_tables", "ESP_CTD_blanks_metadata.csv"), row.names = FALSE)
+```
+
+## Prepare ASV/taxa tables
+
+### COI
+```{r COI_blanks_ASV_table}
+ESP_CTD_COI_blanks_phyloseq <- subset_samples(ESP_CTD_COI_phyloseq, sample_data(ESP_CTD_COI_phyloseq)$sample_type.x == "negative")
+
+ESP_CTD_COI_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_COI_blanks_phyloseq) > 0, ESP_CTD_COI_blanks_phyloseq)
+
+ESP_CTD_COI_blanks_asv_table <- as.data.frame(as.matrix(otu_table(ESP_CTD_COI_blanks_phyloseq)))
+
+# Remove the plate suffix from the sample names
+# colnames(ESP_CTD_COI_blanks_asv_table) <- sub("_[^_]+$", "", colnames(ESP_CTD_COI_blanks_asv_table)) 
+
+# Reorder ASVs in order of frequency
+ESP_CTD_COI_blanks_asv_table %>% 
+  mutate(rowsum = rowSums(.)) %>% 
+  arrange(-rowsum) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_COI_blanks_asv_table
+
+# Join taxonomy
+as.data.frame(as.matrix(tax_table(ESP_CTD_COI_blanks_phyloseq))) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_COI_blanks_tax_table
+
+ESP_CTD_COI_blanks_asv_table %>% 
+  left_join(., ESP_CTD_COI_blanks_tax_table, by = "ASV") -> ESP_CTD_COI_blanks_asv_tax_table
+
+# Export
+write.csv(ESP_CTD_COI_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_COI_blanks_asv_tax_table.csv"), row.names = FALSE)
+```
+
+
+### 18S
+```{r 18S_blanks_ASV_table}
+ESP_CTD_18S_blanks_phyloseq <- subset_samples(ESP_CTD_18S_phyloseq, sample_data(ESP_CTD_18S_phyloseq)$sample_type.x == "negative")
+
+ESP_CTD_18S_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_18S_blanks_phyloseq) > 0, ESP_CTD_18S_blanks_phyloseq)
+
+ESP_CTD_18S_blanks_asv_table <- as.data.frame(as.matrix(otu_table(ESP_CTD_18S_blanks_phyloseq)))
+
+# Remove the plate suffix from the sample names
+# colnames(ESP_CTD_18S_blanks_asv_table) <- sub("_[^_]+$", "", colnames(ESP_CTD_18S_blanks_asv_table)) 
+
+# Reorder ASVs in order of frequency
+ESP_CTD_18S_blanks_asv_table %>% 
+  mutate(rowsum = rowSums(.)) %>% 
+  arrange(-rowsum) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_18S_blanks_asv_table
+
+# Join taxonomy
+as.data.frame(as.matrix(tax_table(ESP_CTD_18S_blanks_phyloseq))) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_18S_blanks_tax_table
+
+ESP_CTD_18S_blanks_asv_table %>% 
+  left_join(., ESP_CTD_18S_blanks_tax_table, by = "ASV") -> ESP_CTD_18S_blanks_asv_tax_table
+
+# Export
+write.csv(ESP_CTD_18S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_18S_blanks_asv_tax_table.csv"), row.names = FALSE)
+```
+
+
+### 12S
+```{r 12S_blanks_ASV_table}
+ESP_CTD_12S_blanks_phyloseq <- subset_samples(ESP_CTD_12S_phyloseq, sample_data(ESP_CTD_12S_phyloseq)$sample_type.x == "negative")
+
+ESP_CTD_12S_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_12S_blanks_phyloseq) > 0, ESP_CTD_12S_blanks_phyloseq)
+
+ESP_CTD_12S_blanks_asv_table <- as.data.frame(as.matrix(otu_table(ESP_CTD_12S_blanks_phyloseq)))
+
+# Remove the plate suffix from the sample names
+# colnames(ESP_CTD_12S_blanks_asv_table) <- sub("_[^_]+$", "", colnames(ESP_CTD_12S_blanks_asv_table)) 
+
+# Reorder ASVs in order of frequency
+ESP_CTD_12S_blanks_asv_table %>% 
+  mutate(rowsum = rowSums(.)) %>% 
+  arrange(-rowsum) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_12S_blanks_asv_table
+
+# Join taxonomy
+as.data.frame(as.matrix(tax_table(ESP_CTD_12S_blanks_phyloseq))) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_12S_blanks_tax_table
+
+ESP_CTD_12S_blanks_asv_table %>% 
+  left_join(., ESP_CTD_12S_blanks_tax_table, by = "ASV") -> ESP_CTD_12S_blanks_asv_tax_table
+
+# Export
+write.csv(ESP_CTD_12S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_12S_blanks_asv_tax_table.csv"), row.names = FALSE)
+```
+
+### 16S
+```{r 16S_blanks_ASV_table}
+ESP_CTD_16S_blanks_phyloseq <- subset_samples(ESP_CTD_16S_phyloseq, sample_data(ESP_CTD_16S_phyloseq)$sample_type !=  "environmental")
+
+ESP_CTD_16S_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_16S_blanks_phyloseq) > 0, ESP_CTD_16S_blanks_phyloseq)
+
+ESP_CTD_16S_blanks_asv_table <- as.data.frame(as.matrix(otu_table(ESP_CTD_16S_blanks_phyloseq)))
+
+# Remove the plate suffix from the sample names
+# colnames(ESP_CTD_16S_blanks_asv_table) <- sub("_[^_]+$", "", colnames(ESP_CTD_16S_blanks_asv_table)) 
+
+# Reorder ASVs in order of frequency
+ESP_CTD_16S_blanks_asv_table %>% 
+  mutate(rowsum = rowSums(.)) %>% 
+  arrange(-rowsum) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_16S_blanks_asv_table
+
+# Join taxonomy
+as.data.frame(as.matrix(tax_table(ESP_CTD_16S_blanks_phyloseq))) %>% 
+  rownames_to_column("ASV") -> ESP_CTD_16S_blanks_tax_table
+
+ESP_CTD_16S_blanks_asv_table %>% 
+  left_join(., ESP_CTD_16S_blanks_tax_table, by = "ASV") -> ESP_CTD_16S_blanks_asv_tax_table
+
+# Export
+write.csv(ESP_CTD_16S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_16S_blanks_asv_tax_table.csv"), row.names = FALSE)
+```
+
+
+
+
+
+
+
+
+
+
