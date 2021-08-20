@@ -212,11 +212,15 @@ for (i in 1:length(markers)){
 shannon_plot_combined <- annotate_figure(ggpubr::ggarrange(shannon_plot_16S, shannon_plot_18S,shannon_plot_COI,shannon_plot_12S, 
                                           ncol = 2, nrow = 2,labels = c("(a)", "(b)", "(c)", "(d)"), 
                                           label.x = 0.1, label.y = 0.985,
-                                          font.label = list(size = 20, color = "black", face = "bold")),
+                                          font.label = list(size = 20, color = "black", face = "plain")),
                                          # annotate_figure
                                          left = text_grob("Shannon Index", color = "black", size = 15, rot = 90),
                                          bottom = text_grob("Sampling Method", size = 15))
 
 
 ggsave(shannon_plot_combined, height = 8, width = 8, path = fig_dir, filename = "ESP_CTD_shannon_plot.png", device = "png")
+
+# Resave according to figure guidelines of eDNA journal
+final_fig_dir <- here("figures", "final_figures")
+ggsave(shannon_plot_combined, height = 8, width = 8, path = final_fig_dir, filename = "Fig4_alpha_diversity.pdf", device = "pdf")
 
