@@ -1,0 +1,29 @@
+# PERMANOVA RESULTS FOR DIRECT COMPARISON SAMPLES
+
+"Type" has two values: benchtop ESP or peristaltic pump.
+
+### COI
+
+Permutation test for adonis under reduced model
+Terms added sequentially (first to last)
+Permutation: free
+Number of permutations: 999
+
+adonis2(formula = PCA_dist ~ Type, data = COI_PERMANOVA_metadata, permutations = 999)
+         Df SumOfSqs      R2      F Pr(>F)
+Type      1   0.8234 0.05036 0.3182  0.794
+Residual  6  15.5253 0.94964              
+Total     7  16.3486 1.00000              
+
+### 16S
+
+Permutation test for adonis under reduced model
+Terms added sequentially (first to last)
+Permutation: free
+Number of permutations: 999
+
+adonis2(formula = PCA_dist ~ Type, data = PERMANOVA_metadata_16S, permutations = 999)
+         Df SumOfSqs      R2      F Pr(>F)
+Type      1   0.3569 0.02188 0.1342   0.77
+Residual  6  15.9550 0.97812              
+Total     7  16.3119 1.00000
