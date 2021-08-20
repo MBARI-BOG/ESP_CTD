@@ -840,11 +840,15 @@ combined_heatmap_gg <- annotate_figure(ggpubr::ggarrange(egg::ggarrange(plots = 
                                                       labels = c("(a) 18S", " ", "(b) COI", " ", "(c) 12S", " ", "(d) 16S", " "), 
                                                       # label.args = list(gp = grid::gpar(fontsize = 25, fontface = "bold"),
                                                       #                   x = 0.9, y = 0.95)),
-                                                      label.args = list(gp = grid::gpar(fontsize = 20, fontface = "bold"),
+                                                      label.args = list(gp = grid::gpar(fontsize = 20, fontface = "plain"),
                                                                         x = 0.01, y = 0.95)),
                                                  heatmap_legend, nrow = 2, ncol = 1, heights = c(10,1)),
-                                       top = text_grob("Shipboard                                  Autonomous         ", 
-                                      color = "black", face = "bold", size = 25, vjust = 2))
+                                       top = text_grob("Shipboard                                    Autonomous           ", 
+                                      color = "black", face = "plain", size = 25, vjust = 2))
 
 
 ggsave(combined_heatmap_gg, height = 16, width = 12, path = fig_dir, filename = "combined_heatmap_fig.png", device = "png")
+
+# Resave according to figure guidelines of eDNA journal
+final_fig_dir <- here("figures", "final_figures")
+ggsave(combined_heatmap_gg, height = 16, width = 12, path = final_fig_dir, filename = "Fig6_heatmap.pdf", device = "pdf")
