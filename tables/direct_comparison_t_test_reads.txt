@@ -1,0 +1,29 @@
+### Paired t-test for direct comparison samples
+
+
+
+# COI
+
+	Paired t-test
+
+data:  arrange(subset(read_counts_DC_COI, type == "peristaltic pump"), by_group = sampling_pair)$total_reads and arrange(subset(read_counts_DC_COI, type == "benchtop ESP"), by_group = sampling_pair)$total_reads
+t = 0.73395, df = 3, p-value = 0.5161
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -25695.0  41099.5
+sample estimates:
+mean of the differences 
+                7702.25 
+
+# 16S
+
+	Paired t-test
+
+data:  arrange(subset(read_counts_DC_16S, type == "peristaltic pump"), by_group = sampling_pair)$total_reads and arrange(subset(read_counts_DC_16S, type == "benchtop ESP"), by_group = sampling_pair)$total_reads
+t = 0.81791, df = 3, p-value = 0.4733
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -6578.32 11129.32
+sample estimates:
+mean of the differences 
+                 2275.5 
