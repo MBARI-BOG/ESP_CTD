@@ -24,7 +24,7 @@ library(ggpubr)
 
 Load both the direct comparison samples and the original (CN18S and CN18F) samples for COI and 16S
 
-```{r eval = FALSE}
+```{r}
 #### COI
 asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
 tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
@@ -112,7 +112,7 @@ fig_dir <- here::here("figures", "PCAs")
 # COI
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "COI_final")
 
@@ -153,7 +153,7 @@ write.table(ESP_CTD_COI_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash,, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -191,7 +191,7 @@ qiime deicode rpca \
 
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_COI_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -261,13 +261,21 @@ CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "peristaltic pump" = 22, "benchtop E
 
 ESP_CTD_COI_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = season, fill = season, shape = sample_type_2))+
   # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
-  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white",
                                      ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
   scale_color_manual(values = season_colors)+
   scale_fill_manual(values = season_colors)+
   scale_shape_manual(values = CTD_ESP_shapes)+
+  # Plot the direct comparison samples separately with thin black outlines
+  geom_point(data = subset(pca_data, sample_type_2 %in% c("peristaltic pump", "benchtop ESP")), 
+             aes(x=PC1,y=PC2, fill = season, shape = sample_type_2),
+             # size = 6.5, stroke = 1, color = "black", 
+             size = 6.5, stroke = 1.5, color = "black", 
+             # fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+             #                         ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")),
+             inherit.aes = FALSE) +
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -289,7 +297,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA_v2.png", ESP_CTD_COI_PCA,widt
 # 18S
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r }
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "18S")
 
@@ -319,7 +327,7 @@ write.table(ESP_CTD_18S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash,, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -356,7 +364,7 @@ qiime DEICODE RPCA + run PERMANOVA \
 
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_18S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -452,7 +460,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA.png", ESP_CTD_18S_PCA,width =
 # 12S
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r }
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "12S")
 
@@ -482,7 +490,7 @@ write.table(ESP_CTD_12S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash,, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -518,7 +526,7 @@ qiime deicode rpca \
 ```
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_12S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -614,13 +622,14 @@ ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA.png", ESP_CTD_12S_PCA,width =
 # 16S
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r }
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("16S_Analyses", "DEICODE", "16S_final")
 
 # Subset environmental samples for comparison
 # ESP_CTD_16S_envt_phyloseq <- prune_samples(sample_data(ESP_CTD_16S_phyloseq)$CTD_or_ESP %in% c("CTD","ESP"),ESP_CTD_16S_phyloseq)
-# ESP_CTD_16S_envt_phyloseq <- prune_samples(sample_sums(ESP_CTD_16S_envt_phyloseq) > 1000, ESP_CTD_16S_envt_phyloseq)
+# This is necessary to drop the one CTD sample (CN18Fc35_5_eDNA) with zero reads - otherwise the code breaks later
+ESP_CTD_16S_directcomp_CN18FS_phyloseq <- prune_samples(sample_sums(ESP_CTD_16S_directcomp_CN18FS_phyloseq) > 1000, ESP_CTD_16S_directcomp_CN18FS_phyloseq)
 ESP_CTD_16S_directcomp_CN18FS_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_16S_directcomp_CN18FS_phyloseq) > 0, ESP_CTD_16S_directcomp_CN18FS_phyloseq)
 
 ESP_CTD_16S_envt_asv_table <- as.data.frame(as(otu_table(ESP_CTD_16S_directcomp_CN18FS_phyloseq),"matrix"))
@@ -641,13 +650,28 @@ ESP_CTD_16S_envtsamples_metadata %>%
                                           "unknown")))) %>% 
   # Make another, simplified depth category (shallow_deep) 
   mutate(shallow_deep = ifelse(depth_cat %in% c("0-25", "27-50"), "shallow", "deep")) -> ESP_CTD_16S_envtsamples_metadata
+# Add field for plotting - CTD, ESP, or peristaltic pump, or bench ESP
+ESP_CTD_16S_envtsamples_metadata %>%
+  mutate(sample_type_2 = ifelse(grepl("CN17_CBI", `#SampleID`), "benchtop ESP",
+                         ifelse(grepl("CN17_B", `#SampleID`), "peristaltic pump", sampling_device))) %>% 
+  mutate(sample_type_2 = ifelse(sample_type_2 == "CTD_Flyer", "CTD",
+                                ifelse(sample_type_2 == "3G_ESP", "ESP", sample_type_2))) -> ESP_CTD_16S_envtsamples_metadata
+# Tweak ESP/CTD field to include direct comparisons; needed because we can't have NAs in PERMANOVA
+# Add field for plotting - CTD, ESP, or peristaltic pump, or bench ESP
+ESP_CTD_16S_envtsamples_metadata %>%
+  mutate(CTD_or_ESP = ifelse(sample_type_2 == "benchtop ESP", "ESP", ifelse(sample_type_2 == "peristaltic pump", "CTD", sample_type_2))) -> ESP_CTD_16S_envtsamples_metadata
+# Add season field (separate from cruise, necessary because of addition of CN17S)
+ESP_CTD_16S_envtsamples_metadata %>%
+  mutate(season = ifelse(sampling_cruise %in% c("CN18S", "CN17S"), "Spring", "Fall")) -> ESP_CTD_16S_envtsamples_metadata
+
+
 write.table(ESP_CTD_16S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_envt_sample_data_for_biom.txt"),sep = "\t",row.names = FALSE,quote = FALSE)
 ```
 
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash,, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -683,13 +707,13 @@ qiime diversity beta-group-significance \
 ```
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_16S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
 
 ## Load 16S Data
-distance <- read_qza(here::here("16S_Analyses", "DEICODE","distance.qza"))
+distance <- read_qza(here::here("16S_Analyses", "DEICODE", "16S_final", "distance.qza"))
 
 # Extract distance matrix
 distance_matrix <- distance$data
@@ -706,7 +730,7 @@ ESP_CTD_permanova_16S <- adonis2(PCA_dist ~ CTD_or_ESP, data = pca_metadata, per
 depth_permanova_16S <- adonis2(PCA_dist ~ shallow_deep, data = pca_metadata, permutations=999)
 
 # PERMANOVA for cruise
-cruise_permanova_16S <- adonis2(PCA_dist ~ SAMPLING_cruise, data = pca_metadata, permutations=999)
+cruise_permanova_16S <- adonis2(PCA_dist ~ sampling_cruise, data = pca_metadata, permutations=999)
 
 # PERMANOVA for season
 season_permanova_16S <- adonis2(PCA_dist ~ season, data = pca_metadata, permutations=999)
@@ -714,7 +738,7 @@ season_permanova_16S <- adonis2(PCA_dist ~ season, data = pca_metadata, permutat
 ##----Run multi-factor PERMANOVAs-------------------------------------------------------------
 
 # Multi-factorial PERMANOVA
-mutli_permanova_16S <- adonis2(PCA_dist ~  shallow_deep + season + SAMPLING_cruise + CTD_or_ESP, data = pca_metadata, permutations=999)
+mutli_permanova_16S <- adonis2(PCA_dist ~  shallow_deep + season + sampling_cruise + CTD_or_ESP, data = pca_metadata, permutations=999)
 
 # Save permanova value for plot - ESP vs. CTD after controlling for depth and cruise
 permanova_value <- mutli_permanova_16S$`Pr(>F)`[3]
@@ -723,7 +747,7 @@ permanova_value <- mutli_permanova_16S$`Pr(>F)`[3]
 
 ### Plot 16S DEICODE RPCA
 ```{r}
-pco <- read_qza(here::here("16S_Analyses", "DEICODE","ordination.qza"))
+pco <- read_qza(here::here("16S_Analyses", "DEICODE", "16S_final", "ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
 label.PC1
@@ -741,7 +765,7 @@ pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
 pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
 
 # Extract depth data
-pca_data$depth <- extract_numeric(pca_data$Depth)
+# pca_data$depth <- extract_numeric(pca_data$Depth)
 
 # Shape guide for depths
 # depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
@@ -749,17 +773,32 @@ cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
 CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
 # CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
 
+
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+season_colors <- c("Fall" = "#ff7f00", "Spring" = "#1f78b4")
+# cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4", "CANON17S" = "#6a3d9a")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "peristaltic pump" = 22, "benchtop ESP" = 23)
+
 ##----Make plot-----------------------------------------------------------------
 
-ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+# ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = season, fill = season, shape = sample_type_2))+
   # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
   geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
-                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+                                     ifelse(pca_data$sampling_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
   xlab(print(label.PC1))+
   ylab(print(label.PC2))+
-  scale_color_manual(values = cruise_colors)+
-  scale_fill_manual(values = cruise_colors)+
+  scale_color_manual(values = season_colors)+
+  scale_fill_manual(values = season_colors)+
   scale_shape_manual(values = CTD_ESP_shapes)+
+  # Plot the direct comparison samples separately with thin black outlines
+  geom_point(data = subset(pca_data, sample_type_2 %in% c("peristaltic pump", "benchtop ESP")), 
+             aes(x=PC1,y=PC2, fill = season, shape = sample_type_2),
+             # size = 6.5, stroke = 1, color = "black", 
+             size = 6.5, stroke = 1.5, color = "black", 
+             # fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+             #                         ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")),
+             inherit.aes = FALSE) +
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title = element_text(size = 20),
@@ -774,9 +813,9 @@ ESP_CTD_16S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill
 # +
 #   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
 
-ESP_CTD_16S_PCA
+# ESP_CTD_16S_PCA
 
-ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA.png", ESP_CTD_16S_PCA,width = 7,height = 5)
+ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA_v2.png", ESP_CTD_16S_PCA,width = 7,height = 5)
 ```
 
 
@@ -785,28 +824,44 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA.png", ESP_CTD_16S_PCA,width =
 PCA_legend <- ggplot(pca_data) +
   # ESP vs. CTD
   annotate("text",label = "Sampling Method", x = 0, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
-  annotate("point", x = 0.2, y = 0.9, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # CTD
-  annotate("text",label = "Shipboard", x = 0.6, y = 0.9,size = 7.5,adj = 0)+ #CTD
-  annotate("point", x = 0.2, y = 1.9, shape = 24, colour = "black", fill = "black", size = 6, stroke = 3)+ # ESP
-  annotate("text",label = "Autonomous", x = 0.6, y = 1.9,size = 7.5,adj = 0)+ #ESP
+  annotate("point", x = 0.2, y = 1.2, shape = 21, colour = "black", fill = "black", size = 7, stroke = 3)+ # CTD
+  annotate("text",label = "Shipboard", x = 0.6, y = 1.2,size = 7.5,adj = 0)+ #CTD
+  annotate("point", x = 0.2, y = 2, shape = 24, colour = "black", fill = "black", size = 6, stroke = 3)+ # ESP
+  annotate("text",label = "Autonomous", x = 0.6, y = 2,size = 7.5,adj = 0)+ #ESP
+  
+  # Add shapes for benchtop ESP and peristaltic pump
+  # CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "peristaltic pump" = 22, "benchtop ESP" = 23)
+  annotate("point", x = 0.2, y = -0.4, shape = 22, colour = "black", fill = "black", size = 7, stroke = 3)+ # peristaltic pump
+  annotate("text",label = "Peristaltic Pump", x = 0.6, y = -0.4,size = 7.5,adj = 0)+ #CTD
+  annotate("point", x = 0.2, y = 0.4, shape = 23, colour = "black", fill = "black", size = 6, stroke = 3)+ # benchtop ESP
+  annotate("text",label = "Benchtop ESP", x = 0.6, y = 0.4,size = 7.5,adj = 0)+ #ESP
+  
   # Season and depth
   annotate("text",label = "Season/Depth", x = 6.1, y = 2.8,size = 10,adj = 0)+ # Title 
-  annotate("point", x = 7, y = 2, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 7, stroke = 3)+ # circle point
-  annotate("text",label = "/", x = 6.6, y = 2.01,size = 12,adj = 0, fontface = "bold")+ # slash
   annotate("point", x = 6.3, y = 1.95, shape = 24, colour = "#ff7f00", fill = "#ff7f00", size = 6, stroke = 3)+ # triangle point
-  annotate("text",label = "Fall (shallow)", x = 7.3, y = 2,size = 7.5,adj = 0)+ # fall (shallow)
-  annotate("point", x = 7, y = 1.2, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 7, stroke = 3)+ # circle point
-  annotate("text",label = "/", x = 6.6, y = 1.21,size = 12,adj = 0, fontface = "bold")+ # slash
-  annotate("point", x = 6.3, y = 1.15, shape = 24, colour = "#1f78b4", fill = "#1f78b4", size = 6, stroke = 3)+ # triangle point
-  annotate("text",label = "Spring (shallow)", x = 7.3, y = 1.2,size = 7.5,adj = 0)+ # spring (shallow)
-  annotate("point", x = 7, y = 0.4, shape = 21, colour = "#1f78b4", fill = "white", size = 7, stroke = 3)+ # circle point
-  annotate("text",label = "/", x = 6.6, y = 0.351,size = 12,adj = 0, fontface = "bold")+ # slash
-  annotate("point", x = 6.3, y = 0.35, shape = 24, colour = "#1f78b4", fill = "white", size = 6, stroke = 3)+ # triangle point
-  annotate("text",label = "Spring (deep)", x = 7.3, y = 0.4,size = 7.5,adj = 0)+ # spring (deep)
+  annotate("text",label = "/", x = 6.7, y = 2.01,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 7.2, y = 2, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "Fall (shallow)", x = 7.6, y = 2,size = 7.5,adj = 0)+ # fall (shallow)
+  
+  annotate("point", x = 6.3, y = 1.05, shape = 24, colour = "#1f78b4", fill = "#1f78b4", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "/", x = 6.7, y = 1.11,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 7.2, y = 1.1, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 7, stroke = 3)+ # circle point
+  # Add the CN17S samples to spring (shallow)
+  annotate("text",label = "/", x = 7.55, y = 1.11,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 8.05, y = 1.1, shape = 23, colour = "black", fill = "#1f78b4", size = 8, stroke = 2)+ # diamond point
+  annotate("text",label = "/", x = 8.4, y = 1.11,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 8.9, y = 1.1, shape = 22, colour = "black", fill = "#1f78b4", size = 9, stroke = 2)+ # square point
+  annotate("text",label = "Spring (shallow)", x = 9.25, y = 1.1,size = 7.5,adj = 0)+ # spring (shallow)
+
+  annotate("point", x = 6.3, y = 0.15, shape = 24, colour = "#1f78b4", fill = "white", size = 6, stroke = 3)+ # triangle point
+  annotate("text",label = "/", x = 6.7, y = 0.331,size = 12,adj = 0, fontface = "bold")+ # slash
+  annotate("point", x = 7.2, y = 0.2, shape = 21, colour = "#1f78b4", fill = "white", size = 7, stroke = 3)+ # circle point
+  annotate("text",label = "Spring (deep)", x = 7.6, y = 0.2,size = 7.5,adj = 0)+ # spring (deep)
   
   
-  xlim(0,10)+
-  ylim(0.2,3.2)+
+  xlim(0,12.5)+
+  # ylim(0.2,3.2)+
+  ylim(-0.7, 3.2)+
     theme(panel.background = element_rect(fill="white"),
         panel.border = element_rect(colour = "black", fill=NA, size=2),
         axis.text = element_blank(),
@@ -814,6 +869,8 @@ PCA_legend <- ggplot(pca_data) +
         axis.ticks = element_blank(), 
         legend.position = "none",
         plot.margin = unit(c(0,10,0,10),"cm"))
+    
+    # PCA_legend
 ```
 
 # Combine all PCA figures
@@ -822,7 +879,7 @@ combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA,
                                                  ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ESP_CTD_16S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
                                                  font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
-                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
+                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1.2))
 
 # Reorder according to organism size
 
@@ -830,7 +887,7 @@ combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA,
                                                  ESP_CTD_18S_PCA, ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"), label.x = 0.05, label.y = 0.985,
                                                  font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
-                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
+                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1.2))
                                    
 
 
@@ -841,23 +898,31 @@ ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "com
 # Combine all PERMANOVA results, export as two tables
 
 ### Table of multi-factor PERMANOVA results
+16S and COI have four rows because they include CN17S and therefore include cruise as a factor. 18S and 12S have an NA for cruise, because it is the same as season (only one cruise per season).
+
+The variables are listed in the table in the order that they were tested
 ```{r}
-Dataset <- c(rep("18S",3), rep("COI",3),  rep("12S",3), rep("16S",3))
-Variable_tested <- c(rep(c("Sampling method (ESP vs CTD)", "Season (fall vs spring)","Depth groups (0-25, 27-50, 70-200)"),4))
-p_value <- c(mutli_permanova_18S$`Pr(>F)`[3], mutli_permanova_18S$`Pr(>F)`[2], mutli_permanova_18S$`Pr(>F)`[1],
-             mutli_permanova_COI$`Pr(>F)`[3], mutli_permanova_COI$`Pr(>F)`[2], mutli_permanova_COI$`Pr(>F)`[1],
-             mutli_permanova_12S$`Pr(>F)`[3], mutli_permanova_12S$`Pr(>F)`[2], mutli_permanova_12S$`Pr(>F)`[1],
-             mutli_permanova_16S$`Pr(>F)`[3], mutli_permanova_16S$`Pr(>F)`[2], mutli_permanova_16S$`Pr(>F)`[1])
-F_statistic <- c(mutli_permanova_18S$F[3], mutli_permanova_18S$F[2], mutli_permanova_18S$F[1],
-                 mutli_permanova_COI$F[3], mutli_permanova_COI$F[2], mutli_permanova_COI$F[1],
-                 mutli_permanova_12S$F[3], mutli_permanova_12S$F[2], mutli_permanova_12S$F[1],
-                 mutli_permanova_16S$F[3], mutli_permanova_16S$F[2], mutli_permanova_16S$F[1])
+Dataset <- c(rep("18S",4), rep("COI",4),  rep("12S",4), rep("16S",4))
+Variable_tested <- c(rep(c("Depth: shallow (0-50 m) vs. deep (70-200 m)", "Season (fall vs spring)", "Cruise (17S, 18S, or 18F)", "Sampling method (ESP vs CTD)"),4))
+p_value <- c(mutli_permanova_18S$`Pr(>F)`[1], mutli_permanova_18S$`Pr(>F)`[2], NA, mutli_permanova_18S$`Pr(>F)`[3],
+             mutli_permanova_COI$`Pr(>F)`[1], mutli_permanova_COI$`Pr(>F)`[2], mutli_permanova_COI$`Pr(>F)`[3], mutli_permanova_COI$`Pr(>F)`[4],
+             mutli_permanova_12S$`Pr(>F)`[1], mutli_permanova_12S$`Pr(>F)`[2], NA, mutli_permanova_12S$`Pr(>F)`[3],
+             mutli_permanova_16S$`Pr(>F)`[1], mutli_permanova_16S$`Pr(>F)`[2], mutli_permanova_16S$`Pr(>F)`[3], mutli_permanova_16S$`Pr(>F)`[4])
+F_statistic <- c(mutli_permanova_18S$F[1], mutli_permanova_18S$F[2], NA, mutli_permanova_18S$F[3],
+             mutli_permanova_COI$F[1], mutli_permanova_COI$F[2], mutli_permanova_COI$F[3], mutli_permanova_COI$F[4],
+             mutli_permanova_12S$F[1], mutli_permanova_12S$F[2], NA, mutli_permanova_12S$F[3],
+             mutli_permanova_16S$F[1], mutli_permanova_16S$F[2], mutli_permanova_16S$F[3], mutli_permanova_16S$F[4])
 multi_PERMANOVA_results_table <- data.frame(Dataset, Variable_tested, p_value, F_statistic)
 
+
+mutli_permanova_16S
+multi_PERMANOVA_results_table
 write.csv(multi_PERMANOVA_results_table, here::here("figures", "supplemental", "TableS3_v2.csv"))
 ```
 
 ### Table with individual category PERMANOVA results
+
+I don't think this is included in the final paper.
 
 NOTE: In order to run this, you have to run the ESP_CTD_controls_PCA.Rmd script first to get the PERMANOVA values for the control vs. experimental comparisons. Otherwise, the script will not be able to find the PERMANOVA values for the control vs. environmental comparisons.
 ```{r}
@@ -874,6 +939,6 @@ F_statistic <- c(permanova_control_envt_18S$F[1], ESP_CTD_permanova_18S$F[1], se
 
 individual_PERMANOVA_results_table <- data.frame(Dataset, Variable_tested, p_value, F_statistic)
 
-write.csv(individual_PERMANOVA_results_table, here::here("figures", "supplemental", "TableS2_v2.csv"))
+# write.csv(individual_PERMANOVA_results_table, here::here("figures", "supplemental", "TableS2_v2.csv"))
 ```
 
