@@ -1,0 +1,17 @@
+"","Dataset","Variable_tested","p_value","F_statistic"
+"1","18S","Depth: shallow (0-50 m) vs. deep (70-200 m)",0.001,99.2538260442838
+"2","18S","Season (fall vs spring)",0.001,52.6317425746138
+"3","18S","Cruise (17S, 18S, or 18F)",NA,NA
+"4","18S","Sampling method (ESP vs CTD)",0.001,37.1859290292735
+"5","COI","Depth: shallow (0-50 m) vs. deep (70-200 m)",0.001,276.045792088418
+"6","COI","Season (fall vs spring)",0.001,264.829677272293
+"7","COI","Cruise (17S, 18S, or 18F)",0.841,0.180937049755051
+"8","COI","Sampling method (ESP vs CTD)",0.273,1.30002885463658
+"9","12S","Depth: shallow (0-50 m) vs. deep (70-200 m)",0.001,36.3379846340967
+"10","12S","Season (fall vs spring)",0.001,9.60269626057105
+"11","12S","Cruise (17S, 18S, or 18F)",NA,NA
+"12","12S","Sampling method (ESP vs CTD)",0.001,10.680472838059
+"13","16S","Depth: shallow (0-50 m) vs. deep (70-200 m)",0.001,254.614494077774
+"14","16S","Season (fall vs spring)",0.001,256.99991045434
+"15","16S","Cruise (17S, 18S, or 18F)",0.006,5.18447300306145
+"16","16S","Sampling method (ESP vs CTD)",0.236,1.45893337969834
