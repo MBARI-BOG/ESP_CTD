@@ -18,6 +18,8 @@ library(phyloseq)
 library(qiime2R)
 library(here)
 library(vegan)
+
+fig_dir <- here("figures", "supplemental")
 ```
 
 ### Load data
@@ -242,7 +244,7 @@ write.csv(blank_metadata_combined, here(fig_dir, "blanks_tables", "ESP_CTD_blank
 
 ### COI
 ```{r COI_blanks_ASV_table}
-ESP_CTD_COI_blanks_phyloseq <- subset_samples(ESP_CTD_COI_phyloseq, sample_data(ESP_CTD_COI_phyloseq)$sample_type.x == "negative")
+ESP_CTD_COI_blanks_phyloseq <- subset_samples(ESP_CTD_COI_phyloseq, sample_data(ESP_CTD_COI_phyloseq)$sample_type.x %in% c("negative", "blank"))
 
 ESP_CTD_COI_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_COI_blanks_phyloseq) > 0, ESP_CTD_COI_blanks_phyloseq)
 
@@ -271,7 +273,7 @@ write.csv(ESP_CTD_COI_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_
 
 ### 18S
 ```{r 18S_blanks_ASV_table}
-ESP_CTD_18S_blanks_phyloseq <- subset_samples(ESP_CTD_18S_phyloseq, sample_data(ESP_CTD_18S_phyloseq)$sample_type.x == "negative")
+ESP_CTD_18S_blanks_phyloseq <- subset_samples(ESP_CTD_18S_phyloseq, sample_data(ESP_CTD_18S_phyloseq)$sample_type.x %in% c("negative", "blank"))
 
 ESP_CTD_18S_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_18S_blanks_phyloseq) > 0, ESP_CTD_18S_blanks_phyloseq)
 
@@ -300,7 +302,7 @@ write.csv(ESP_CTD_18S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_
 
 ### 12S
 ```{r 12S_blanks_ASV_table}
-ESP_CTD_12S_blanks_phyloseq <- subset_samples(ESP_CTD_12S_phyloseq, sample_data(ESP_CTD_12S_phyloseq)$sample_type.x == "negative")
+ESP_CTD_12S_blanks_phyloseq <- subset_samples(ESP_CTD_12S_phyloseq, sample_data(ESP_CTD_12S_phyloseq)$sample_type.x %in% c("negative", "blank"))
 
 ESP_CTD_12S_blanks_phyloseq <- prune_taxa(taxa_sums(ESP_CTD_12S_blanks_phyloseq) > 0, ESP_CTD_12S_blanks_phyloseq)
 
@@ -360,6 +362,198 @@ write.csv(ESP_CTD_16S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_
 
 
 
+
+
+
+
+
+## Summarized figure
+
+```{r set_fig_dir}
+fig_dir <- here("figures", "supplemental", "blanks_figures")
+```
+
+
+
+Plot phyla (top 10 + unassigned + other, same as for the direct comparison samples)
+phyloseq: ESP_CTD_COI_blanks_phyloseq
+metadata: blanks_metadata_COI
+
+### COI
+
+
+### Make top phyla plot
+```{r prep_data}
+# Extract ASVs
+as.data.frame(otu_table(ESP_CTD_COI_blanks_phyloseq)) %>% 
+  rownames_to_column("ASV") -> blanks_COI_ASV_table
+
+# Remove "_X" from the column names
+colnames(blanks_COI_ASV_table) <- gsub("_X", "", colnames(blanks_COI_ASV_table))
+
+# Extract taxonomy table
+blanks_COI_tax_table <- as.data.frame(as(tax_table(ESP_CTD_COI_blanks_phyloseq),"matrix"))
+blanks_COI_tax_table <- tibble::rownames_to_column(blanks_COI_tax_table,"ASV")
+
+# reformat ASV table as long form
+blanks_COI_ASV_table %>% 
+  pivot_longer(cols = colnames(blanks_COI_ASV_table)[2:ncol(blanks_COI_ASV_table)], names_to = "sample_name") -> blanks_COI_asv_table_long
+
+blanks_COI_asv_table_long %>% 
+  left_join(blanks_COI_tax_table, by = "ASV") -> blanks_COI_table
+
+# Add shortened sample names
+blanks_metadata_COI %>% 
+  mutate(sample_name = COI_plate_name) -> blanks_metadata_COI
+
+# Add more informative sample names
+blanks_metadata_COI %>% 
+  arrange(desc(blank_type)) %>% 
+  # add index within each blank_type group
+  group_by(blank_type) %>% 
+  mutate(id = row_number()) %>% 
+  # re-order those that were taken separately for each cruise
+  ungroup() %>% 
+  group_by(blank_type, SAMPLING_cruise) %>% 
+  mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), row_number(), id)) %>% 
+  # combine into new name field
+  mutate(name = ifelse(blank_type %in% c("DNA extraction blank", "PCR blank"), paste0(blank_type, " ", id),
+                       paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) -> blanks_metadata_COI
+
+blanks_COI_table %>% 
+  left_join(.,  blanks_metadata_COI, by = "sample_name") -> blanks_COI_table
+
+
+unique(blanks_COI_table$Phylum)
+```
+
+```{r determine_top_phyla}
+blanks_COI_table %>% 
+  # Change so that "unassigned", "no_hit", and "unknown" will merge together
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  group_by(Phylum) %>% 
+  summarise(total = sum(value)) -> blanks_COI_phyla_reads
+
+blanks_COI_phyla_reads %>% 
+  arrange(., desc(total)) -> blanks_COI_phyla_reads
+
+# Get the top ten phyla; we need top ten, then "unknown" and "other" to get to 12
+# Get top 11
+top11_phyla <- blanks_COI_phyla_reads$Phylum[1:11]
+
+# Mutate data for plotting to get new phyla (top 10 + unassigned + other)
+blanks_COI_table %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  mutate(., phylum2 = ifelse(Phylum %in% top11_phyla, Phylum, "Other")) -> blanks_COI_table
+
+# Calculate proportion of total
+blanks_COI_table %>% 
+  group_by(name) %>% 
+  mutate(rel_reads = value/sum(value)*100) -> blanks_COI_table
+
+# Group by phylum and collapse table
+blanks_COI_table %>% 
+  group_by(name, phylum2) %>% 
+  summarise(rel_reads = sum(rel_reads)) -> blanks_COI_table_forplot
+
+# Reorder phyla so that unassigned and other are at the bottom
+blanks_COI_table_forplot$phylum2 <- factor(blanks_COI_table_forplot$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Chaetognatha", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
+
+# Make color scale
+phylum_colors <- c("#a6cee3",
+"#1f78b4",
+"#b2df8a",
+"#33a02c",
+'#fb9a99',
+"#e31a1c",
+"#fdbf6f",
+"#ff7f00",
+"#cab2d6",
+"#6a3d9a",
+"#b15928",
+"gray50")
+# "#ffff99",
+# "#b15928")
+```
+
+
+
+```{r plot_top_phyla_COI}
+blanks_COI_top_phyla_plot <- ggplot(blanks_COI_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Percentage of total reads") +
+  scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/COI figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        legend.position = "top",
+        legend.title.align = 0.5)
+        # axis.line.x.bottom = element_line(color = "black", size = 1),
+        # axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_COI_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/COI_blanks_phyla_plot.png"), blanks_COI_top_phyla_plot, height = 15, width = 6)
+```
+
+Second version of plot showing read counts rather than relative read counts
+```{r second_version_showing_absolute_reads}
+# Group by phylum and collapse table
+blanks_COI_table %>% 
+  group_by(name, phylum2) %>% 
+  summarise(total_reads = sum(value)) -> blanks_COI_table_forplot_2
+
+# Reorder phyla so that unassigned and other are at the bottom
+blanks_COI_table_forplot_2$phylum2 <- factor(blanks_COI_table_forplot_2$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Chaetognatha", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
+
+
+blanks_COI_top_phyla_plot <- ggplot(blanks_COI_table_forplot_2, aes(x = name, y = total_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Total Reads") +
+  # scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/COI figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
+        legend.title.align = 0.5)
+        # axis.line.x.bottom = element_line(color = "black", size = 1),
+        # axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_COI_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/COI_blanks_phyla_plot_absolute_reads.png"), blanks_COI_top_phyla_plot, height = 15, width = 6)
+
+```
 
 
 
