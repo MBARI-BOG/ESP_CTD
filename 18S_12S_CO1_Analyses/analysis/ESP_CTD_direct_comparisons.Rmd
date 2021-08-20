@@ -19,6 +19,7 @@ library(qiime2R)
 library(ggthemes)
 library(ggpubr)
 library(janitor)
+library(vegan)
 
 fig_dir <- here::here("figures", "direct_comparisons")
 ```
@@ -1100,6 +1101,9 @@ ggsave(paste0(fig_dir, "/final_figures/COI_directcomp_fig_v2.png"), DC_COI_fig, 
 
 ### load data
 ```{r load_data}
+# set fig_dir
+fig_dir <- here("figures", "direct_comparisons", "16S")
+
 # load asv table
 read.table(here("data", "16S", "2017_directcomparison_tablewithtaxonomy.tsv"), sep = "\t") %>% 
   row_to_names(row_number = 1) %>% 
@@ -1133,6 +1137,8 @@ directcomp_16S_phyloseq <- merge_phyloseq(otu_table(column_to_rownames(asv_table
                                        tax_table(as.matrix(column_to_rownames(tax_table_16S, "ASV_ID"))),
                                        sample_data(column_to_rownames(yamahara_metadata_16S, "sample_name")))
 
+# Remove two likely mislabeled samples
+directcomp_16S_phyloseq <- prune_samples(!(sample_names(directcomp_16S_phyloseq) %in% c("CN17_B20", "CN17_CBI9", "CN17_B23", "CN17_CBI10")), directcomp_16S_phyloseq)
 
 # Add another column to show which samples are paired
 yamahara_metadata_16S %>% 
@@ -1862,6 +1868,45 @@ DC_COI_16S_phylum_fig <- ggarrange(DC_16S_top_phyla_plot, DC_COI_top_phyla_plot,
 ggsave(paste0(fig_dir, "/final_figures/COI_16S_directcomp_phylum_fig.png"), DC_COI_16S_phylum_fig, height = 8, width = 12)
 ```
 
+# Test for differences between methods
 
+### PERMANOVA
 
+#### COI
+```{r}
+# Extract metadata
+COI_PERMANOVA_metadata <- subset(directcomp_meta_yamahara, SampleID %in% directcomp_COI_metadata$`#SampleID`)
+# COI_PERMANOVA_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> COI_PERMANOVA_metadata
+
+## Load 16S Data
+distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "COI_directcomp", "distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+
+# PERMANOVA for cruise
+directcomp_permanova_COI <- adonis2(PCA_dist ~ Type, data = COI_PERMANOVA_metadata, permutations=999)
+```
+
+#### 16S
+```{r}
+# Extract metadata
+PERMANOVA_metadata_16S <- subset(yamahara_metadata_16S,sampling_pair %in% c(1,2,3,4))
+PERMANOVA_metadata_16S %>% dplyr::rename(., "SampleID" = "sample_name") -> PERMANOVA_metadata_16S
+
+## Load 16S Data
+distance <- read_qza(here::here("16S_Analyses", "DEICODE", "16S_directcomp", "distance.qza"))
+
+# Extract distance matrix
+distance_matrix <- distance$data
+
+# convert DEICODE matrix to "dist" class object
+PCA_dist <- as.dist(distance_matrix)
+
+# PERMANOVA for cruise
+directcomp_permanova_16S <- adonis2(PCA_dist ~ Type, data = PERMANOVA_metadata_16S, permutations=999)
+```
 
