@@ -832,9 +832,9 @@ PCA_legend <- ggplot(pca_data) +
   # Add shapes for benchtop ESP and peristaltic pump
   # CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24, "peristaltic pump" = 22, "benchtop ESP" = 23)
   annotate("point", x = 0.2, y = -0.4, shape = 22, colour = "black", fill = "black", size = 7, stroke = 3)+ # peristaltic pump
-  annotate("text",label = "Peristaltic Pump", x = 0.6, y = -0.4,size = 7.5,adj = 0)+ #CTD
+  annotate("text",label = "Shipboard (2017)", x = 0.6, y = -0.4,size = 7.5,adj = 0)+ #CTD
   annotate("point", x = 0.2, y = 0.4, shape = 23, colour = "black", fill = "black", size = 6, stroke = 3)+ # benchtop ESP
-  annotate("text",label = "Benchtop ESP", x = 0.6, y = 0.4,size = 7.5,adj = 0)+ #ESP
+  annotate("text",label = "Benchtop ESP (2017)", x = 0.6, y = 0.4,size = 7.5,adj = 0)+ #ESP
   
   # Season and depth
   annotate("text",label = "Season/Depth", x = 6.1, y = 2.8,size = 10,adj = 0)+ # Title 
@@ -850,8 +850,8 @@ PCA_legend <- ggplot(pca_data) +
   annotate("text",label = "/", x = 7.55, y = 1.11,size = 12,adj = 0, fontface = "bold")+ # slash
   annotate("point", x = 8.05, y = 1.1, shape = 23, colour = "black", fill = "#1f78b4", size = 8, stroke = 2)+ # diamond point
   annotate("text",label = "/", x = 8.4, y = 1.11,size = 12,adj = 0, fontface = "bold")+ # slash
-  annotate("point", x = 8.9, y = 1.1, shape = 22, colour = "black", fill = "#1f78b4", size = 9, stroke = 2)+ # square point
-  annotate("text",label = "Spring (shallow)", x = 9.25, y = 1.1,size = 7.5,adj = 0)+ # spring (shallow)
+  annotate("point", x = 8.95, y = 1.1, shape = 22, colour = "black", fill = "#1f78b4", size = 9, stroke = 2)+ # square point
+  annotate("text",label = "Spring (shallow)", x = 9.3, y = 1.1,size = 7.5,adj = 0)+ # spring (shallow)
 
   annotate("point", x = 6.3, y = 0.15, shape = 24, colour = "#1f78b4", fill = "white", size = 6, stroke = 3)+ # triangle point
   annotate("text",label = "/", x = 6.7, y = 0.331,size = 12,adj = 0, fontface = "bold")+ # slash
@@ -886,13 +886,16 @@ combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA,
 combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA, 
                                                  ESP_CTD_18S_PCA, ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"), label.x = 0.05, label.y = 0.985,
-                                                 font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
+                                                 font.label = list(size = 35, color = "black", face = "plain"), hjust = -0.12),
                                                  PCA_legend, nrow = 2, ncol = 1, heights = c(7,1.2))
                                    
 
 
 ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "combined_PCA_fig_v2.png", device = "png")
 
+# Resave according to figure guidelines of eDNA journal
+final_fig_dir <- here("figures", "final_figures")
+ggsave(combined_PCA_gg, height = 16, width = 16, path = final_fig_dir, filename = "Fig5_PCA.pdf", device = "pdf")
 ```
 
 # Combine all PERMANOVA results, export as two tables
