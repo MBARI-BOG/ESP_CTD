@@ -1863,9 +1863,13 @@ ggsave(paste0(fig_dir, "/16S_directcomp_phyla_plot.png"), DC_16S_top_phyla_plot,
 ### Join 16S and COI top phyla plots using ggarrange
 ```{r make_directcomp_fig}
 DC_COI_16S_phylum_fig <- ggarrange(DC_16S_top_phyla_plot, DC_COI_top_phyla_plot, heights = c(7,7), widths = c(5,4.1), labels = c("(a) 16S", "(b) COI"),
-                                   label.x = 0.01, label.y = 0.995, font.label = list(size = 24), hjust = 0)
+                                   label.x = 0.01, label.y = 0.995, font.label = list(size = 24, face = "plain"), hjust = 0)
 
 ggsave(paste0(fig_dir, "/final_figures/COI_16S_directcomp_phylum_fig.png"), DC_COI_16S_phylum_fig, height = 8, width = 12)
+
+# Resave for paper submission
+final_fig_dir <- here("figures", "final_figures")
+ggsave(DC_COI_16S_phylum_fig, height = 8, width = 11, path = final_fig_dir, filename = "Fig3_top_phyla_direct_comparison.pdf", device = "pdf")
 ```
 
 # Test for differences between methods
@@ -1908,5 +1912,59 @@ PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for cruise
 directcomp_permanova_16S <- adonis2(PCA_dist ~ Type, data = PERMANOVA_metadata_16S, permutations=999)
+```
+
+
+# Compare read counts
+
+
+```{r}
+as.data.frame(sample_sums(directcomp_16S_phyloseq)) %>% 
+  rownames_to_column("sample_name") %>% 
+  dplyr::rename(total_reads = "sample_sums(directcomp_16S_phyloseq)") %>% 
+  # Add type field
+  mutate(type = ifelse(grepl("CN17_CBI", sample_name), "benchtop ESP",
+                         ifelse(grepl("CN17_B", sample_name), "peristaltic pump", NA))) %>% 
+    # Add sampling pair information
+    mutate(., sampling_pair = ifelse(sample_name %in% c("CN17_B1", "CN17_CBI1"), "1",
+                                   ifelse(sample_name %in% c("CN17_B10", "CN17_CBI4"), "2",
+                                          ifelse(sample_name %in% c("CN17_B13", "CN17_CBI5"), "3",
+                                                 ifelse(sample_name %in% c("CN17_B17", "CN17_CBI8"), "4",NA))))) -> read_counts_DC_16S
+
+as.data.frame(sample_sums(directcomp_COI_phyloseq)) %>% 
+  rownames_to_column("sample_name") %>% 
+  dplyr::rename(total_reads = "sample_sums(directcomp_COI_phyloseq)") %>% 
+  # Remove mislabeled samples
+  subset(!(sample_name %in% c("CANON_B20_22_X", "CANON_CBI9_22_X", "CANON_B23_22_X", "CANON_CBI10_22_X"))) %>% 
+    # Add type field
+  mutate(type = ifelse(grepl("CANON_CBI", sample_name), "benchtop ESP",
+                         ifelse(grepl("CANON_B", sample_name), "peristaltic pump", NA))) %>% 
+  # Add sampling pair information
+    mutate(., sampling_pair = ifelse(sample_name %in% c("CANON_B1_22_X", "CANON_CBI1_22_X"), "1",
+                                   ifelse(sample_name %in% c("CANON_B10_22_X", "CANON_CBI4_22_X"), "2",
+                                          ifelse(sample_name %in% c("CANON_B13_22_X", "CANON_CBI5_22_X"), "3",
+                                                 ifelse(sample_name %in% c("CANON_B17_22_X", "CANON_CBI8_22_X"), "4",NA))))) -> read_counts_DC_COI
+
+# Run t-test
+
+## Unpaired
+# COI
+t.test(total_reads ~ type, data = read_counts_DC_COI)
+
+# 16S
+t.test(total_reads ~ type, data = read_counts_DC_16S)
+
+
+## Paired
+
+# 16S
+t.test(arrange(subset(read_counts_DC_16S, type == "peristaltic pump"), by_group = sampling_pair)$total_reads, 
+       arrange(subset(read_counts_DC_16S, type == "benchtop ESP"), by_group = sampling_pair)$total_reads, paired = TRUE, alternative = "two.sided")
+
+# COI
+# 16S
+t.test(arrange(subset(read_counts_DC_COI, type == "peristaltic pump"), by_group = sampling_pair)$total_reads, 
+       arrange(subset(read_counts_DC_COI, type == "benchtop ESP"), by_group = sampling_pair)$total_reads, paired = TRUE, alternative = "two.sided")
+
 ```
 
