@@ -13,18 +13,18 @@ All of the CSVs exported in this Rmd are combined into one Excel file, TableS4.x
 
 #### Load libraries
 ```{r load_libraries}
-library(tidyverse)
 library(phyloseq)
 library(qiime2R)
 library(here)
 library(vegan)
+library(tidyverse)
 
-fig_dir <- here("figures", "supplemental")
+fig_dir <- here::here("figures", "supplemental")
 ```
 
 ### Load data
 Make sure to remove leading Xs from column names in OTU tables
-```{r eval = FALSE}
+```{r}
 #### COI
 asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
 tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
@@ -237,7 +237,7 @@ blank_metadata_combined %>%
 # Reorder the columns, remove some
 blank_metadata_combined <- blank_metadata_combined[,c("original_name", "blank_type", "COI_plate_name", "18S_plate_name", "12S_plate_name", "16S_plate_name", "SAMPLING_cruise")]
 
-write.csv(blank_metadata_combined, here(fig_dir, "blanks_tables", "ESP_CTD_blanks_metadata.csv"), row.names = FALSE)
+write.csv(blank_metadata_combined, here::here(fig_dir, "blanks_tables", "ESP_CTD_blanks_metadata.csv"), row.names = FALSE)
 ```
 
 ## Prepare ASV/taxa tables
@@ -267,7 +267,7 @@ ESP_CTD_COI_blanks_asv_table %>%
   left_join(., ESP_CTD_COI_blanks_tax_table, by = "ASV") -> ESP_CTD_COI_blanks_asv_tax_table
 
 # Export
-write.csv(ESP_CTD_COI_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_COI_blanks_asv_tax_table.csv"), row.names = FALSE)
+write.csv(ESP_CTD_COI_blanks_asv_tax_table, here::here(fig_dir, "blanks_tables", "ESP_CTD_COI_blanks_asv_tax_table.csv"), row.names = FALSE)
 ```
 
 
@@ -296,7 +296,7 @@ ESP_CTD_18S_blanks_asv_table %>%
   left_join(., ESP_CTD_18S_blanks_tax_table, by = "ASV") -> ESP_CTD_18S_blanks_asv_tax_table
 
 # Export
-write.csv(ESP_CTD_18S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_18S_blanks_asv_tax_table.csv"), row.names = FALSE)
+write.csv(ESP_CTD_18S_blanks_asv_tax_table, here::here(fig_dir, "blanks_tables", "ESP_CTD_18S_blanks_asv_tax_table.csv"), row.names = FALSE)
 ```
 
 
@@ -325,7 +325,7 @@ ESP_CTD_12S_blanks_asv_table %>%
   left_join(., ESP_CTD_12S_blanks_tax_table, by = "ASV") -> ESP_CTD_12S_blanks_asv_tax_table
 
 # Export
-write.csv(ESP_CTD_12S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_12S_blanks_asv_tax_table.csv"), row.names = FALSE)
+write.csv(ESP_CTD_12S_blanks_asv_tax_table, here::here(fig_dir, "blanks_tables", "ESP_CTD_12S_blanks_asv_tax_table.csv"), row.names = FALSE)
 ```
 
 ### 16S
@@ -353,7 +353,7 @@ ESP_CTD_16S_blanks_asv_table %>%
   left_join(., ESP_CTD_16S_blanks_tax_table, by = "ASV") -> ESP_CTD_16S_blanks_asv_tax_table
 
 # Export
-write.csv(ESP_CTD_16S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_CTD_16S_blanks_asv_tax_table.csv"), row.names = FALSE)
+write.csv(ESP_CTD_16S_blanks_asv_tax_table, here::here(fig_dir, "blanks_tables", "ESP_CTD_16S_blanks_asv_tax_table.csv"), row.names = FALSE)
 ```
 
 
@@ -367,10 +367,10 @@ write.csv(ESP_CTD_16S_blanks_asv_tax_table, here(fig_dir, "blanks_tables", "ESP_
 
 
 
-## Summarized figure
+## Summarized figures
 
 ```{r set_fig_dir}
-fig_dir <- here("figures", "supplemental", "blanks_figures")
+fig_dir <- here::here("figures", "supplemental", "blanks_figures")
 ```
 
 
@@ -379,7 +379,7 @@ Plot phyla (top 10 + unassigned + other, same as for the direct comparison sampl
 phyloseq: ESP_CTD_COI_blanks_phyloseq
 metadata: blanks_metadata_COI
 
-### COI
+## COI
 
 
 ### Make top phyla plot
@@ -408,14 +408,14 @@ blanks_metadata_COI %>%
 
 # Add more informative sample names
 blanks_metadata_COI %>% 
-  arrange(desc(blank_type)) %>% 
+  dplyr::arrange(desc(blank_type)) %>% 
   # add index within each blank_type group
-  group_by(blank_type) %>% 
-  mutate(id = row_number()) %>% 
+  dplyr::group_by(blank_type) %>% 
+  dplyr::mutate(id = dplyr::row_number()) %>% 
   # re-order those that were taken separately for each cruise
   ungroup() %>% 
   group_by(blank_type, SAMPLING_cruise) %>% 
-  mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), row_number(), id)) %>% 
+  dplyr::mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), dplyr::row_number(), id)) %>% 
   # combine into new name field
   mutate(name = ifelse(blank_type %in% c("DNA extraction blank", "PCR blank"), paste0(blank_type, " ", id),
                        paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) -> blanks_metadata_COI
@@ -454,7 +454,7 @@ blanks_COI_table %>%
 # Group by phylum and collapse table
 blanks_COI_table %>% 
   group_by(name, phylum2) %>% 
-  summarise(rel_reads = sum(rel_reads)) -> blanks_COI_table_forplot
+  dplyr::summarise(rel_reads = sum(rel_reads)) -> blanks_COI_table_forplot
 
 # Reorder phyla so that unassigned and other are at the bottom
 blanks_COI_table_forplot$phylum2 <- factor(blanks_COI_table_forplot$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Chaetognatha", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
@@ -557,3 +557,540 @@ ggsave(paste0(fig_dir, "/COI_blanks_phyla_plot_absolute_reads.png"), blanks_COI_
 
 
 
+
+## 18S
+
+
+### Make top phyla plot
+```{r prep_data}
+# Extract ASVs
+as.data.frame(otu_table(ESP_CTD_18S_blanks_phyloseq)) %>% 
+  rownames_to_column("ASV") -> blanks_18S_ASV_table
+
+# Remove "_X" from the column names
+colnames(blanks_18S_ASV_table) <- gsub("_X", "", colnames(blanks_18S_ASV_table))
+
+# Extract taxonomy table
+blanks_18S_tax_table <- as.data.frame(as(tax_table(ESP_CTD_18S_blanks_phyloseq),"matrix"))
+blanks_18S_tax_table <- tibble::rownames_to_column(blanks_18S_tax_table,"ASV")
+
+# reformat ASV table as long form
+blanks_18S_ASV_table %>% 
+  pivot_longer(cols = colnames(blanks_18S_ASV_table)[2:ncol(blanks_18S_ASV_table)], names_to = "sample_name") -> blanks_18S_asv_table_long
+
+blanks_18S_asv_table_long %>% 
+  left_join(blanks_18S_tax_table, by = "ASV") -> blanks_18S_table
+
+# Add shortened sample names
+blanks_metadata_18S %>% 
+  mutate(sample_name = `18S_plate_name`) -> blanks_metadata_18S
+
+# Add more informative sample names
+blanks_metadata_18S %>% 
+  dplyr::arrange(desc(blank_type)) %>% 
+  # add index within each blank_type group
+  dplyr::group_by(blank_type) %>% 
+  dplyr::mutate(id = dplyr::row_number()) %>% 
+  # re-order those that were taken separately for each cruise
+  ungroup() %>% 
+  group_by(blank_type, SAMPLING_cruise) %>% 
+  dplyr::mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), dplyr::row_number(), id)) %>% 
+  # combine into new name field
+  mutate(name = ifelse(blank_type %in% c("DNA extraction blank", "PCR blank"), paste0(blank_type, " ", id),
+                       paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) -> blanks_metadata_18S
+
+blanks_18S_table %>% 
+  left_join(.,  blanks_metadata_18S, by = "sample_name") -> blanks_18S_table
+
+
+unique(blanks_18S_table$Phylum)
+```
+
+```{r determine_top_phyla}
+blanks_18S_table %>% 
+  # Change so that "unassigned", "no_hit", and "unknown" will merge together
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  group_by(Phylum) %>% 
+  summarise(total = sum(value)) -> blanks_18S_phyla_reads
+
+blanks_18S_phyla_reads %>% 
+  arrange(., desc(total)) -> blanks_18S_phyla_reads
+
+# Get the top ten phyla; we need top ten, then "unknown" and "other" to get to 12
+# Get top 11
+top11_phyla <- blanks_18S_phyla_reads$Phylum[1:11]
+
+# Mutate data for plotting to get new phyla (top 10 + unassigned + other)
+blanks_18S_table %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  mutate(., phylum2 = ifelse(Phylum %in% top11_phyla, Phylum, "Other")) -> blanks_18S_table
+
+# Calculate proportion of total
+blanks_18S_table %>% 
+  group_by(name) %>% 
+  mutate(rel_reads = value/sum(value)*100) -> blanks_18S_table
+
+# Group by phylum and collapse table
+blanks_18S_table %>% 
+  group_by(name, phylum2) %>% 
+  dplyr::summarise(rel_reads = sum(rel_reads)) -> blanks_18S_table_forplot
+
+# Reorder phyla so that unassigned and other are at the bottom
+blanks_18S_table_forplot$phylum2 <- factor(blanks_18S_table_forplot$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Basidiomycota", "Cercozoa", "Chlorophyta", "Cnidaria", "Dinoflagellata",  "Euglenozoa","Ochrophyta", "Streptophyta", "Other", "Unassigned"))
+
+# Make color scale
+phylum_colors <- c("#a6cee3",
+                   "#1f78b4",
+                   "#b2df8a",
+                   "#33a02c",
+                   '#fb9a99',
+                   "#e31a1c",
+                   "#fdbf6f",
+                   "#ff7f00",
+                   "#cab2d6",
+                   "#6a3d9a",
+                   "#b15928",
+                   "gray50")
+# "#ffff99",
+# "#b15928")
+```
+
+
+
+```{r plot_top_phyla_18S}
+blanks_18S_top_phyla_plot <- ggplot(blanks_18S_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Percentage of total reads") +
+  scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/18S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        legend.position = "top",
+        legend.title.align = 0.5)
+# axis.line.x.bottom = element_line(color = "black", size = 1),
+# axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_18S_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/18S_blanks_phyla_plot.png"), blanks_18S_top_phyla_plot, height = 15, width = 6)
+```
+
+Second version of plot showing read counts rather than relative read counts
+```{r second_version_showing_absolute_reads}
+# Group by phylum and collapse table
+blanks_18S_table %>% 
+  group_by(name, phylum2) %>% 
+  summarise(total_reads = sum(value)) -> blanks_18S_table_forplot_2
+
+# Reorder phyla so that unassigned and other are at the bottom
+blanks_18S_table_forplot_2$phylum2 <- factor(blanks_18S_table_forplot_2$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Basidiomycota", "Cercozoa", "Chlorophyta", "Cnidaria", "Dinoflagellata",  "Euglenozoa","Ochrophyta", "Streptophyta", "Other", "Unassigned"))
+
+
+blanks_18S_top_phyla_plot <- ggplot(blanks_18S_table_forplot_2, aes(x = name, y = total_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Total Reads") +
+  # scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/18S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
+        legend.title.align = 0.5)
+# axis.line.x.bottom = element_line(color = "black", size = 1),
+# axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_18S_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/18S_blanks_phyla_plot_absolute_reads.png"), blanks_18S_top_phyla_plot, height = 15, width = 6)
+
+```
+
+
+
+## 12S
+
+
+### Make top families plot
+```{r prep_data}
+# Extract ASVs
+as.data.frame(otu_table(ESP_CTD_12S_blanks_phyloseq)) %>% 
+  rownames_to_column("ASV") -> blanks_12S_ASV_table
+
+# Remove "_X" from the column names
+colnames(blanks_12S_ASV_table) <- gsub("_X", "", colnames(blanks_12S_ASV_table))
+
+# Extract taxonomy table
+blanks_12S_tax_table <- as.data.frame(as(tax_table(ESP_CTD_12S_blanks_phyloseq),"matrix"))
+blanks_12S_tax_table <- tibble::rownames_to_column(blanks_12S_tax_table,"ASV")
+
+# reformat ASV table as long form
+blanks_12S_ASV_table %>% 
+  pivot_longer(cols = colnames(blanks_12S_ASV_table)[2:ncol(blanks_12S_ASV_table)], names_to = "sample_name") -> blanks_12S_asv_table_long
+
+blanks_12S_asv_table_long %>% 
+  left_join(blanks_12S_tax_table, by = "ASV") -> blanks_12S_table
+
+# Add shortened sample names
+blanks_metadata_12S %>% 
+  mutate(sample_name = `12S_plate_name`) -> blanks_metadata_12S
+
+# Add more informative sample names
+blanks_metadata_12S %>% 
+  dplyr::arrange(desc(blank_type)) %>% 
+  # add index within each blank_type group
+  dplyr::group_by(blank_type) %>% 
+  dplyr::mutate(id = dplyr::row_number()) %>% 
+  # re-order those that were taken separately for each cruise
+  ungroup() %>% 
+  group_by(blank_type, SAMPLING_cruise) %>% 
+  dplyr::mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), dplyr::row_number(), id)) %>% 
+  # combine into new name field
+  mutate(name = ifelse(blank_type %in% c("DNA extraction blank", "PCR blank"), paste0(blank_type, " ", id),
+                       paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) -> blanks_metadata_12S
+
+blanks_12S_table %>% 
+  left_join(.,  blanks_metadata_12S, by = "sample_name") -> blanks_12S_table
+
+
+unique(blanks_12S_table$Phylum)
+unique(blanks_12S_table$Family)
+```
+
+```{r determine_top_families}
+blanks_12S_table %>% 
+  # Change so that "unassigned", "no_hit", and "unknown" will merge together
+  mutate(., Family = ifelse(Family %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Family)) %>% 
+  group_by(Family) %>% 
+  summarise(total = sum(value)) -> blanks_12S_families_reads
+
+blanks_12S_families_reads %>% 
+  arrange(., desc(total)) -> blanks_12S_families_reads
+
+# Get the top ten families; we need top ten, then "unknown" and "other" to get to 12
+# Get top 11
+top11_families <- blanks_12S_families_reads$Family[1:11]
+
+# Mutate data for plotting to get new families (top 10 + unassigned + other)
+blanks_12S_table %>% 
+  mutate(., Family = ifelse(Family %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Family)) %>% 
+  mutate(., Family2 = ifelse(Family %in% top11_families, Family, "Other")) -> blanks_12S_table
+
+# Calculate proportion of total
+blanks_12S_table %>% 
+  group_by(name) %>% 
+  mutate(rel_reads = value/sum(value)*100) -> blanks_12S_table
+
+# Group by Family and collapse table
+blanks_12S_table %>% 
+  group_by(name, Family2) %>% 
+  dplyr::summarise(rel_reads = sum(rel_reads)) -> blanks_12S_table_forplot
+
+# Reorder families so that unassigned and other are at the bottom
+blanks_12S_table_forplot$Family2 <- factor(blanks_12S_table_forplot$Family2, levels = c("Bovidae", "Canidae", "Clupeidae", "Engraulidae",     "Hominidae", "Merlucciidae", "Myctophidae", "Paralichthyidae", "Sebastidae", "Suidae", "Other", "Unassigned"))
+
+# Make color scale
+Family_colors <- c("#a6cee3",
+                   "#1f78b4",
+                   "#b2df8a",
+                   "#33a02c",
+                   '#fb9a99',
+                   "#e31a1c",
+                   "#fdbf6f",
+                   "#ff7f00",
+                   "#cab2d6",
+                   "#6a3d9a",
+                   "#b15928",
+                   "gray50")
+# "#ffff99",
+# "#b15928")
+```
+
+
+
+```{r plot_top_families_12S}
+blanks_12S_top_families_plot <- ggplot(blanks_12S_table_forplot, aes(x = name, y = rel_reads, fill = Family2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = Family_colors)+
+  labs(x = "Sample", y = "Percentage of total reads") +
+  scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Family", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/12S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        legend.position = "top",
+        legend.title.align = 0.5)
+# axis.line.x.bottom = element_line(color = "black", size = 1),
+# axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_12S_top_families_plot
+
+ggsave(paste0(fig_dir, "/12S_blanks_families_plot.png"), blanks_12S_top_families_plot, height = 15, width = 6)
+```
+
+Second version of plot showing read counts rather than relative read counts
+```{r second_version_showing_absolute_reads}
+# Group by Family and collapse table
+blanks_12S_table %>% 
+  group_by(name, Family2) %>% 
+  summarise(total_reads = sum(value)) -> blanks_12S_table_forplot_2
+
+# Reorder families so that unassigned and other are at the bottom
+blanks_12S_table_forplot_2$Family2 <- factor(blanks_12S_table_forplot_2$Family2, levels = c("Bovidae", "Canidae", "Clupeidae", "Engraulidae",     "Hominidae", "Merlucciidae", "Myctophidae", "Paralichthyidae", "Sebastidae", "Suidae", "Other", "Unassigned"))
+
+
+blanks_12S_top_families_plot <- ggplot(blanks_12S_table_forplot_2, aes(x = name, y = total_reads, fill = Family2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = Family_colors)+
+  labs(x = "Sample", y = "Total Reads") +
+  # scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Family", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/12S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
+        legend.title.align = 0.5)
+# axis.line.x.bottom = element_line(color = "black", size = 1),
+# axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_12S_top_families_plot
+
+ggsave(paste0(fig_dir, "/12S_blanks_families_plot_absolute_reads.png"), blanks_12S_top_families_plot, height = 15, width = 6)
+
+```
+
+
+
+
+## 16S
+
+
+### Make top phyla plot
+```{r prep_data}
+# Extract ASVs
+as.data.frame(otu_table(ESP_CTD_16S_blanks_phyloseq)) %>% 
+  rownames_to_column("ASV") -> blanks_16S_ASV_table
+
+# Remove "_X" from the column names
+colnames(blanks_16S_ASV_table) <- gsub("_X", "", colnames(blanks_16S_ASV_table))
+
+# Extract taxonomy table
+blanks_16S_tax_table <- as.data.frame(as(tax_table(ESP_CTD_16S_blanks_phyloseq),"matrix"))
+blanks_16S_tax_table <- tibble::rownames_to_column(blanks_16S_tax_table,"ASV")
+
+# reformat ASV table as long form
+blanks_16S_ASV_table %>% 
+  pivot_longer(cols = colnames(blanks_16S_ASV_table)[2:ncol(blanks_16S_ASV_table)], names_to = "sample_name") -> blanks_16S_asv_table_long
+
+blanks_16S_asv_table_long %>% 
+  left_join(blanks_16S_tax_table, by = "ASV") -> blanks_16S_table
+
+# Add shortened sample names
+blanks_metadata_16S %>% 
+  mutate(sample_name = `16S_plate_name`) -> blanks_metadata_16S
+
+# Add more informative sample names
+blanks_metadata_16S %>% 
+  dplyr::arrange(desc(blank_type)) %>% 
+  # add index within each blank_type group
+  dplyr::group_by(blank_type) %>% 
+  dplyr::mutate(id = dplyr::row_number()) %>% 
+  # re-order those that were taken separately for each cruise
+  ungroup() %>% 
+  group_by(blank_type, SAMPLING_cruise) %>% 
+  dplyr::mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), dplyr::row_number(), id)) %>% 
+  # combine into new name field
+  mutate(name = ifelse(blank_type %in% c("DNA extraction blank", "PCR blank"), paste0(blank_type, " ", id),
+                       paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) -> blanks_metadata_16S
+
+blanks_16S_table %>% 
+  left_join(.,  blanks_metadata_16S, by = "sample_name") -> blanks_16S_table
+
+
+unique(blanks_16S_table$Phylum)
+```
+
+```{r determine_top_phyla}
+blanks_16S_table %>% 
+  # Change so that "unassigned", "no_hit", and "unknown" will merge together
+  mutate(Phylum = gsub(" ", "", Phylum)) %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  group_by(Phylum) %>% 
+  summarise(total = sum(value)) -> blanks_16S_phyla_reads
+
+blanks_16S_phyla_reads %>% 
+  arrange(., desc(total)) -> blanks_16S_phyla_reads
+
+# Get the top ten phyla; we need top ten, then "unknown" and "other" to get to 12
+# Get top 11
+top11_phyla <- blanks_16S_phyla_reads$Phylum[1:11]
+
+# Mutate data for plotting to get new phyla (top 10 + unassigned + other)
+blanks_16S_table %>% 
+  mutate(Phylum = gsub(" ", "", Phylum)) %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c(""), "Unassigned", Phylum)) %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  mutate(., phylum2 = ifelse(Phylum %in% top11_phyla, Phylum, "Other")) -> blanks_16S_table
+
+# Calculate proportion of total
+blanks_16S_table %>% 
+  group_by(name) %>% 
+  mutate(rel_reads = value/sum(value)*100) -> blanks_16S_table
+
+# Group by phylum and collapse table
+blanks_16S_table %>% 
+  group_by(name, phylum2) %>% 
+  dplyr::summarise(rel_reads = sum(rel_reads)) -> blanks_16S_table_forplot
+
+# Reorder phyla so that unassigned and other are at the bottom
+blanks_16S_table_forplot$phylum2 <- factor(blanks_16S_table_forplot$phylum2, levels = c("Actinobacteriota", "Bacteroidota",  "Bdellovibrionota",  "Cyanobacteria", "Deinococcota", "Firmicutes", "Patescibacteria", "Planctomycetota", "Proteobacteria",  "Verrucomicrobiota", "Other", "Unassigned"))
+
+# Make color scale
+phylum_colors <- c("#a6cee3",
+                   "#1f78b4",
+                   "#b2df8a",
+                   "#33a02c",
+                   '#fb9a99',
+                   "#e31a1c",
+                   "#fdbf6f",
+                   "#ff7f00",
+                   "#cab2d6",
+                   "#6a3d9a",
+                   "#b15928",
+                   "gray50")
+# "#ffff99",
+# "#b15928")
+```
+
+
+
+```{r plot_top_phyla_16S}
+blanks_16S_top_phyla_plot <- ggplot(blanks_16S_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Percentage of total reads") +
+  scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        legend.position = "top",
+        legend.title.align = 0.5)
+# axis.line.x.bottom = element_line(color = "black", size = 1),
+# axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_16S_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/16S_blanks_phyla_plot.png"), blanks_16S_top_phyla_plot, height = 15, width = 6)
+```
+
+Second version of plot showing read counts rather than relative read counts
+```{r second_version_showing_absolute_reads}
+# Group by phylum and collapse table
+blanks_16S_table %>% 
+  group_by(name, phylum2) %>% 
+  summarise(total_reads = sum(value)) -> blanks_16S_table_forplot_2
+
+# Reorder phyla so that unassigned and other are at the bottom
+blanks_16S_table_forplot_2$phylum2 <- factor(blanks_16S_table_forplot_2$phylum2, levels = c("Actinobacteriota", "Bacteroidota",  "Bdellovibrionota",  "Cyanobacteria", "Deinococcota", "Firmicutes", "Patescibacteria", "Planctomycetota", "Proteobacteria",  "Verrucomicrobiota", "Other", "Unassigned"))
+
+
+blanks_16S_top_phyla_plot <- ggplot(blanks_16S_table_forplot_2, aes(x = name, y = total_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Total Reads") +
+  # scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
+        legend.title.align = 0.5)
+# axis.line.x.bottom = element_line(color = "black", size = 1),
+# axis.line.y.left = element_line(color = "black", size = 1))
+
+blanks_16S_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/16S_blanks_phyla_plot_absolute_reads.png"), blanks_16S_top_phyla_plot, height = 15, width = 6)
+
+```
