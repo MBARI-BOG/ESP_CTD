@@ -877,7 +877,7 @@ blanks_12S_top_families_plot_rel_reads <- ggplot(blanks_12S_table_forplot, aes(x
 # axis.line.x.bottom = element_line(color = "black", size = 1),
 # axis.line.y.left = element_line(color = "black", size = 1))
 
-blanks_12S_top_families_plot
+blanks_12S_top_families_plot_rel_reads
 
 ggsave(paste0(fig_dir, "/12S_blanks_families_plot_rel_reads.png"), blanks_12S_top_families_plot_rel_reads, height = 15, width = 6)
 ```
