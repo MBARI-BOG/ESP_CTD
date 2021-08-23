@@ -188,6 +188,7 @@ ASV_8280	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	Oncaea	Onc
 ASV_8281	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8283	Eukaryota	Porifera	Demospongiae	Poecilosclerida	Microcionidae	g_	s_
 ASV_8284	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Forskaliidae	g_	s_
+ASV_8285	Eukaryota	Arthropoda	unassigned	unassigned	unassigned	g_	s_
 ASV_8286	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_8287	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_8289	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
@@ -254,6 +255,7 @@ ASV_8372	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8373	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	g_	s_
 ASV_8376	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
 ASV_8379	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_8380	Eukaryota	Arthropoda	Insecta	Diptera	Agromyzidae	g_	s_
 ASV_8381	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
 ASV_8384	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_8385	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
@@ -370,6 +372,7 @@ ASV_8574	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_8575	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8576	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
 ASV_8580	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_8581	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8583	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
 ASV_8584	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8585	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
@@ -398,6 +401,7 @@ ASV_8620	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8621	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
 ASV_8622	Eukaryota	Cnidaria	Anthozoa	Scleractinia	unassigned	g_	s_
 ASV_8623	Eukaryota	Bacillariophyta	Mediophyceae	Cymatosirales	Cymatosiraceae	g_	s_
+ASV_8624	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8625	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8628	Eukaryota	Ochrophyta	Phaeophyceae	Sphacelariales	Sphacelariaceae	g_	s_
 ASV_8629	Eukaryota	Ochrophyta	Chrysophyceae	Chromulinales	Chromulinaceae	g_	s_
@@ -479,6 +483,7 @@ ASV_8754	Eukaryota	unknown	unknown	unknown	unknown	g_	s_
 ASV_8755	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_8756	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_8757	Eukaryota	unknown	Labyrinthulomycetes	unknown	Thraustochytriaceae	g_	s_
+ASV_8759	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
 ASV_8763	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_8764	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_8766	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
@@ -793,6 +798,8 @@ ASV_9305	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
 ASV_9308	Eukaryota	Arthropoda	Hexanauplia	Cyclopoida	Oithonidae	g_	s_
 ASV_9309	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_9311	Eukaryota	unknown	unknown	Telonemida	unassigned	g_	s_
+ASV_9313	Eukaryota	Annelida	Polychaeta	unknown	Opheliidae	Armandia	Armandia brevis
+ASV_9314	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
 ASV_9315	Eukaryota	Ochrophyta	Phaeophyceae	unassigned	unassigned	g_	s_
 ASV_9316	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
 ASV_9317	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
@@ -1295,6 +1302,7 @@ ASV_10262	Eukaryota	unknown	Raphidophyceae	Chattonellales	Chattonellaceae	g_	s_
 ASV_10264	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
 ASV_10266	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
 ASV_10268	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_10274	Eukaryota	unknown	Labyrinthulomycetes	unknown	Thraustochytriaceae	g_	s_
 ASV_10277	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_10278	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
 ASV_10288	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
@@ -1342,6 +1350,7 @@ ASV_10380	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia 
 ASV_10382	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
 ASV_10383	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
 ASV_10384	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_10385	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
 ASV_10389	Eukaryota	Arthropoda	Insecta	Hemiptera	Lygaeidae	g_	s_
 ASV_10390	Eukaryota	Ochrophyta	Phaeophyceae	Dictyotales	Dictyotaceae	g_	s_
 ASV_10391	Eukaryota	Arthropoda	unassigned	unassigned	unassigned	g_	s_
@@ -1393,6 +1402,7 @@ ASV_10496	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
 ASV_10497	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_10500	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
 ASV_10501	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_10502	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
 ASV_10503	Eukaryota	Arthropoda	Insecta	Diptera	Mycetophilidae	g_	s_
 ASV_10504	Eukaryota	unknown	Raphidophyceae	Chattonellales	Chattonellaceae	Fibrocapsa	Fibrocapsa japonica
 ASV_10508	Bacteria	unknown	unknown	unknown	unknown	g_	s_
@@ -1436,6 +1446,7 @@ ASV_10600	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s
 ASV_10601	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_10602	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_10603	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_10607	Eukaryota	Cryptophyta	unknown	Pyrenomonadales	Geminigeraceae	g_	s_
 ASV_10608	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_10613	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_10614	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
@@ -1511,6 +1522,7 @@ ASV_10818	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	unassigned	g_	s_
 ASV_10820	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
 ASV_10821	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
 ASV_10823	Eukaryota	Arthropoda	Arachnida	Sarcoptiformes	Peloppiidae	g_	s_
+ASV_10828	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
 ASV_10837	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
 ASV_10838	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Ctenocalanus	Ctenocalanus vanus
 ASV_10840	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
@@ -1743,6 +1755,7 @@ ASV_11583	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11584	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11585	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11586	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_11587	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11588	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11590	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11591	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
@@ -2260,6 +2273,7 @@ ASV_12513	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
 ASV_12516	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
 ASV_12519	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
 ASV_12522	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	Acartia californiensis
+ASV_12524	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	g_	s_
 ASV_12526	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
 ASV_12533	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
 ASV_12537	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
@@ -2510,6 +2524,7 @@ ASV_13100	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibac
 ASV_13102	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_13103	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_13109	Eukaryota	unknown	Synurophyceae	Ochromonadales	Ochromonadaceae	g_	s_
+ASV_13110	Bacteria	unknown	unknown	unknown	unknown	g_	s_
 ASV_13113	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_13114	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_13115	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
@@ -2839,6 +2854,7 @@ ASV_13982	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s
 ASV_13983	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_13984	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_13985	Eukaryota	Bacillariophyta	Coscinodiscophyceae	unassigned	unassigned	g_	s_
+ASV_13990	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_13992	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_13993	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
 ASV_14001	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
@@ -2881,6 +2897,7 @@ ASV_14133	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	unassigned	g_	s_
 ASV_14134	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_14136	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_14137	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Zancleidae	g_	s_
+ASV_14141	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_14153	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_14154	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_14157	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
@@ -3538,6 +3555,7 @@ ASV_16564	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalan
 ASV_16565	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_16578	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
 ASV_16585	Eukaryota	Arthropoda	Hexanauplia	Sessilia	Balanidae	Balanus	unassigned
+ASV_16593	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
 ASV_16595	Eukaryota	unknown	unknown	Bicosoecida	Cafeteriaceae	g_	s_
 ASV_16604	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
 ASV_16605	Eukaryota	Bryozoa	Gymnolaemata	Cheilostomatida	Membraniporidae	Membranipora	unassigned
@@ -3552,6 +3570,7 @@ ASV_16653	Eukaryota	Arthropoda	Insecta	Diptera	Sciaridae	g_	s_
 ASV_16660	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
 ASV_16692	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
 ASV_16698	Eukaryota	Annelida	Polychaeta	Spionida	Spionidae	g_	s_
+ASV_16725	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_16730	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
 ASV_16735	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_16742	Eukaryota	Mollusca	Bivalvia	Veneroida	unassigned	g_	s_
@@ -3565,6 +3584,7 @@ ASV_16785	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
 ASV_16796	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Pseudocalanus	Pseudocalanus mimus
 ASV_16804	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
 ASV_16805	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_16810	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
 ASV_16811	Eukaryota	unknown	unknown	Telonemida	unassigned	g_	s_
 ASV_16816	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
 ASV_16824	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
@@ -3575,6 +3595,7 @@ ASV_16838	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_16848	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
 ASV_16854	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
 ASV_16886	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
+ASV_16891	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	g_	s_
 ASV_16893	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
 ASV_16911	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_16912	Eukaryota	Rhodophyta	Florideophyceae	Ceramiales	Delesseriaceae	g_	s_
@@ -3778,6 +3799,7 @@ ASV_18110	Eukaryota	Blastocladiomycota	Blastocladiomycetes	Blastocladiales	Blast
 ASV_18119	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
 ASV_18122	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
 ASV_18144	Eukaryota	Chlorophyta	Chloropicophyceae	Chloropicales	Chloropicaceae	Chloroparvula	Chloroparvula pacifica
+ASV_18145	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_18146	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_18149	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_18159	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
@@ -3872,6 +3894,7 @@ ASV_18894	Eukaryota	Ochrophyta	Phaeophyceae	Dictyotales	Dictyotaceae	g_	s_
 ASV_18895	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_18906	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_18911	Eukaryota	Arthropoda	Insecta	Diptera	Culicidae	g_	s_
+ASV_18921	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
 ASV_18958	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
 ASV_18960	Eukaryota	Ochrophyta	Phaeophyceae	unknown	unknown	g_	s_
 ASV_18965	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
@@ -4955,11 +4978,13 @@ ASV_24470	Eukaryota	unknown	Pelagophyceae	Pelagomonadales	unknown	Aureococcus	Au
 ASV_24472	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga
 ASV_24478	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Apolemiidae	g_	s_
 ASV_24483	Eukaryota	Ochrophyta	Dictyochophyceae	Dictyochales	unknown	g_	s_
+ASV_24511	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
 ASV_24512	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Halistemma	Halistemma rubrum
 ASV_24536	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
 ASV_24540	Eukaryota	Ochrophyta	Phaeophyceae	unassigned	unassigned	g_	s_
 ASV_24545	Eukaryota	Oomycota	Oomycetes	Anisolpidiales	Anisolpidiaceae	g_	s_
 ASV_24563	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Leptocylindrales	Leptocylindraceae	g_	s_
+ASV_24572	Eukaryota	Cnidaria	Hydrozoa	unassigned	unassigned	g_	s_
 ASV_24575	Eukaryota	unknown	Raphidophyceae	Chattonellales	Chattonellaceae	g_	s_
 ASV_24577	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
 ASV_24589	Eukaryota	Blastocladiomycota	Blastocladiomycetes	Blastocladiales	Blastocladiaceae	g_	s_
@@ -14929,3 +14954,1044 @@ ASV_52379	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_52399	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_52489	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_52490	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_1	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_6	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_28	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_35	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_189	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
+ASV_781	Eukaryota	Arthropoda	Insecta	Hemiptera	unknown	g_	s_
+ASV_822	Eukaryota	Rhodophyta	Bangiophyceae	Bangiales	Bangiaceae	g_	s_
+ASV_1706	Eukaryota	Chlorophyta	Chloropicophyceae	Chloropicales	Chloropicaceae	Chloropicon	Chloropicon roscoffensis
+ASV_2975	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	unassigned
+ASV_3136	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus
+ASV_4039	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_4709	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_8245	Eukaryota	Oomycota	Oomycetes	unknown	unknown	g_	s_
+ASV_8370	Eukaryota	unassigned	unassigned	unassigned	unassigned	unassigned	unassigned
+ASV_8401	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
+ASV_8429	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Clausophyidae	Chuniphyes	Chuniphyes multidentata
+ASV_8439	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_8562	Eukaryota	Annelida	Polychaeta	Echiuroidea	Echiuridae	g_	s_
+ASV_8599	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_8672	Eukaryota	Arthropoda	Insecta	Diptera	Agromyzidae	g_	s_
+ASV_8694	Eukaryota	unknown	unknown	Himatismenida	Cochliopodiidae	g_	s_
+ASV_8702	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Aglaopheniidae	g_	s_
+ASV_8796	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_8803	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_8881	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_9022	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_9148	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_9312	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_9376	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Forskaliidae	g_	s_
+ASV_9409	Eukaryota	Arthropoda	unassigned	unassigned	unassigned	g_	s_
+ASV_9417	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_9529	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_9557	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_9619	Eukaryota	Ascomycota	Saccharomycetes	Saccharomycetales	Metschnikowiaceae	g_	s_
+ASV_9650	Eukaryota	Ochrophyta	Dictyochophyceae	Dictyochales	unknown	Dictyocha	Dictyocha speculum
+ASV_9690	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_9792	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_9793	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_9836	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_10152	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_10160	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_10244	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
+ASV_10345	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Coscinodiscales	Coscinodiscaceae	g_	s_
+ASV_10362	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_10515	Eukaryota	Cryptophyta	unknown	Pyrenomonadales	Geminigeraceae	g_	s_
+ASV_10569	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_10605	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
+ASV_10922	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Coscinodiscales	Coscinodiscaceae	g_	s_
+ASV_10950	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_10968	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_11031	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_11199	Eukaryota	Ochrophyta	Phaeophyceae	Sphacelariales	Choristocarpaceae	g_	s_
+ASV_11223	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	Halitholus	Halitholus sp. PS-2018
+ASV_11234	Eukaryota	Arthropoda	Insecta	Hemiptera	Cicadellidae	g_	s_
+ASV_11313	Eukaryota	Rhodophyta	Bangiophyceae	Bangiales	Bangiaceae	g_	s_
+ASV_11324	Eukaryota	Haptophyta	Haptophyta	unassigned	unassigned	g_	s_
+ASV_11413	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	g_	s_
+ASV_11589	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_11631	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_11945	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12061	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12106	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12162	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12250	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12300	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12362	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_12445	Eukaryota	Ochrophyta	Phaeophyceae	unassigned	unassigned	g_	s_
+ASV_12536	Eukaryota	Oomycota	Oomycetes	unknown	unknown	g_	s_
+ASV_12573	Eukaryota	Arthropoda	Insecta	Diptera	Mycetophilidae	g_	s_
+ASV_12636	Eukaryota	unknown	Synurophyceae	Ochromonadales	Ochromonadaceae	g_	s_
+ASV_12726	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
+ASV_12741	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_12756	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Mamiellaceae	g_	s_
+ASV_12779	Bacteria	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_12861	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_12907	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_12966	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_12979	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_13094	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_13120	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
+ASV_13169	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_13317	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_13333	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_13365	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Zancleidae	g_	s_
+ASV_13390	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_13431	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_13495	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_13505	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_13510	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Polaribacter	Polaribacter sp. Hel1_33_78
+ASV_13535	Eukaryota	Rotifera	Monogononta	Ploima	Euchlanidae	g_	s_
+ASV_13605	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Ectocarpaceae	g_	s_
+ASV_13609	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_13631	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_13671	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_13723	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_13758	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_13762	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_13874	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_13892	Eukaryota	unknown	Dinophyceae	Lophodiniales	Lophodiniaceae	Woloszynskia	unassigned
+ASV_13954	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_14060	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_14102	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
+ASV_14184	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_14205	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_14261	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_14312	Eukaryota	Mollusca	Gastropoda	Stylommatophora	Gastrodontidae	g_	s_
+ASV_14332	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_14338	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_14362	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_14382	Eukaryota	Chlorophyta	unknown	Pyramimonadales	unassigned	g_	s_
+ASV_14537	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_14584	Eukaryota	Arthropoda	Ostracoda	Halocyprida	Halocyprididae	Paraconchoecia	Paraconchoecia allotherium
+ASV_14694	Eukaryota	Chlorophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_14814	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_14823	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_14835	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_14944	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_15020	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_15090	Eukaryota	unknown	Dinophyceae	unassigned	unassigned	unassigned	unassigned
+ASV_15121	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_15177	Eukaryota	Bacillariophyta	Mediophyceae	Cymatosirales	Cymatosiraceae	g_	s_
+ASV_15185	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
+ASV_15459	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15464	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15529	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15628	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15639	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15687	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15699	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15708	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15717	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15758	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15773	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15848	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15893	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_15929	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16065	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16143	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16309	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16317	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16318	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16437	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_16546	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_16664	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
+ASV_16680	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_16747	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus parapergens
+ASV_16860	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
+ASV_16874	Eukaryota	Annelida	Polychaeta	Spionida	Magelonidae	g_	s_
+ASV_16881	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_16887	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	g_	s_
+ASV_16906	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira pseudonana
+ASV_16931	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
+ASV_16939	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_16942	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
+ASV_17007	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_17065	Eukaryota	Bacillariophyta	Mediophyceae	Lithodesmiales	Lithodesmiaceae	g_	s_
+ASV_17111	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_17149	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_17155	Eukaryota	Arthropoda	Arachnida	Araneae	Philodromidae	g_	s_
+ASV_17268	Eukaryota	Oomycota	Oomycetes	Pythiales	unassigned	g_	s_
+ASV_17290	Eukaryota	Cryptophyta	unknown	Pyrenomonadales	Geminigeraceae	g_	s_
+ASV_17319	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_17334	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_17391	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	Halitholus	Halitholus sp. PS-2018
+ASV_17393	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
+ASV_17421	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_17495	Eukaryota	Mollusca	Gastropoda	unknown	Pachychilidae	g_	s_
+ASV_17510	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_17530	Eukaryota	unknown	Dinophyceae	Peridiniales	Protoperidiniaceae	Protoperidinium	Protoperidinium cf. depressum
+ASV_17585	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_17597	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_17613	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_17634	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_17651	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Zancleidae	g_	s_
+ASV_17667	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_17678	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
+ASV_17693	Eukaryota	Annelida	Polychaeta	Sabellida	Sabellariidae	unknown	Sabellariidae sp. BP2010-403
+ASV_17735	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_17842	Eukaryota	unknown	unknown	Choanoflagellata	Salpingoecidae	g_	s_
+ASV_17865	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_17875	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_17909	Eukaryota	Basidiomycota	Agaricomycetes	unassigned	unassigned	g_	s_
+ASV_17915	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_18005	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira pseudonana
+ASV_18019	Eukaryota	Apicomplexa	Aconoidasida	Haemosporida	Plasmodiidae	g_	s_
+ASV_18075	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_18087	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_18138	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_18154	Eukaryota	Cnidaria	Anthozoa	Alcyonacea	Arulidae	g_	s_
+ASV_18251	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_18414	Eukaryota	Porifera	Demospongiae	Suberitida	Halichondriidae	g_	s_
+ASV_18527	Eukaryota	Rhodophyta	Florideophyceae	Hapalidiales	Hapalidiaceae	g_	s_
+ASV_18821	Eukaryota	Chlorophyta	Chloropicophyceae	Chloropicales	Chloropicaceae	g_	s_
+ASV_18900	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_18986	Eukaryota	Chlorophyta	Mamiellophyceae	Dolichomastigales	Dolichomastigaceae	g_	s_
+ASV_18993	Eukaryota	Arthropoda	Insecta	Diptera	Culicidae	g_	s_
+ASV_19074	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_19081	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_19091	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_19172	Eukaryota	Chlorophyta	Mamiellophyceae	Dolichomastigales	Dolichomastigaceae	g_	s_
+ASV_19277	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_19372	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_19448	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_19492	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
+ASV_19537	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_20563	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20564	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20573	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20626	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20627	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20646	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20671	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20710	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20737	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20776	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20840	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20896	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_20961	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_21078	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_21189	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus parapergens
+ASV_21228	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_21313	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_21384	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus
+ASV_21421	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_21452	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_21494	Eukaryota	Chordata	Appendicularia	Copelata	Oikopleuridae	g_	s_
+ASV_21631	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_21712	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_21736	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_21841	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_21849	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_21872	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus pergens
+ASV_21959	Bacteria	Proteobacteria	Gammaproteobacteria	Vibrionales	Vibrionaceae	Photobacterium	Photobacterium profundum
+ASV_22013	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_22039	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus pergens
+ASV_22082	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	g_	s_
+ASV_22115	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_22174	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_22277	Eukaryota	unknown	Raphidophyceae	Chattonellales	Chattonellaceae	g_	s_
+ASV_22369	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_22540	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_22556	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_22935	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_23518	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_23664	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_23700	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_23804	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_23830	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_23937	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_24233	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_24429	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. D AC-2013
+ASV_24430	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_24431	Eukaryota	unknown	unknown	Bicosoecida	Cafeteriaceae	g_	s_
+ASV_24433	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_24434	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	g_	s_
+ASV_24438	Eukaryota	Rhodophyta	Bangiophyceae	Bangiales	Bangiaceae	g_	s_
+ASV_24439	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_24440	Eukaryota	unknown	unknown	unknown	Hartmannellidae	g_	s_
+ASV_24444	Eukaryota	Oomycota	Oomycetes	unknown	unknown	g_	s_
+ASV_24445	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24447	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Plumulariidae	g_	s_
+ASV_24448	Eukaryota	Rhodophyta	Bangiophyceae	Bangiales	Bangiaceae	g_	s_
+ASV_24449	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_24451	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_24459	Eukaryota	Annelida	Polychaeta	Spionida	Chaetopteridae	g_	s_
+ASV_24460	Eukaryota	unknown	Synurophyceae	Ochromonadales	Ochromonadaceae	g_	s_
+ASV_24463	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	g_	s_
+ASV_24464	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_24467	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24469	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_24474	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_24476	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24477	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24481	Eukaryota	Annelida	Polychaeta	Phyllodocida	Pholoidae	Pholoides	Pholoides asperus
+ASV_24486	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_24487	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24489	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24494	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24510	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_24514	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_24516	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus parapergens
+ASV_24519	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_24520	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	g_	s_
+ASV_24531	Eukaryota	Nemertea	Pilidiophora	Heteronemertea	Cerebratulidae	Cerebratulus	s_
+ASV_24535	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24537	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Scytosiphonaceae	g_	s_
+ASV_24538	Eukaryota	Cnidaria	Hydrozoa	unassigned	unassigned	g_	s_
+ASV_24565	Eukaryota	Arthropoda	Insecta	Hymenoptera	Crabronidae	g_	s_
+ASV_24567	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_24568	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Forskaliidae	g_	s_
+ASV_24570	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
+ASV_24595	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24597	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24613	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis globosa
+ASV_24614	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga
+ASV_24625	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Thysanoessa	Thysanoessa gregaria
+ASV_24626	Eukaryota	Arthropoda	Insecta	Diptera	Agromyzidae	g_	s_
+ASV_24630	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_24631	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_24633	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_24641	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_24644	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24645	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24649	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_24652	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus pergens
+ASV_24653	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga
+ASV_24657	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_24661	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_24662	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_24663	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus
+ASV_24669	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis globosa
+ASV_24677	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	Halitholus	Halitholus sp. PS-2018
+ASV_24680	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	g_	s_
+ASV_24685	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_24694	Eukaryota	Brachiopoda	unknown	unknown	unknown	Phoronis	Phoronis ijimai
+ASV_24701	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24702	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24706	Eukaryota	Ochrophyta	Chrysophyceae	unknown	unknown	g_	s_
+ASV_24708	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	g_	s_
+ASV_24713	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_24722	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_24723	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_24727	Eukaryota	Rotifera	Monogononta	Ploima	Asplanchnidae	g_	s_
+ASV_24734	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis globosa
+ASV_24742	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga
+ASV_24743	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24747	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24763	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Forskaliidae	g_	s_
+ASV_24764	Eukaryota	Arthropoda	Hexanauplia	Sessilia	Balanidae	Balanus	unassigned
+ASV_24765	Eukaryota	Oomycota	Oomycetes	unknown	unknown	g_	s_
+ASV_24774	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_24777	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_24806	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24821	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_24823	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24850	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24863	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_24874	Eukaryota	unknown	unknown	unknown	Vannellidae	g_	s_
+ASV_24877	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Scytosiphonaceae	g_	s_
+ASV_24880	Eukaryota	unknown	unknown	unknown	Paramoebidae	g_	s_
+ASV_24888	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_24895	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calocalanidae	g_	s_
+ASV_24902	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24927	Eukaryota	Arthropoda	Insecta	Hymenoptera	Braconidae	g_	s_
+ASV_24941	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_24944	Eukaryota	Ochrophyta	Phaeophyceae	Fucales	Sargassaceae	g_	s_
+ASV_24951	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_24958	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
+ASV_24962	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_24972	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	g_	s_
+ASV_24985	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga
+ASV_24995	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
+ASV_24999	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus parapergens
+ASV_25005	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_25012	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25014	Eukaryota	Cnidaria	Hydrozoa	unassigned	unassigned	g_	s_
+ASV_25026	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_25034	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
+ASV_25044	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	unassigned
+ASV_25047	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25049	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_25059	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	Skeletonema japonicum
+ASV_25064	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25091	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25101	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Splanchnotrophidae	g_	s_
+ASV_25120	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	g_	s_
+ASV_25136	Eukaryota	Rhodophyta	Florideophyceae	Ceramiales	unassigned	g_	s_
+ASV_25138	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_25148	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	Halitholus	Halitholus sp. PS-2018
+ASV_25149	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira pseudonana
+ASV_25157	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_25158	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25163	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_25168	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Aglaopheniidae	g_	s_
+ASV_25169	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_25172	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_25175	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25180	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_25185	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_25188	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_25193	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Agalmatidae	Nanomia	Nanomia bijuga
+ASV_25212	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	Skeletonema potamos
+ASV_25234	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25237	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_25245	Eukaryota	Rhodophyta	Florideophyceae	Ceramiales	Rhodomelaceae	g_	s_
+ASV_25246	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
+ASV_25247	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus parapergens
+ASV_25248	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Corymorphidae	g_	s_
+ASV_25252	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_25270	Eukaryota	unknown	unknown	Bicosoecida	Cafeteriaceae	g_	s_
+ASV_25273	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25276	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
+ASV_25277	Eukaryota	Cercozoa	unknown	Euglyphida	Cyphoderiidae	g_	s_
+ASV_25279	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Coscinodiscales	Coscinodiscaceae	g_	s_
+ASV_25289	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_25291	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	g_	s_
+ASV_25307	Eukaryota	Arthropoda	Malacostraca	Euphausiacea	Euphausiidae	Thysanoessa	Thysanoessa spinifera
+ASV_25310	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25311	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_25322	Eukaryota	unknown	unknown	unknown	Paramoebidae	g_	s_
+ASV_25369	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_25377	Eukaryota	Mollusca	Gastropoda	unknown	Valvatidae	g_	s_
+ASV_25401	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25411	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25427	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_25447	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Aglaopheniidae	g_	s_
+ASV_25450	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_25451	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
+ASV_25460	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_25461	Eukaryota	Arthropoda	Insecta	Hemiptera	Lachnidae	g_	s_
+ASV_25477	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_25482	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25487	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_25488	Eukaryota	Bacillariophyta	Bacillariophyceae	Naviculales	Amphipleuraceae	g_	s_
+ASV_25493	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_25501	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_25535	Eukaryota	Ctenophora	Tentaculata	Cydippida	Pleurobrachiidae	Pleurobrachia	s_
+ASV_25547	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_25548	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25550	Eukaryota	unknown	unknown	unknown	Vexilliferidae	g_	s_
+ASV_25569	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_25602	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_25604	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Cylindrotheca	Cylindrotheca closterium
+ASV_25610	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25611	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25619	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_25621	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_25622	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25624	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25637	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_25640	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	s_
+ASV_25650	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_25654	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_25666	Eukaryota	Arthropoda	Insecta	Hymenoptera	Formicidae	Tapinoma	Tapinoma melanocephalum
+ASV_25672	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25702	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_25709	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25724	Eukaryota	Arthropoda	Insecta	Hymenoptera	unassigned	g_	s_
+ASV_25726	Eukaryota	Bacillariophyta	Coscinodiscophyceae	unassigned	unassigned	g_	s_
+ASV_25729	Eukaryota	Ochrophyta	Phaeophyceae	Laminariales	Alariaceae	g_	s_
+ASV_25746	Eukaryota	Annelida	Polychaeta	Phyllodocida	Polynoidae	Lepidasthenia	Lepidasthenia berkeleyae
+ASV_25750	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_25760	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	s_
+ASV_25767	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_25771	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
+ASV_25801	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_25803	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_25813	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis globosa
+ASV_25814	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_25817	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_25824	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25833	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_25839	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Polaribacter	Polaribacter sp. Hel1_33_78
+ASV_25858	Eukaryota	Ctenophora	Tentaculata	Cestida	Cestidae	g_	s_
+ASV_25860	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Scytosiphonaceae	g_	s_
+ASV_25861	Eukaryota	Arthropoda	Insecta	Lepidoptera	Noctuidae	g_	s_
+ASV_25862	Eukaryota	unknown	unknown	unknown	Paramoebidae	g_	s_
+ASV_25863	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Pseudo-nitzschia	unassigned
+ASV_25876	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25886	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_25887	Eukaryota	Arthropoda	Insecta	Diptera	Agromyzidae	g_	s_
+ASV_25924	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Eucalanidae	Eucalanus	Eucalanus californicus
+ASV_25925	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_25937	Eukaryota	Ochrophyta	Phaeophyceae	Sphacelariales	Sphacelariaceae	g_	s_
+ASV_25952	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	g_	s_
+ASV_25962	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	unassigned
+ASV_25976	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_25977	Eukaryota	Mollusca	Gastropoda	unknown	Planorbidae	g_	s_
+ASV_25979	Eukaryota	Mollusca	Gastropoda	unknown	Pachychilidae	g_	s_
+ASV_25981	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Acinetosporaceae	g_	s_
+ASV_25997	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26003	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_26005	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_26006	Eukaryota	Bacillariophyta	Mediophyceae	Cymatosirales	Cymatosiraceae	g_	s_
+ASV_26020	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26023	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_26036	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	s_
+ASV_26039	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26040	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26056	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	Skeletonema japonicum
+ASV_26057	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Eirenidae	g_	s_
+ASV_26079	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26096	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26116	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26117	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	Polaribacter	Polaribacter sp. Hel1_33_78
+ASV_26118	Bacteria	unknown	unknown	unknown	unknown	unknown	bacterium
+ASV_26121	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26122	Eukaryota	Porifera	Demospongiae	Bubarida	Dictyonellidae	g_	s_
+ASV_26136	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_26160	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_26180	Eukaryota	unknown	unknown	unknown	Paramoebidae	g_	s_
+ASV_26182	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_26194	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_26195	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_26196	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_26198	Eukaryota	Rhodophyta	Florideophyceae	Ceramiales	Rhodomelaceae	g_	s_
+ASV_26199	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_26219	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	s_
+ASV_26240	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26260	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_26277	Eukaryota	Mollusca	Gastropoda	Neogastropoda	Columbellidae	g_	s_
+ASV_26280	Eukaryota	Ochrophyta	Phaeophyceae	unassigned	unassigned	g_	s_
+ASV_26302	Eukaryota	Oomycota	Oomycetes	unknown	unknown	g_	s_
+ASV_26315	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26316	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26317	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_26319	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_26338	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_26339	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_26356	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira pseudonana
+ASV_26357	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26358	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26362	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26364	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_26367	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26380	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26381	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_26382	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26385	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_26386	Eukaryota	unknown	unknown	Telonemida	unassigned	g_	s_
+ASV_26407	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_26408	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_26410	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_26428	Eukaryota	Porifera	Demospongiae	Desmacellida	Desmacellidae	g_	s_
+ASV_26435	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_26447	Eukaryota	Annelida	Polychaeta	Spionida	Spionidae	g_	s_
+ASV_26449	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	Skeletonema dohrnii
+ASV_26452	Eukaryota	unknown	Dinophyceae	Gymnodiniales	Gymnodiniaceae	Margalefidinium	Margalefidinium polykrikoides
+ASV_26475	Eukaryota	unknown	Labyrinthulomycetes	unknown	Thraustochytriaceae	g_	s_
+ASV_26477	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	s_
+ASV_26479	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26497	Eukaryota	unknown	Dinophyceae	Gymnodiniales	Gymnodiniaceae	Gymnodinium	Gymnodinium sp. NVA/RUS/2008
+ASV_26498	Eukaryota	unknown	unknown	Bicosoecida	Cafeteriaceae	Cafeteria	s_
+ASV_26507	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26538	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26542	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_26545	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_26549	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26563	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_26565	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	s_
+ASV_26566	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_26570	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_26571	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_26575	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26594	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26597	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26598	Eukaryota	Arthropoda	Insecta	Diptera	Mycetophilidae	g_	s_
+ASV_26602	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_26614	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_26630	Eukaryota	Chlorophyta	unknown	Pyramimonadales	unknown	g_	s_
+ASV_26631	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26633	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_26634	Eukaryota	unknown	unknown	unknown	Paramoebidae	g_	s_
+ASV_26636	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_26640	Eukaryota	Ochrophyta	Phaeophyceae	Sphacelariales	Discosporangiaceae	g_	s_
+ASV_26641	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_26642	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26661	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	Pseudo-nitzschia	unassigned
+ASV_26662	Eukaryota	Ochrophyta	Chrysophyceae	Chromulinales	Paraphysomonadaceae	g_	s_
+ASV_26665	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26704	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_26705	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26707	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_26708	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26712	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26713	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_26736	Eukaryota	unknown	unknown	unknown	Vexilliferidae	g_	s_
+ASV_26738	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_26747	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26750	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26782	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26783	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26784	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26787	Eukaryota	Arthropoda	unassigned	unassigned	unassigned	g_	s_
+ASV_26789	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26790	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_26824	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_26825	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26826	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	g_	s_
+ASV_26829	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
+ASV_26830	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_26837	Eukaryota	unknown	Dinophyceae	Gymnodiniales	Gymnodiniaceae	Lepidodinium	Lepidodinium chlorophorum
+ASV_26839	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_26846	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26855	Eukaryota	Oomycota	Oomycetes	unknown	unknown	g_	s_
+ASV_26866	Eukaryota	Arthropoda	Insecta	Diptera	Mycetophilidae	g_	s_
+ASV_26874	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26875	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26878	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	unassigned	g_	s_
+ASV_26879	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26883	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_26884	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_26892	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_26919	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26920	Eukaryota	Rhodophyta	Florideophyceae	Corallinales	Corallinaceae	g_	s_
+ASV_26922	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26925	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_26929	Eukaryota	Bacillariophyta	Coscinodiscophyceae	unassigned	unassigned	g_	s_
+ASV_26932	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_26933	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_26936	Eukaryota	unknown	Dinophyceae	Gymnodiniales	Gymnodiniaceae	g_	s_
+ASV_26975	Eukaryota	Cnidaria	unassigned	unassigned	unassigned	g_	s_
+ASV_26976	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_26977	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_26978	Eukaryota	unknown	unknown	unknown	Vexilliferidae	g_	s_
+ASV_26980	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_26986	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_26996	Eukaryota	Haptophyta	Haptophyta	unassigned	unassigned	g_	s_
+ASV_26998	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_26999	Eukaryota	Bacillariophyta	Mediophyceae	Lithodesmiales	Lithodesmiaceae	g_	s_
+ASV_27016	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_27017	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_27036	Eukaryota	Echinodermata	Ophiuroidea	unassigned	unassigned	g_	s_
+ASV_27054	Bacteria	unknown	unknown	unknown	unknown	g_	s_
+ASV_27064	Eukaryota	Arthropoda	unassigned	unassigned	unassigned	g_	s_
+ASV_27065	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27067	Eukaryota	unknown	Katablepharidophyta	unknown	Katablepharidaceae	g_	s_
+ASV_27068	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_27071	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_27072	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_27074	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_27077	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calocalanidae	g_	s_
+ASV_27107	Eukaryota	Rhodophyta	Florideophyceae	Ceramiales	Ceramiaceae	Callithamnion	Callithamnion sp. 1pikeanum
+ASV_27108	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_27109	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
+ASV_27113	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_27125	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_27127	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_27133	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27176	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_27179	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_27183	Eukaryota	unknown	Dinophyceae	unassigned	unassigned	unassigned	unassigned
+ASV_27185	Eukaryota	unknown	unknown	unknown	unknown	g_	s_
+ASV_27186	Eukaryota	Chlorophyta	Trebouxiophyceae	Chlorellales	Chlorellaceae	g_	s_
+ASV_27196	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_27218	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_27220	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27223	Eukaryota	unknown	unknown	unknown	Paramoebidae	g_	s_
+ASV_27224	Bacteria	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27228	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_27230	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_27236	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27244	Eukaryota	Onychophora	Udeonychophora	Euonychophora	Peripatopsidae	g_	s_
+ASV_27268	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_27275	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_27276	Eukaryota	Arthropoda	unassigned	unassigned	unassigned	g_	s_
+ASV_27279	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_27282	Eukaryota	unknown	Dinophyceae	unassigned	unassigned	unassigned	unassigned
+ASV_27289	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus parapergens
+ASV_27338	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27339	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27352	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_27354	Eukaryota	Chlorophyta	Palmophyllophyceae	Prasinococcales	Prasinococcaceae	g_	s_
+ASV_27358	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27367	Eukaryota	Arthropoda	Malacostraca	Isopoda	Bopyridae	g_	s_
+ASV_27408	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_27414	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_27418	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Aequoreidae	Aequorea	unassigned
+ASV_27420	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_27426	Eukaryota	Chlorophyta	Trebouxiophyceae	Chlorellales	Chlorellaceae	g_	s_
+ASV_27440	Eukaryota	Mollusca	Bivalvia	Pholadomyoida	Laternulidae	g_	s_
+ASV_27451	Eukaryota	Arthropoda	Arachnida	Araneae	Austrochilidae	g_	s_
+ASV_27485	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27486	Eukaryota	Ochrophyta	Chrysophyceae	Chromulinales	Chromulinaceae	g_	s_
+ASV_27492	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	s_
+ASV_27499	Eukaryota	unknown	Dinophyceae	Dinophysiales	Dinophysiaceae	Dinophysis	unassigned
+ASV_27500	Eukaryota	Brachiopoda	unknown	unknown	unknown	Phoronis	Phoronis ijimai
+ASV_27501	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	Halitholus	Halitholus sp. PS-2018
+ASV_27504	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_27506	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27524	Eukaryota	Ascomycota	Leotiomycetes	unknown	unknown	g_	s_
+ASV_27526	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_27528	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27571	Eukaryota	Bacillariophyta	Mediophyceae	Lithodesmiales	Lithodesmiaceae	g_	s_
+ASV_27572	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
+ASV_27573	Eukaryota	Arthropoda	Insecta	Coleoptera	Carabidae	g_	s_
+ASV_27584	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27585	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_27588	Eukaryota	Ochrophyta	Phaeophyceae	Fucales	Hormosiraceae	g_	s_
+ASV_27591	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_27596	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Melosirales	Stephanopyxidaceae	Stephanopyxis	Stephanopyxis turris
+ASV_27604	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
+ASV_27663	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
+ASV_27668	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_27677	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
+ASV_27681	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Thalassiosiraceae	Thalassiosira	Thalassiosira pseudonana
+ASV_27682	Eukaryota	Chlorophyta	unknown	Pyramimonadales	unknown	g_	s_
+ASV_27684	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27689	Eukaryota	Mollusca	Gastropoda	Cycloneritida	Neritidae	g_	s_
+ASV_27695	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27698	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	g_	s_
+ASV_27730	Eukaryota	Arthropoda	Collembola	Poduromorpha	Onychiuridae	g_	s_
+ASV_27763	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_27764	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27765	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_27772	Eukaryota	Bacillariophyta	Bacillariophyceae	Naviculales	unassigned	g_	s_
+ASV_27774	Eukaryota	Ochrophyta	Phaeophyceae	Desmarestiales	Desmarestiaceae	g_	s_
+ASV_27782	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_27783	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27785	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_27786	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_27793	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Aglaopheniidae	g_	s_
+ASV_27800	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_27804	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_27809	Eukaryota	Porifera	Demospongiae	Axinellida	unassigned	g_	s_
+ASV_27815	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Pandeidae	g_	s_
+ASV_27864	Bacteria	Bacteroidetes	Flavobacteriia	Flavobacteriales	Flavobacteriaceae	g_	s_
+ASV_27865	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_27869	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	g_	s_
+ASV_27873	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27875	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
+ASV_27876	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27877	Eukaryota	unknown	Dinophyceae	Syndiniales	Syndiniaceae	g_	s_
+ASV_27882	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	s_
+ASV_27886	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27893	Eukaryota	Arthropoda	unknown	unknown	unknown	g_	s_
+ASV_27894	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_27905	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_27908	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_27909	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27919	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27990	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
+ASV_27992	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_27993	Eukaryota	Ochrophyta	Chrysophyceae	Chromulinales	Paraphysomonadaceae	g_	s_
+ASV_27994	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_27998	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_27999	Eukaryota	Cnidaria	Hydrozoa	unassigned	unassigned	g_	s_
+ASV_28007	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	Phaeocystis	Phaeocystis globosa
+ASV_28012	Eukaryota	unknown	Dinophyceae	unassigned	unassigned	g_	s_
+ASV_28026	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Attheyaceae	Attheya	Attheya longicornis
+ASV_28032	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Bougainvilliidae	g_	s_
+ASV_28037	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28039	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28050	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_28052	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_28109	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	unassigned	g_	s_
+ASV_28110	Eukaryota	Ochrophyta	Phaeophyceae	unassigned	unassigned	g_	s_
+ASV_28120	Eukaryota	Rhodophyta	Florideophyceae	Gigartinales	Gigartinaceae	Mazzaella	Mazzaella flaccida
+ASV_28123	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_28124	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Campanulariidae	g_	s_
+ASV_28125	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28127	Eukaryota	Platyhelminthes	Rhabditophora	Polycladida	unassigned	g_	s_
+ASV_28134	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_28137	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_28146	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
+ASV_28148	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_28150	Eukaryota	unknown	unknown	unknown	Vexilliferidae	g_	s_
+ASV_28155	Eukaryota	unknown	unknown	Choanoflagellata	Salpingoecidae	g_	s_
+ASV_28158	Eukaryota	Cnidaria	Hydrozoa	unknown	unknown	g_	s_
+ASV_28177	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_28183	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_28185	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_28187	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_28188	Eukaryota	Arthropoda	Hexanauplia	Calanoida	unassigned	g_	s_
+ASV_28189	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_28252	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_28301	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_28317	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28329	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_28344	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28349	Eukaryota	Oomycota	Oomycetes	Saprolegniales	Saprolegniaceae	g_	s_
+ASV_28350	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_28368	Eukaryota	Annelida	Polychaeta	Sabellida	Sabellariidae	g_	s_
+ASV_28451	Eukaryota	Rhodophyta	Florideophyceae	Plocamiales	Plocamiaceae	Plocamium	unassigned
+ASV_28452	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28453	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_28454	Eukaryota	unknown	unknown	Longamoebia	Acanthamoebidae	g_	s_
+ASV_28455	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28456	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_28457	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	unassigned	g_	s_
+ASV_28459	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
+ASV_28464	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus
+ASV_28466	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	Asterionellopsis	Asterionellopsis lenisilicea
+ASV_28479	Eukaryota	Bacillariophyta	Mediophyceae	Lithodesmiales	Lithodesmiaceae	g_	s_
+ASV_28513	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_28516	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28529	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_28540	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28550	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_28562	Eukaryota	Ochrophyta	Phaeophyceae	unassigned	unassigned	g_	s_
+ASV_28575	Eukaryota	Chlorophyta	Trebouxiophyceae	Chlorellales	Chlorellaceae	g_	s_
+ASV_28576	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_28577	Eukaryota	unknown	unknown	Longamoebia	Acanthamoebidae	g_	s_
+ASV_28578	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_28579	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_28580	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_28581	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28589	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28590	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28591	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Corynidae	Sarsia	Sarsia bella
+ASV_28613	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28614	Eukaryota	Bacillariophyta	Fragilariophyceae	Thalassionemales	Thalassionemataceae	g_	s_
+ASV_28615	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
+ASV_28616	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
+ASV_28723	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_28724	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Scytosiphonaceae	g_	s_
+ASV_28725	Eukaryota	Arthropoda	Insecta	Diptera	Streblidae	g_	s_
+ASV_28726	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28753	Eukaryota	unknown	Eustigmatophyceae	Goniochloridales	unknown	g_	s_
+ASV_28754	Eukaryota	unknown	unknown	Himatismenida	unknown	g_	s_
+ASV_28755	Eukaryota	Ascomycota	Sordariomycetes	unassigned	unassigned	g_	s_
+ASV_28756	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_28779	Eukaryota	Cnidaria	Anthozoa	Scleractinia	unassigned	g_	s_
+ASV_28813	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_28909	Eukaryota	unknown	unknown	Himatismenida	Cochliopodiidae	g_	s_
+ASV_28910	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus
+ASV_28911	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Calanus	Calanus pacificus
+ASV_28912	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	unassigned	g_	s_
+ASV_28913	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_28914	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28915	Eukaryota	Rotifera	Monogononta	Ploima	Synchaetidae	g_	s_
+ASV_28916	Eukaryota	Ctenophora	Tentaculata	Cydippida	Pleurobrachiidae	g_	s_
+ASV_28917	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_28918	Eukaryota	Bacillariophyta	Mediophyceae	Hemiaulales	Hemiaulaceae	Eucampia	s_
+ASV_28919	Eukaryota	Bacillariophyta	Mediophyceae	Hemiaulales	Hemiaulaceae	g_	s_
+ASV_28920	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28921	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_28922	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	g_	s_
+ASV_28923	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetocerotaceae	g_	s_
+ASV_28931	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
+ASV_28932	Eukaryota	Ctenophora	Tentaculata	Lobata	Bolinopsidae	g_	s_
+ASV_28933	Eukaryota	Bacillariophyta	Bacillariophyceae	Bacillariales	Bacillariaceae	g_	s_
+ASV_28960	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_28961	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_28962	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_29072	Eukaryota	Cercozoa	unknown	Cercomonadida	Cercomonadidae	g_	s_
+ASV_29073	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_29074	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	s_
+ASV_29075	Eukaryota	Bacillariophyta	Fragilariophyceae	Fragilariales	Fragilariaceae	g_	s_
+ASV_29103	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
+ASV_29104	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
+ASV_29105	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeletonemataceae	Skeletonema	s_
+ASV_29192	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	Acartia	unassigned
+ASV_29193	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Forskaliidae	g_	s_
+ASV_29194	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	g_	s_
+ASV_29196	Eukaryota	Ochrophyta	Phaeophyceae	Laminariales	Alariaceae	g_	s_
+ASV_29197	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
+ASV_29198	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Acartiidae	g_	s_
+ASV_29202	Eukaryota	Cercozoa	unknown	Euglyphida	Paulinellidae	g_	s_
+ASV_29203	Eukaryota	Arthropoda	Insecta	Diptera	Agromyzidae	g_	s_
+ASV_29204	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Stephanodiscaceae	g_	s_
+ASV_29205	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
+ASV_29221	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_29271	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_29272	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_29273	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_29274	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
+ASV_29275	Eukaryota	unknown	unknown	Choanoflagellata	Salpingoecidae	g_	s_
+ASV_29284	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29285	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29290	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29297	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29299	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29300	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29309	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29323	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29326	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29350	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29351	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29386	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29404	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29408	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29436	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29464	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29508	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29510	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29519	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29538	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29565	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29572	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29599	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29606	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29650	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29651	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29652	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29659	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29697	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29705	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29710	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29716	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29721	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29741	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29760	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29769	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29785	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29809	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29814	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29822	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29838	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29851	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29926	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29927	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29930	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29942	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29950	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29971	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29972	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_29990	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30017	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30021	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30031	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30065	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30075	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30108	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30112	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30114	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30134	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30139	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30166	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30190	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30209	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30217	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30241	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30256	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30257	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30259	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30262	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30279	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30281	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30297	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30302	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30303	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30304	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30306	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30320	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30338	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30339	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30371	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30380	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30403	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30406	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30427	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30434	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30438	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30453	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30454	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30455	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30459	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30469	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30481	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30497	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30511	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30538	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30567	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30600	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30603	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30604	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30618	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30627	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30628	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30632	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30649	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30652	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30655	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30660	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30666	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30689	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30690	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30691	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30729	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30730	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30731	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30732	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30733	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30742	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30747	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30770	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30772	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30773	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30776	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30780	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30809	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30823	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30824	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30829	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30830	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30868	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30874	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30884	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30894	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30895	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30898	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30899	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30947	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30953	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30956	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30989	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30990	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30991	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30995	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30997	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30998	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_30999	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31000	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31007	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31008	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31041	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31042	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31043	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31057	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31060	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31064	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31080	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31115	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31130	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31136	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31137	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31141	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31147	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31150	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31156	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31158	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31205	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31206	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31215	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31232	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31292	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31293	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31315	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31340	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31353	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31354	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31355	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31473	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31488	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31489	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31490	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31491	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31498	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31499	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31500	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31501	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31523	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31651	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31653	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31654	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31655	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31656	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31657	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31686	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_31687	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
