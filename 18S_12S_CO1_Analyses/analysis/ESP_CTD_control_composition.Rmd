@@ -1128,13 +1128,13 @@ fig_dir <- here("figures", "final_figures")
 control_abs_reads_comb_plot <- ggarrange(blanks_16S_top_phyla_plot, blanks_18S_top_phyla_plot, blanks_COI_top_phyla_plot, blanks_12S_top_families_plot, heights = 15, widths = 6, nrow = 1, labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"),
                                    label.x = 0.01, label.y = 1, font.label = list(size = 24, face = "plain"), hjust = 0)
 
-ggsave(here(fig_dir, "Fig_S2_control_taxa_abs_reads.pdf"), control_abs_reads_comb_plot, height = 15, width = 24)
+ggsave(here(fig_dir, "FigS2-control_taxa_abs_reads.pdf"), control_abs_reads_comb_plot, height = 15, width = 24)
 
 
 control_rel_reads_comb_plot <- ggarrange(blanks_16S_top_phyla_plot_rel_reads, blanks_18S_top_phyla_plot_rel_reads, blanks_COI_top_phyla_plot_rel_reads, blanks_12S_top_families_plot_rel_reads, heights = 15, widths = 6, nrow = 1, labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"),
                                    label.x = 0.01, label.y = 1, font.label = list(size = 24, face = "plain"), hjust = 0)
 
-ggsave(here(fig_dir, "Fig_S2_control_taxa_rel_reads.pdf"), control_rel_reads_comb_plot, height = 15, width = 24)
+ggsave(here(fig_dir, "FigS3-control_taxa_rel_reads.pdf"), control_rel_reads_comb_plot, height = 15, width = 24)
 
 ```
 
