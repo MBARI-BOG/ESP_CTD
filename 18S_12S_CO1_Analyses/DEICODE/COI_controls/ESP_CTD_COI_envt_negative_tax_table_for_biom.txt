@@ -1954,6 +1954,7 @@ ASV_11852	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11853	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11854	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11855	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_11858	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11859	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11861	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11862	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
@@ -2027,6 +2028,7 @@ ASV_11957	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11959	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11961	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11962	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_11965	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11966	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11969	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_11970	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
@@ -3016,6 +3018,7 @@ ASV_14682	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibac
 ASV_14688	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_14693	Eukaryota	Ochrophyta	Phaeophyceae	Laminariales	Laminariaceae	g_	s_
 ASV_14698	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_14702	Eukaryota	unknown	unknown	Longamoebia	Acanthamoebidae	Acanthamoeba	unassigned
 ASV_14707	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_14710	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
 ASV_14726	Bacteria	Proteobacteria	Alphaproteobacteria	Rickettsiales	Rickettsiaceae	g_	s_
@@ -5053,6 +5056,7 @@ ASV_25142	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Chaetocerotales	Chaetoce
 ASV_25143	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Corymorphidae	g_	s_
 ASV_25144	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_25166	Eukaryota	Arthropoda	Insecta	unassigned	unassigned	g_	s_
+ASV_25170	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
 ASV_25176	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_25209	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
 ASV_25220	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Prayidae	g_	s_
@@ -5297,6 +5301,7 @@ ASV_27520	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s
 ASV_27554	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_27574	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_27582	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
+ASV_27590	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_27597	Eukaryota	Bacillariophyta	unassigned	unassigned	unassigned	g_	s_
 ASV_27599	Eukaryota	unknown	Labyrinthulomycetes	unknown	Thraustochytriaceae	g_	s_
 ASV_27664	Eukaryota	Chlorophyta	Chloropicophyceae	Chloropicales	Chloropicaceae	Chloroparvula	unassigned
@@ -13248,6 +13253,7 @@ ASV_45533	Eukaryota	Mollusca	Gastropoda	Nudibranchia	Onchidorididae	Corambe	Cora
 ASV_45534	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45535	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45536	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	g_	s_
+ASV_45537	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45538	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45539	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Forskaliidae	g_	s_
 ASV_45540	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	unassigned
@@ -13262,6 +13268,7 @@ ASV_45555	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45556	Eukaryota	Arthropoda	Insecta	Lepidoptera	Nepticulidae	g_	s_
 ASV_45558	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45560	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_45561	Eukaryota	Porifera	Demospongiae	unassigned	unassigned	g_	s_
 ASV_45562	Eukaryota	Arthropoda	Hexanauplia	Calanoida	unassigned	g_	s_
 ASV_45563	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
 ASV_45564	Eukaryota	Arthropoda	Hexanauplia	Calanoida	unassigned	g_	s_
@@ -13281,11 +13288,14 @@ ASV_45591	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45592	Eukaryota	Arthropoda	Hexanauplia	Cyclopoida	unassigned	g_	s_
 ASV_45593	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45594	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
+ASV_45595	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_45596	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
 ASV_45598	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
 ASV_45599	Eukaryota	Arthropoda	Malacostraca	Decapoda	Epialtidae	Pugettia	Pugettia producta
 ASV_45600	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45601	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45604	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_45605	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
 ASV_45607	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus pergens
 ASV_45608	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45610	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
@@ -13301,6 +13311,7 @@ ASV_45639	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45642	Eukaryota	Cnidaria	Hydrozoa	Narcomedusae	Cuninidae	g_	s_
 ASV_45643	Eukaryota	Oomycota	Oomycetes	Pythiales	Pythiaceae	g_	s_
 ASV_45644	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	g_	s_
+ASV_45647	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45649	Eukaryota	Arthropoda	Insecta	Diptera	Sciaridae	g_	s_
 ASV_45650	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45652	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
@@ -13312,6 +13323,7 @@ ASV_45665	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emilia
 ASV_45669	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Coscinodiscales	Coscinodiscaceae	g_	s_
 ASV_45671	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
 ASV_45672	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	g_	s_
+ASV_45675	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45678	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	Paracalanus	Paracalanus sp. C AC-2013
 ASV_45681	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_45682	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
@@ -13346,6 +13358,7 @@ ASV_45777	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45780	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_45784	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_45785	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
+ASV_45790	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45793	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
 ASV_45797	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45798	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
@@ -13354,6 +13367,7 @@ ASV_45805	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45809	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Metridia	Metridia lucens
 ASV_45810	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45811	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_45812	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45819	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
 ASV_45823	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	g_	s_
 ASV_45826	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
@@ -13361,6 +13375,7 @@ ASV_45829	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45840	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	g_	s_
 ASV_45841	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
 ASV_45853	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
+ASV_45854	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45856	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
 ASV_45860	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45861	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
@@ -13374,6 +13389,7 @@ ASV_45881	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_45882	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
 ASV_45884	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
 ASV_45885	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_45887	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
 ASV_45891	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_45894	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calocalanidae	g_	s_
 ASV_45898	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
@@ -13455,6 +13471,7 @@ ASV_46207	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeleto
 ASV_46210	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
 ASV_46217	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_46218	Eukaryota	Arthropoda	Hexanauplia	Cyclopoida	unassigned	g_	s_
+ASV_46229	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_46235	Eukaryota	Cnidaria	Hydrozoa	Leptothecata	Mitrocomidae	g_	s_
 ASV_46236	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
 ASV_46253	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
@@ -13481,6 +13498,7 @@ ASV_46373	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Metridinidae	Pleuromamma	Pl
 ASV_46375	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	g_	s_
 ASV_46376	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Chordariaceae	g_	s_
 ASV_46377	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibacteraceae	g_	s_
+ASV_46378	Eukaryota	Arthropoda	Insecta	Zygentoma	Lepismatidae	Ctenolepisma	s_
 ASV_46383	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_46394	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_46395	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
@@ -13490,6 +13508,7 @@ ASV_46411	Eukaryota	Chaetognatha	Sagittoidea	Aphragmophora	Sagittidae	g_	s_
 ASV_46421	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Sphaeronectidae	Sphaeronectes	Sphaeronectes gracilis
 ASV_46434	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_46447	Eukaryota	Rhodophyta	Bangiophyceae	Bangiales	Bangiaceae	g_	s_
+ASV_46449	Eukaryota	Basidiomycota	unassigned	unassigned	unassigned	g_	s_
 ASV_46460	Eukaryota	Haptophyta	Haptophyta	Prymnesiales	Chrysochromulinaceae	g_	s_
 ASV_46461	Eukaryota	Cnidaria	Hydrozoa	Siphonophorae	Sphaeronectidae	Sphaeronectes	Sphaeronectes gracilis
 ASV_46462	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
@@ -13760,6 +13779,7 @@ ASV_47364	Eukaryota	Haptophyta	Haptophyta	Phaeocystales	Phaeocystaceae	g_	s_
 ASV_47365	Eukaryota	Chlorophyta	Mamiellophyceae	Mamiellales	Bathycoccaceae	Bathycoccus	Bathycoccus prasinos
 ASV_47366	Eukaryota	Oomycota	Oomycetes	unassigned	unassigned	g_	s_
 ASV_47367	Eukaryota	Porifera	Demospongiae	Clionaida	Spirastrellidae	g_	s_
+ASV_47369	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
 ASV_47374	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
 ASV_47375	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalanus	Clausocalanus pergens
 ASV_47377	Eukaryota	unknown	unknown	unknown	Vexilliferidae	g_	s_
@@ -13842,6 +13862,7 @@ ASV_47651	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Clausocalanidae	Clausocalan
 ASV_47652	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Paracalanidae	g_	s_
 ASV_47653	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	Emiliania huxleyi
 ASV_47654	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Proboscidactylidae	g_	s_
+ASV_47661	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
 ASV_47665	Eukaryota	Picozoa	unknown	unknown	unknown	g_	s_
 ASV_47700	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Coscinodiscales	Coscinodiscaceae	g_	s_
 ASV_47706	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
@@ -13888,6 +13909,7 @@ ASV_47779	Eukaryota	Bacillariophyta	Coscinodiscophyceae	Thalassiosirales	Skeleto
 ASV_47780	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
 ASV_47781	Eukaryota	Haptophyta	Haptophyta	Isochrysidales	Noelaerhabdaceae	Emiliania	s_
 ASV_47782	unassigned	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_47789	Eukaryota	Arthropoda	Insecta	Diptera	unassigned	g_	s_
 ASV_47797	no_hit	no_hit	no_hit	no_hit	no_hit	g_	s_
 ASV_47805	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_47821	Eukaryota	Rhodophyta	Florideophyceae	Plocamiales	Plocamiaceae	g_	s_
@@ -14239,6 +14261,8 @@ ASV_48803	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_48804	Eukaryota	Ochrophyta	Phaeophyceae	Ectocarpales	Scytosiphonaceae	g_	s_
 ASV_48805	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_48806	Eukaryota	Ochrophyta	Phaeophyceae	Fucales	Sargassaceae	g_	s_
+ASV_48830	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
+ASV_48831	Eukaryota	Arthropoda	Insecta	Diptera	Mycetophilidae	g_	s_
 ASV_48846	Eukaryota	Rhodophyta	Bangiophyceae	Bangiales	Bangiaceae	g_	s_
 ASV_48847	Eukaryota	Mollusca	Cephalopoda	Teuthida	Enoploteuthidae	g_	s_
 ASV_48848	Eukaryota	Cnidaria	Hydrozoa	Anthoathecata	Corynidae	g_	s_
@@ -14378,6 +14402,7 @@ ASV_49528	Bacteria	Proteobacteria	Alphaproteobacteria	Pelagibacterales	Pelagibac
 ASV_49529	Eukaryota	Arthropoda	Hexanauplia	Poecilostomatoida	Oncaeidae	g_	s_
 ASV_49530	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
 ASV_49531	Eukaryota	unassigned	unassigned	unassigned	unassigned	g_	s_
+ASV_49556	Eukaryota	Chordata	Mammalia	Primates	Hominidae	Homo	Homo sapiens
 ASV_49562	Eukaryota	Arthropoda	Hexanauplia	Calanoida	Calanidae	Ctenocalanus	Ctenocalanus vanus
 ASV_49563	Eukaryota	Ochrophyta	Dictyochophyceae	Pedinellales	unknown	g_	s_
 ASV_49564	Eukaryota	Oomycota	Oomycetes	Peronosporales	Peronosporaceae	g_	s_
@@ -14483,6 +14508,7 @@ ASV_50305	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_50306	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_50307	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_50314	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
+ASV_50316	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_50319	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_50328	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
 ASV_50333	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit	no_hit
