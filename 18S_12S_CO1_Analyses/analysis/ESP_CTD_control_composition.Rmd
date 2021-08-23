@@ -18,6 +18,7 @@ library(qiime2R)
 library(here)
 library(vegan)
 library(tidyverse)
+library(ggpubr)
 
 fig_dir <- here::here("figures", "supplemental")
 ```
@@ -479,7 +480,7 @@ phylum_colors <- c("#a6cee3",
 
 
 ```{r plot_top_phyla_COI}
-blanks_COI_top_phyla_plot <- ggplot(blanks_COI_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+blanks_COI_top_phyla_plot_rel_reads <- ggplot(blanks_COI_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
   geom_bar(stat = "identity", color = "black", size = 0.3) +
   scale_fill_manual(values = phylum_colors)+
   labs(x = "Sample", y = "Percentage of total reads") +
@@ -490,23 +491,27 @@ blanks_COI_top_phyla_plot <- ggplot(blanks_COI_table_forplot, aes(x = name, y = 
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_text(size = 14),
-        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/COI figure
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
         # axis.text.y = element_blank(),
         # axis.title.y = element_blank(),
         axis.ticks.length.y=unit(0, "cm"),
         axis.ticks.length.x = unit(0.1, "cm"),
         # axis.ticks=element_blank(),
-        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
-        legend.position = "top",
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
         legend.title.align = 0.5)
         # axis.line.x.bottom = element_line(color = "black", size = 1),
         # axis.line.y.left = element_line(color = "black", size = 1))
 
 blanks_COI_top_phyla_plot
 
-ggsave(paste0(fig_dir, "/COI_blanks_phyla_plot.png"), blanks_COI_top_phyla_plot, height = 15, width = 6)
+ggsave(paste0(fig_dir, "/COI_blanks_phyla_plot_rel_reads.png"), blanks_COI_top_phyla_plot_rel_reads, height = 15, width = 6)
 ```
 
 Second version of plot showing read counts rather than relative read counts
@@ -531,7 +536,7 @@ blanks_COI_top_phyla_plot <- ggplot(blanks_COI_table_forplot_2, aes(x = name, y 
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_text(size = 14),
-        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/COI figure
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
         # axis.text.y = element_blank(),
         # axis.title.y = element_blank(),
         axis.ticks.length.y=unit(0, "cm"),
@@ -658,7 +663,7 @@ phylum_colors <- c("#a6cee3",
 
 
 ```{r plot_top_phyla_18S}
-blanks_18S_top_phyla_plot <- ggplot(blanks_18S_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+blanks_18S_top_phyla_plot_rel_reads <- ggplot(blanks_18S_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
   geom_bar(stat = "identity", color = "black", size = 0.3) +
   scale_fill_manual(values = phylum_colors)+
   labs(x = "Sample", y = "Percentage of total reads") +
@@ -669,23 +674,27 @@ blanks_18S_top_phyla_plot <- ggplot(blanks_18S_table_forplot, aes(x = name, y = 
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_text(size = 14),
-        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/18S figure
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
         # axis.text.y = element_blank(),
         # axis.title.y = element_blank(),
         axis.ticks.length.y=unit(0, "cm"),
         axis.ticks.length.x = unit(0.1, "cm"),
         # axis.ticks=element_blank(),
-        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
-        legend.position = "top",
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
         legend.title.align = 0.5)
 # axis.line.x.bottom = element_line(color = "black", size = 1),
 # axis.line.y.left = element_line(color = "black", size = 1))
 
 blanks_18S_top_phyla_plot
 
-ggsave(paste0(fig_dir, "/18S_blanks_phyla_plot.png"), blanks_18S_top_phyla_plot, height = 15, width = 6)
+ggsave(paste0(fig_dir, "/18S_blanks_phyla_plot_rel_reads.png"), blanks_18S_top_phyla_plot_rel_reads, height = 15, width = 6)
 ```
 
 Second version of plot showing read counts rather than relative read counts
@@ -710,7 +719,7 @@ blanks_18S_top_phyla_plot <- ggplot(blanks_18S_table_forplot_2, aes(x = name, y 
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_text(size = 14),
-        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/18S figure
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
         # axis.text.y = element_blank(),
         # axis.title.y = element_blank(),
         axis.ticks.length.y=unit(0, "cm"),
@@ -771,6 +780,8 @@ blanks_metadata_12S %>%
   dplyr::mutate(id = dplyr::row_number()) %>% 
   # re-order those that were taken separately for each cruise
   ungroup() %>% 
+  # Add in the missing sampling cruise
+  mutate(SAMPLING_cruise = ifelse(grepl("CN18F", original_name), "CN18F", SAMPLING_cruise)) %>% 
   group_by(blank_type, SAMPLING_cruise) %>% 
   dplyr::mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), dplyr::row_number(), id)) %>% 
   # combine into new name field
@@ -837,7 +848,7 @@ Family_colors <- c("#a6cee3",
 
 
 ```{r plot_top_families_12S}
-blanks_12S_top_families_plot <- ggplot(blanks_12S_table_forplot, aes(x = name, y = rel_reads, fill = Family2)) +
+blanks_12S_top_families_plot_rel_reads <- ggplot(blanks_12S_table_forplot, aes(x = name, y = rel_reads, fill = Family2)) +
   geom_bar(stat = "identity", color = "black", size = 0.3) +
   scale_fill_manual(values = Family_colors)+
   labs(x = "Sample", y = "Percentage of total reads") +
@@ -848,23 +859,27 @@ blanks_12S_top_families_plot <- ggplot(blanks_12S_table_forplot, aes(x = name, y
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_text(size = 14),
-        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/12S figure
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
         # axis.text.y = element_blank(),
         # axis.title.y = element_blank(),
         axis.ticks.length.y=unit(0, "cm"),
         axis.ticks.length.x = unit(0.1, "cm"),
         # axis.ticks=element_blank(),
-        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
-        legend.position = "top",
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
         legend.title.align = 0.5)
 # axis.line.x.bottom = element_line(color = "black", size = 1),
 # axis.line.y.left = element_line(color = "black", size = 1))
 
 blanks_12S_top_families_plot
 
-ggsave(paste0(fig_dir, "/12S_blanks_families_plot.png"), blanks_12S_top_families_plot, height = 15, width = 6)
+ggsave(paste0(fig_dir, "/12S_blanks_families_plot_rel_reads.png"), blanks_12S_top_families_plot_rel_reads, height = 15, width = 6)
 ```
 
 Second version of plot showing read counts rather than relative read counts
@@ -889,7 +904,7 @@ blanks_12S_top_families_plot <- ggplot(blanks_12S_table_forplot_2, aes(x = name,
   theme(panel.background = element_rect(fill = "white",size = 1),
         panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
         axis.title.x = element_text(size = 14),
-        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/12S figure
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
         # axis.text.y = element_blank(),
         # axis.title.y = element_blank(),
         axis.ticks.length.y=unit(0, "cm"),
@@ -955,7 +970,12 @@ blanks_metadata_16S %>%
   dplyr::mutate(id = ifelse(blank_type %in% c("ESP Pre-experiment blank", "ESP Post-experiment blank", "Control for ESP pre-blanks", "Control for ESP post-blanks"), dplyr::row_number(), id)) %>% 
   # combine into new name field
   mutate(name = ifelse(blank_type %in% c("DNA extraction blank", "PCR blank"), paste0(blank_type, " ", id),
-                       paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) -> blanks_metadata_16S
+                       paste0(SAMPLING_cruise, ": ", blank_type, " ", id))) %>% 
+  # Fix four sample names to make merging work
+  mutate(sample_name = ifelse(sample_name == "CN18FBN2post", "CN18FBN2pst",
+                              ifelse(sample_name == "CN18FBN3post", "CN18FBN3pst",
+                                     ifelse(sample_name == "CN18FESPkoa_BN1post", "CN18FBN1pst",
+                                            ifelse(sample_name == "CN18FESPkoa_BN1pre", "CN18FBN1pre", sample_name)))))-> blanks_metadata_16S
 
 blanks_16S_table %>% 
   left_join(.,  blanks_metadata_16S, by = "sample_name") -> blanks_16S_table
@@ -968,7 +988,7 @@ unique(blanks_16S_table$Phylum)
 blanks_16S_table %>% 
   # Change so that "unassigned", "no_hit", and "unknown" will merge together
   mutate(Phylum = gsub(" ", "", Phylum)) %>% 
-  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown", ""), "Unassigned", Phylum)) %>% 
   group_by(Phylum) %>% 
   summarise(total = sum(value)) -> blanks_16S_phyla_reads
 
@@ -976,7 +996,7 @@ blanks_16S_phyla_reads %>%
   arrange(., desc(total)) -> blanks_16S_phyla_reads
 
 # Get the top ten phyla; we need top ten, then "unknown" and "other" to get to 12
-# Get top 11
+# Get top 10
 top11_phyla <- blanks_16S_phyla_reads$Phylum[1:11]
 
 # Mutate data for plotting to get new phyla (top 10 + unassigned + other)
@@ -1019,7 +1039,7 @@ phylum_colors <- c("#a6cee3",
 
 
 ```{r plot_top_phyla_16S}
-blanks_16S_top_phyla_plot <- ggplot(blanks_16S_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+blanks_16S_top_phyla_plot_rel_reads <- ggplot(blanks_16S_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
   geom_bar(stat = "identity", color = "black", size = 0.3) +
   scale_fill_manual(values = phylum_colors)+
   labs(x = "Sample", y = "Percentage of total reads") +
@@ -1036,17 +1056,21 @@ blanks_16S_top_phyla_plot <- ggplot(blanks_16S_table_forplot, aes(x = name, y = 
         axis.ticks.length.y=unit(0, "cm"),
         axis.ticks.length.x = unit(0.1, "cm"),
         # axis.ticks=element_blank(),
-        plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
         legend.text = element_text(size = 12),
         legend.title = element_text(size = 15),
-        legend.position = "top",
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.08),
         legend.title.align = 0.5)
 # axis.line.x.bottom = element_line(color = "black", size = 1),
 # axis.line.y.left = element_line(color = "black", size = 1))
 
-blanks_16S_top_phyla_plot
+blanks_16S_top_phyla_plot_rel_reads
 
-ggsave(paste0(fig_dir, "/16S_blanks_phyla_plot.png"), blanks_16S_top_phyla_plot, height = 15, width = 6)
+ggsave(paste0(fig_dir, "/16S_blanks_phyla_plot_rel_reads.png"), blanks_16S_top_phyla_plot_rel_reads, height = 15, width = 6)
 ```
 
 Second version of plot showing read counts rather than relative read counts
@@ -1094,3 +1118,28 @@ blanks_16S_top_phyla_plot
 ggsave(paste0(fig_dir, "/16S_blanks_phyla_plot_absolute_reads.png"), blanks_16S_top_phyla_plot, height = 15, width = 6)
 
 ```
+
+
+# Export composite phyla plots for manuscript
+```{r export_final_phyla_plots}
+
+fig_dir <- here("figures", "final_figures")
+
+control_abs_reads_comb_plot <- ggarrange(blanks_16S_top_phyla_plot, blanks_18S_top_phyla_plot, blanks_COI_top_phyla_plot, blanks_12S_top_families_plot, heights = 15, widths = 6, nrow = 1, labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"),
+                                   label.x = 0.01, label.y = 1, font.label = list(size = 24, face = "plain"), hjust = 0)
+
+ggsave(here(fig_dir, "Fig_S2_control_taxa_abs_reads.pdf"), control_abs_reads_comb_plot, height = 15, width = 24)
+
+
+control_rel_reads_comb_plot <- ggarrange(blanks_16S_top_phyla_plot_rel_reads, blanks_18S_top_phyla_plot_rel_reads, blanks_COI_top_phyla_plot_rel_reads, blanks_12S_top_families_plot_rel_reads, heights = 15, widths = 6, nrow = 1, labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"),
+                                   label.x = 0.01, label.y = 1, font.label = list(size = 24, face = "plain"), hjust = 0)
+
+ggsave(here(fig_dir, "Fig_S2_control_taxa_rel_reads.pdf"), control_rel_reads_comb_plot, height = 15, width = 24)
+
+```
+
+
+
+
+
+
