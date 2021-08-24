@@ -158,7 +158,7 @@ as.data.frame(as.matrix(sample_data(ESP_CTD_18S_phyloseq))) %>%
                                            ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
                                                   ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
                                                                               "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
-                                                                              ), "ESP Pos-experiment blank",
+                                                                              ), "ESP Post-experiment blank",
                                                          ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
                                                                               "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
                                                                               ), "ESP Pre-experiment blank",
