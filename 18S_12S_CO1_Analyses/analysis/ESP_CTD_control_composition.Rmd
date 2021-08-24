@@ -127,10 +127,10 @@ as.data.frame(as.matrix(sample_data(ESP_CTD_COI_phyloseq))) %>%
                                            ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
                                                   ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
                                                                               "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
-                                                                              ), "ESP Pre-experiment blank",
+                                                                              ), "ESP Post-experiment blank",
                                                          ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
                                                                               "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
-                                                                              ), "ESP Post-experiment blank",
+                                                                              ), "ESP Pre-experiment blank",
                                                                 ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
   # only keep the relevant columns
   dplyr::select(sample_name, SAMPLING_cruise, library, libraryID, locus, original_name, blank_type) %>% 
@@ -158,10 +158,10 @@ as.data.frame(as.matrix(sample_data(ESP_CTD_18S_phyloseq))) %>%
                                            ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
                                                   ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
                                                                               "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
-                                                                              ), "ESP Pre-experiment blank",
+                                                                              ), "ESP Pos-experiment blank",
                                                          ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
                                                                               "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
-                                                                              ), "ESP Post-experiment blank",
+                                                                              ), "ESP Pre-experiment blank",
                                                                 ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
   # only keep the relevant columns
   dplyr::select(sample_name, SAMPLING_cruise, library, libraryID, locus, original_name, blank_type) %>% 
@@ -188,10 +188,10 @@ as.data.frame(as.matrix(sample_data(ESP_CTD_12S_phyloseq))) %>%
                                            ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
                                                   ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
                                                                               "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
-                                                                              ), "ESP Pre-experiment blank",
+                                                                              ), "ESP Post-experiment blank",
                                                          ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
                                                                               "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
-                                                                              ), "ESP Post-experiment blank",
+                                                                              ), "ESP Pre-experiment blank",
                                                                 ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
   # only keep the relevant columns
   dplyr::select(sample_name, SAMPLING_cruise, library, libraryID, locus, original_name, blank_type) %>% 
@@ -228,10 +228,10 @@ mutate(sample_name = gsub("CN18FBN1", "CN18FESPkoa_BN1", sample_name)) %>%
                                            ifelse(grepl("pre", sample_name), "Control for ESP pre-blanks", 
                                                   ifelse(original_name %in% c("CN18FESPkoa_SC1", "CN18S_koa3G_SC29",
                                                                               "CN18S_koa3G_SC30", "CN18S_koa3G_SC31"
-                                                                              ), "ESP Pre-experiment blank",
+                                                                              ), "ESP Post-experiment blank",
                                                          ifelse(original_name %in% c("CN18FESPkoa_SC59", "CN18S_koa3G_SC57",
                                                                               "CN18S_koa3G_SC58", "CN18S_koa3G_SC59"
-                                                                              ), "ESP Post-experiment blank",
+                                                                              ), "ESP Pre-experiment blank",
                                                                 ifelse(grepl("pcr", sample_name), "PCR blank", "other")))))))) %>% 
   dplyr::rename(`16S_plate_name` = sample_name) %>% 
   # only keep the relevant columns
