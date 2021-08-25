@@ -428,9 +428,15 @@ blanks_COI_asv_table_long %>%
 blanks_metadata_COI %>% 
   mutate(sample_name = COI_plate_name) -> blanks_metadata_COI
 
+# Reverse order of data frame - this will help plot samples in right order, and also numbering of samples
+# blanks_metadata_COI %>% 
+#   map_df(rev) -> blanks_metadata_COI
+
 # Add more informative sample names
 blanks_metadata_COI %>% 
   dplyr::arrange(desc(blank_type)) %>% 
+  # Reverse order
+  map_df(rev) %>% 
   # add index within each blank_type group
   dplyr::group_by(blank_type) %>% 
   dplyr::mutate(id = dplyr::row_number()) %>% 
@@ -613,9 +619,14 @@ blanks_18S_asv_table_long %>%
 blanks_metadata_18S %>% 
   mutate(sample_name = `18S_plate_name`) -> blanks_metadata_18S
 
+# Reverse order of data frame - this will help plot samples in right order, and also numbering of samples
+# blanks_metadata_18S %>% 
+#   map_df(rev) -> blanks_metadata_18S
+
 # Add more informative sample names
 blanks_metadata_18S %>% 
   dplyr::arrange(desc(blank_type)) %>% 
+  map_df(rev) %>% 
   # add index within each blank_type group
   dplyr::group_by(blank_type) %>% 
   dplyr::mutate(id = dplyr::row_number()) %>% 
@@ -796,9 +807,14 @@ blanks_12S_asv_table_long %>%
 blanks_metadata_12S %>% 
   mutate(sample_name = `12S_plate_name`) -> blanks_metadata_12S
 
+# Reverse order of data frame - this will help plot samples in right order, and also numbering of samples
+# blanks_metadata_12S %>% 
+#   map_df(rev) -> blanks_metadata_12S
+
 # Add more informative sample names
 blanks_metadata_12S %>% 
   dplyr::arrange(desc(blank_type)) %>% 
+  map_df(rev) %>% 
   # add index within each blank_type group
   dplyr::group_by(blank_type) %>% 
   dplyr::mutate(id = dplyr::row_number()) %>% 
@@ -982,9 +998,14 @@ blanks_16S_asv_table_long %>%
 blanks_metadata_16S %>% 
   mutate(sample_name = `16S_plate_name`) -> blanks_metadata_16S
 
+# Reverse order of data frame - this will help plot samples in right order, and also numbering of samples
+# blanks_metadata_12S %>% 
+#   map_df(rev) -> blanks_metadata_12S
+
 # Add more informative sample names
 blanks_metadata_16S %>% 
   dplyr::arrange(desc(blank_type)) %>% 
+  map_df(rev) %>% 
   # add index within each blank_type group
   dplyr::group_by(blank_type) %>% 
   dplyr::mutate(id = dplyr::row_number()) %>% 
@@ -1165,6 +1186,15 @@ ggsave(here(fig_dir, "FigS3-control_taxa_rel_reads.pdf"), control_rel_reads_comb
 
 
 
+```{r}
+blanks_metadata_COI
+
+blanks_metadata_12S
+
+blanks_metadata_18S
+
+blanks_metadata_16S
+```
 
 
 
