@@ -13,30 +13,14 @@ Notes: this v3 script now includes the CTD collection blanks as well so that all
 
 In addition to the R packages required for this script, you will also need to install **qiime2** and **DEICODE** (a qiime2 plugin) and create a qiime2 environment to run DEICODE within.
 
-
 ### Load libraries
-```{r}
-library(tidyverse)
-library(phyloseq)
-library(qiime2R)
-library(here)
-library(vegan)
-```
-
-### Load data
-
-
-
-### Load libraries
-```{r}
+```{r load_libraries}
 library(tidyverse)
 library(phyloseq)
 library(qiime2R)
 library(here)
 library(vegan)
 library(ggpubr)
-
-sample_data(ESP_CTD_COI_phyloseq)
 ```
 
 ### Load data
