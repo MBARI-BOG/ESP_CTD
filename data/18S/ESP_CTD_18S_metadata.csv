@@ -22,6 +22,7 @@
 "CN18FESPkoa_SC24_CC","CN18F","33.19232641","CC38","CC","18S","CN18FESPkoa_SC24","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP1","CN18F1"
 "CN18FESPkoa_SC26_CC","CN18F","24.64197722","CC36","CC","18S","CN18FESPkoa_SC26","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP2","CN18F2"
 "CN18FESPkoa_SC29_CC","CN18F","24.12127247","CC33","CC","18S","CN18FESPkoa_SC29","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP3","CN18F3"
+"CN18FESPkoa_SC2_CC","CN18F","31.13364398","CC60","CC","18S","CN18FESPkoa_SC2","3G_ESP","environmental",NA,NA,NA,NA,NA
 "CN18FESPkoa_SC30_CC","CN18F","12.84975355","CC31","CC","18S","CN18FESPkoa_SC30","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP4","CN18F4"
 "CN18FESPkoa_SC31_CC","CN18F","17.95441159","CC30","CC","18S","CN18FESPkoa_SC31","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP5","CN18F5"
 "CN18FESPkoa_SC32_CC","CN18F","34.26964331","CC29","CC","18S","CN18FESPkoa_SC32","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP6","CN18F6"
@@ -42,6 +43,7 @@
 "CN18FESPkoa_SC57_CC","CN18F","35.21756651","CC4","CC","18S","CN18FESPkoa_SC57","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP21","CN18F21"
 "CN18FESPkoa_SC58_CC","CN18F","30.91903055","CC3","CC","18S","CN18FESPkoa_SC58","3G_ESP","environmental","environmental","ESP","ESP_Sample","ESP22","CN18F22"
 "CN18FESPkoa_SC59_CC","CN18F","","CC2","CC","18S","CN18FESPkoa_SC59","3G_ESP","negative","environmental","","","",""
+"CN18FESPkoa_SC60_CC","CN18F","","CC1","CC","18S","CN18FESPkoa_SC60","3G_ESP","positive","environmental","","","",""
 "CN18Fc12_8_eDNA_HH","CN18F","30.0","HH9","HH","18S","CN18Fc12_8_eDNA","","environmental","environmental","CTD","CTD_Sample","CTD22","CN18F22"
 "CN18Fc19_5_eDNA_HH","CN18F","40.0","HH21","HH","18S","CN18Fc19_5_eDNA","","environmental","environmental","CTD","CTD_Sample","CTD21","CN18F21"
 "CN18Fc21_6_eDNA_HH","CN18F","25.0","HH33","HH","18S","CN18Fc21_6_eDNA","","environmental","environmental","CTD","CTD_Sample","CTD20","CN18F20"
@@ -64,6 +66,7 @@
 "CN18Fc47_6_eDNA_HH","CN18F","25.0","HH47","HH","18S","CN18Fc47_6_eDNA","","environmental","environmental","CTD","CTD_Sample","CTD3","CN18F3"
 "CN18Fc49_6_eDNA_HH","CN18F","25.0","HH59","HH","18S","CN18Fc49_6_eDNA","","environmental","environmental","CTD","CTD_Sample","CTD2","CN18F2"
 "CN18Fc51_5_eDNA_HH","CN18F","35.0","HH71","HH","18S","CN18Fc51_5_eDNA","","environmental","environmental","CTD","CTD_Sample","CTD1","CN18F1"
+"CN18SESPkoa_SC32_AA","CN18S","199.9900054","AA83","AA","18S","CN18SESPkoa_SC32","3G_ESP","environmental",NA,NA,NA,NA,NA
 "CN18SESPkoa_SC36_AA","CN18S","29.96195043","AA80","AA","18S","CN18SESPkoa_SC36","3G_ESP","environmental","environmental","ESP","","ESP1","CN18S1"
 "CN18SESPkoa_SC37_AA","CN18S","200.0087146","AA79","AA","18S","CN18SESPkoa_SC37","3G_ESP","environmental","environmental","ESP","","ESP2","CN18S2"
 "CN18SESPkoa_SC39_AA","CN18S","29.99480987","AA78","AA","18S","CN18SESPkoa_SC39","3G_ESP","environmental","environmental","ESP","","ESP3","CN18S3"
@@ -89,6 +92,7 @@
 "CN18S_koa3G_SC57_CC","CN18S","","CC81","CC","18S","CN18S_koa3G_SC57","3G_ESP","negative","environmental","","","",""
 "CN18S_koa3G_SC58_CC","CN18S","","CC80","CC","18S","CN18S_koa3G_SC58","3G ESP","negative","environmental","","","",""
 "CN18S_koa3G_SC59_CC","CN18S","","CC79","CC","18S","CN18S_koa3G_SC59","3G ESP","negative","environmental","","","",""
+"CN18S_koa3G_SC60_CC","CN18S","","CC78","CC","18S","CN18S_koa3G_SC60","3G ESP","positive","environmental","","","",""
 "CN18Sc09_2_eDNA_AA","CN18S","200.0","AA1","AA","18S","CN18Sc09_2_eDNA","CTD/SBE911_Rosette_with_Niskin_bottle","environmental","environmental","CTD","","CTD10","CN18S10"
 "CN18Sc10_2_eDNA_AA","CN18S","200.0","AA3","AA","18S","CN18Sc10_2_eDNA","CTD/SBE911_Rosette_with_Niskin_bottle","environmental","environmental","CTD","","CTD9","CN18S9"
 "CN18Sc14_2_eDNA_AA","CN18S","195.0","AA15","AA","18S","CN18Sc14_2_eDNA","CTD/SBE911_Rosette_with_Niskin_bottle","environmental","environmental","CTD","","CTD8","CN18S8"

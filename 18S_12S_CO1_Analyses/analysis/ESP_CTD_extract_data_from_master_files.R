@@ -38,10 +38,10 @@ metadata_COI_ESP_CTD$sample_name <- str_replace_all(metadata_COI_ESP_CTD$sample_
 setdiff(ESP_CTD_16S_envt_metadata$sample_name,metadata_COI_ESP_CTD$sample_name)
 
 # Now, let's extract the samples we want, based on the matching ESP/CTD sample, plus the blanks
-metadata_COI_ESP_CTD_subset <- subset(metadata_COI_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))))
-# Drop those weird ESP blanks - DONT! These are important
-# metadata_COI_ESP_CTD_subset <- subset(metadata_COI_ESP_CTD_subset, !(sample_name %in% c("CN18FESPkoa_SC59","CN18FESPkoa_SC1","CN18S_koa3G_SC59","CN18S_koa3G_SC58","CN18S_koa3G_SC57","CN18S_koa3G_SC31","CN18S_koa3G_SC30","CN18S_koa3G_SC29")))
-# # metadata_COI_ESP_CTD_subset$sample_name
+# metadata_COI_ESP_CTD_subset <- subset(metadata_COI_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))))
+# Subset ESP CTD samples, plus blanks (including positives) and two final samples to look into carryover
+metadata_COI_ESP_CTD_subset <- subset(metadata_COI_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))) |
+                                        sample_name %in% c("CN18FESPkoa_SC60", "CN18FESPkoa_SC2", "CN18S_koa3G_SC60", "CN18SESPkoa_SC32"))
 
 
 ## add in the metadata that we want about matching IDs
@@ -220,10 +220,11 @@ metadata_18S_ESP_CTD$sample_name <- str_replace_all(metadata_18S_ESP_CTD$sample_
 setdiff(ESP_CTD_16S_envt_metadata$sample_name,metadata_18S_ESP_CTD$sample_name)
 
 # Now, let's extract the samples we want, based on the matching ESP/CTD sample, plus the blanks
-metadata_18S_ESP_CTD_subset <- subset(metadata_18S_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))))
-# Drop those weird ESP blanks - DON'T - these are important!
-# metadata_18S_ESP_CTD_subset <- subset(metadata_18S_ESP_CTD_subset, !(sample_name %in% c("CN18FESPkoa_SC59","CN18FESPkoa_SC1","CN18S_koa3G_SC59","CN18S_koa3G_SC58","CN18S_koa3G_SC57","CN18S_koa3G_SC31","CN18S_koa3G_SC30","CN18S_koa3G_SC29")))
-# metadata_18S_ESP_CTD_subset$sample_name
+# metadata_18S_ESP_CTD_subset <- subset(metadata_18S_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))))
+# Subset ESP CTD samples, plus blanks (including positives) and two final samples to look into carryover
+metadata_18S_ESP_CTD_subset <- subset(metadata_18S_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))) |
+                                        sample_name %in% c("CN18FESPkoa_SC60", "CN18FESPkoa_SC2", "CN18S_koa3G_SC60", "CN18SESPkoa_SC32"))
+
 
 
 ## add in the metadata that we want about matching IDs
@@ -358,9 +359,10 @@ metadata_12S_ESP_CTD$sample_name <- str_replace_all(metadata_12S_ESP_CTD$sample_
 metadata_12S_ESP_CTD$sample_name <- str_replace_all(metadata_12S_ESP_CTD$sample_name,"_NN","")
 
 # Now, let's extract the samples we want, based on the matching ESP/CTD sample, plus the blanks
-metadata_12S_ESP_CTD_subset <- subset(metadata_12S_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | sample_name == "CN18FESPkoa_SC1" | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))))
-# Drop those weird ESP blanks - DON'T - these are important!
-# metadata_12S_ESP_CTD_subset <- subset(metadata_12S_ESP_CTD_subset, !(sample_name %in% c("CN18FESPkoa_SC59","CN18FESPkoa_SC1","CN18S_koa3G_SC59","CN18S_koa3G_SC58","CN18S_koa3G_SC57","CN18S_koa3G_SC31","CN18S_koa3G_SC30","CN18S_koa3G_SC29")))
+# metadata_12S_ESP_CTD_subset <- subset(metadata_12S_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))))
+# Subset ESP CTD samples, plus blanks (including positives) and two final samples to look into carryover
+metadata_12S_ESP_CTD_subset <- subset(metadata_12S_ESP_CTD, sample_name %in% ESP_CTD_16S_envt_metadata$sample_name | !(sample_type %in% c("positive","environmental") & !(str_detect(sample_name,"BP"))) |
+                                        sample_name %in% c("CN18FESPkoa_SC60", "CN18FESPkoa_SC2", "CN18S_koa3G_SC60", "CN18SESPkoa_SC32", "CN18FESPkoa_SC1"))
 
 
 ## add in the metadata that we want about matching IDs
@@ -484,7 +486,7 @@ metadata_16S_ESP_CTD_subset$sample_name <- str_replace_all(metadata_16S_ESP_CTD_
 
 # ESP: CN18F 4, 5, 21, 22
 
-write.csv(metadata_16S_ESP_CTD_subset, here("data", "16S", "ESP_CTD_16S_metadata.csv"))
+write.csv(metadata_16S_ESP_CTD_subset, here("data", "16S", "ESP_CTD_16S_metadata.csv"), row.names = FALSE)
 
 
 
