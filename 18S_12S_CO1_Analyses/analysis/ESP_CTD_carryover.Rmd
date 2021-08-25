@@ -1,0 +1,357 @@
+---
+title: "ESP_CTD_carryover"
+author: "Markus Min"
+date: "8/25/2021"
+output: html_document
+---
+
+### Description
+This Rmd file will explore the degree of sample carryover in the ESP samples.
+
+
+
+### Load libraries
+```{r load_libraries}
+library(tidyverse)
+library(phyloseq)
+library(qiime2R)
+library(here)
+library(vegan)
+library(ggpubr)
+
+# Set figure directory
+fig_dir <- here::here("figures", "ESP_carryover")
+```
+
+### Load data
+
+```{r load_data}
+#### COI
+asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
+tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
+metadata_path_COI <- here::here("data", "COI", "ESP_CTD_COI_metadata.csv")
+
+# Remove leading Xs from asv table
+COI_asv_table <- read.csv(asv_table_path_COI, row.names = 1)
+destroyX = function(es) {
+  f = es
+  for (col in c(1:ncol(f))){ #for each column in dataframe
+    if (startsWith(colnames(f)[col], "X") == TRUE)  { #if starts with 'X' ..
+      colnames(f)[col] <- substr(colnames(f)[col], 2, 100) #get rid of it
+    }
+  }
+  assign(deparse(substitute(es)), f, inherits = TRUE) #assign corrected data to original name
+}
+COI_asv_table <- destroyX(COI_asv_table)
+
+ESP_CTD_COI_phyloseq <- merge_phyloseq(otu_table(COI_asv_table,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_COI, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_COI, row.names = 1)))
+
+#### 18S
+asv_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_asv_table.csv")
+tax_table_path_18S <- here::here("data", "18S", "ESP_CTD_18S_tax_table.csv")
+metadata_path_18S <- here::here("data", "18S", "ESP_CTD_18S_metadata.csv")
+
+# Remove leading Xs
+otu_table_18S <- read.csv(asv_table_path_18S, row.names = 1)
+names(otu_table_18S) <- sub("X", "", names(otu_table_18S))
+
+ESP_CTD_18S_phyloseq <- merge_phyloseq(otu_table(otu_table_18S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_18S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_18S, row.names = 1)))
+
+#### 12S
+asv_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_asv_table.csv")
+tax_table_path_12S <- here::here("data", "12S", "ESP_CTD_12S_tax_table.csv")
+metadata_path_12S <- here::here("data", "12S", "ESP_CTD_12S_metadata.csv")
+
+# Remove leading Xs
+otu_table_12S <- read.csv(asv_table_path_12S, row.names = 1)
+names(otu_table_12S) <- sub("X", "", names(otu_table_12S))
+
+ESP_CTD_12S_phyloseq <- merge_phyloseq(otu_table(otu_table_12S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(read.csv(tax_table_path_12S, row.names = 1))),
+                                       sample_data(read.csv(metadata_path_12S, row.names = 1)))
+
+
+### 16S
+# Read in combined taxonomy + ASV table
+asv_tax_combined_path_16S <- here::here("data", "16S", "ESP_CTD_16S_dada2_table_with_tax.csv")
+asv_tax_combined_16S <- read.csv(asv_tax_combined_path_16S)
+# Split off asv table
+dplyr::select(asv_tax_combined_16S, -Taxon) %>% 
+  column_to_rownames("FeatureID") -> asv_table_16S
+# Split off taxonomy, separate into fields per rank
+tax_table_16S <- dplyr::select(asv_tax_combined_16S, FeatureID, Taxon)
+tax_table_16S$Taxon <- gsub("[a-zA-Z]__","", tax_table_16S$Taxon)
+tax_table_16S %>% separate(., Taxon, into = c("Kingdom", "Phylum", "Class", "Order", "Family", "Genus", "Species"), sep = ";") %>% 
+  column_to_rownames("FeatureID") -> tax_table_16S
+  
+metadata_path_16S <- here::here("data", "16S", "ESP_CTD_16S_metadata.csv")
+
+ESP_CTD_16S_phyloseq <- merge_phyloseq(otu_table(asv_table_16S,taxa_are_rows = TRUE),
+                                       tax_table(as.matrix(tax_table_16S)),
+                                       sample_data(read.csv(metadata_path_16S, row.names = 1)))
+sample_data(ESP_CTD_16S_phyloseq)
+```
+
+
+### Subset carryover samples
+```{r subset_carryover_samples}
+# carryover_samples
+carryover_samples <- data.frame(original_name = c("CN18FESPkoa_SC60",
+"CN18FESPkoa_SC59",
+"CN18FESPkoa_SC2",
+"CN18FESPkoa_SC1",
+"CN18S_koa3G_SC60",
+"CN18S_koa3G_SC59",
+"CN18S_koa3G_SC58",
+"CN18S_koa3G_SC57",
+"CN18SESPkoa_SC32",
+"CN18S_koa3G_SC31",
+"CN18S_koa3G_SC30",
+"CN18S_koa3G_SC29"), carryover_name = c("ESP Pre-Positive",
+"ESP Pre-Blank",
+"Final ESP Deployment Sample",
+"ESP Post-Blank",
+"ESP Pre-Positive",
+"ESP Pre-Blank 1",
+"ESP Pre-Blank 2",
+"ESP Pre-Blank 3",
+"Final ESP Deployment Sample",
+"ESP Post-Blank 1",
+"ESP Post-Blank 2",
+"ESP Post-Blank 3"))
+
+# Get the sample order for plotting
+sample_order <- c("CN18F: ESP Pre-Positive",
+"CN18F: ESP Pre-Blank",
+"CN18F: Final ESP Deployment Sample",
+"CN18F: ESP Post-Blank",
+"CN18S: ESP Pre-Positive",
+"CN18S: ESP Pre-Blank 1",
+"CN18S: ESP Pre-Blank 2",
+"CN18S: ESP Pre-Blank 3",
+"CN18S: Final ESP Deployment Sample",
+"CN18S: ESP Post-Blank 1",
+"CN18S: ESP Post-Blank 2",
+"CN18S: ESP Post-Blank 3")
+
+
+### COI
+carryover_COI_phyloseq <- subset_samples(ESP_CTD_COI_phyloseq, sample_data(ESP_CTD_COI_phyloseq)$original_name %in% carryover_samples$original_name)
+
+sample_data(ESP_CTD_COI_phyloseq)
+sample_data(carryover_COI_phyloseq)
+
+### 18S
+carryover_18S_phyloseq <- subset_samples(ESP_CTD_18S_phyloseq, sample_data(ESP_CTD_18S_phyloseq)$original_name %in% carryover_samples$original_name)
+
+### 12S
+carryover_12S_phyloseq <- subset_samples(ESP_CTD_12S_phyloseq, sample_data(ESP_CTD_12S_phyloseq)$original_name %in% carryover_samples$original_name)
+
+
+### 16S
+carryover_16S_phyloseq <- prune_samples(sample_names(ESP_CTD_16S_phyloseq) %in% carryover_samples$original_name, ESP_CTD_16S_phyloseq)
+# For 16S we are missing
+
+sample_data(carryover_COI_phyloseq)
+sample_data(carryover_18S_phyloseq)
+sample_data(carryover_12S_phyloseq)
+sample_data(carryover_16S_phyloseq)
+
+# 12S: I don't think that "CN18SESPkoa_SC32" was sequenced for 12S. I think this happened when the ESP/CTD samples got re-sequenced with the TD protocol and since this wasn't a comparison sample it didn't make it in.
+# 16S: missing "CN18FESPkoa_SC2", "CN18SESPkoa_SC32" - these weren't in the ESP/CTD original sample set and therefore didn't get seq'd for 16S. Also missing two positive controls: "CN18S_koa3G_SC60", "CN18FESPkoa_SC60". These are in the metadata, but aren't in the ASV table. perhaps they weren't run through the pipeline? Nastassia seems to have indicated that they didn't think they were important.
+
+```
+
+
+
+# Make plots of carryover
+
+## COI
+
+### Make top phyla plot
+```{r prep_data}
+# Extract ASVs
+as.data.frame(otu_table(carryover_COI_phyloseq)) %>% 
+  rownames_to_column("ASV") -> carryover_COI_ASV_table
+
+# Remove "_X" from the column names
+colnames(carryover_COI_ASV_table) <- gsub("_X", "", colnames(carryover_COI_ASV_table))
+
+# Extract taxonomy table
+carryover_COI_tax_table <- as.data.frame(as(tax_table(carryover_COI_phyloseq),"matrix"))
+carryover_COI_tax_table <- tibble::rownames_to_column(carryover_COI_tax_table,"ASV")
+
+# reformat ASV table as long form
+carryover_COI_ASV_table %>% 
+  pivot_longer(cols = colnames(carryover_COI_ASV_table)[2:ncol(carryover_COI_ASV_table)], names_to = "sample_name") -> carryover_COI_asv_table_long
+
+carryover_COI_asv_table_long %>% 
+  left_join(carryover_COI_tax_table, by = "ASV") -> carryover_COI_table
+
+# Add shortened sample names
+as.data.frame(as.matrix(sample_data(carryover_COI_phyloseq))) %>% 
+  rownames_to_column("sample_name") %>% 
+  left_join(., carryover_samples, by = "original_name") -> carryover_metadata_COI
+
+# Reverse order of data frame - this will help plot samples in right order, and also numbering of samples
+# carryover_metadata_COI %>% 
+#   map_df(rev) -> carryover_metadata_COI
+
+# Add more informative sample names
+carryover_metadata_COI %>% 
+  # concatenate cruise name and name
+  mutate(name = paste0(SAMPLING_cruise, ": ", carryover_name)) -> carryover_metadata_COI
+
+carryover_COI_table %>% 
+  left_join(.,  carryover_metadata_COI, by = "sample_name") -> carryover_COI_table
+
+
+unique(carryover_COI_table$Phylum)
+```
+
+```{r determine_top_phyla}
+carryover_COI_table %>% 
+  # Change so that "unassigned", "no_hit", and "unknown" will merge together
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  group_by(Phylum) %>% 
+  summarise(total = sum(value)) -> carryover_COI_phyla_reads
+
+carryover_COI_phyla_reads %>% 
+  arrange(., desc(total)) -> carryover_COI_phyla_reads
+
+# Get the top ten phyla; we need top ten, then "unknown" and "other" to get to 12
+# Get top 11
+top11_phyla <- carryover_COI_phyla_reads$Phylum[1:11]
+
+# Mutate data for plotting to get new phyla (top 10 + unassigned + other)
+carryover_COI_table %>% 
+  mutate(., Phylum = ifelse(Phylum %in% c("unassigned", "no_hit", "unknown"), "Unassigned", Phylum)) %>% 
+  mutate(., phylum2 = ifelse(Phylum %in% top11_phyla, Phylum, "Other")) -> carryover_COI_table
+
+# Calculate proportion of total
+carryover_COI_table %>% 
+  group_by(name) %>% 
+  mutate(rel_reads = value/sum(value)*100) -> carryover_COI_table
+
+# Group by phylum and collapse table
+carryover_COI_table %>% 
+  group_by(name, phylum2) %>% 
+  dplyr::summarise(rel_reads = sum(rel_reads)) -> carryover_COI_table_forplot
+
+# Reorder phyla so that unassigned and other are at the bottom
+# carryover_COI_table_forplot$phylum2 <- factor(carryover_COI_table_forplot$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Chaetognatha", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
+carryover_COI_table_forplot$phylum2 <- factor(carryover_COI_table_forplot$phylum2, levels = c("Annelida", "Arthropoda", "Bacillariophyta", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
+
+# Make color scale
+phylum_colors <- c("#a6cee3",
+"#1f78b4",
+"#b2df8a",
+"#33a02c",
+'#fb9a99',
+"#e31a1c",
+"#fdbf6f",
+"#ff7f00",
+"#cab2d6",
+"#6a3d9a",
+"#b15928",
+"gray50")
+# "#ffff99",
+# "#b15928")
+```
+
+
+#### Plot relative reads
+```{r plot_top_phyla_COI}
+# Change order
+carryover_COI_table_forplot$name <- factor(carryover_COI_table_forplot$name, levels = sample_order)
+
+carryover_COI_top_phyla_plot_rel_reads <- ggplot(carryover_COI_table_forplot, aes(x = name, y = rel_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Percentage of total reads") +
+  scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.15),
+        legend.title.align = 0.5)
+        # axis.line.x.bottom = element_line(color = "black", size = 1),
+        # axis.line.y.left = element_line(color = "black", size = 1))
+
+carryover_COI_top_phyla_plot_rel_reads
+
+ggsave(paste0(fig_dir, "/COI_carryover_phyla_plot_rel_reads.png"), carryover_COI_top_phyla_plot_rel_reads, height = 10, width = 6)
+```
+
+
+
+Second version of plot showing read counts rather than relative read counts
+```{r second_version_showing_absolute_reads}
+# Group by phylum and collapse table
+carryover_COI_table %>% 
+  group_by(name, phylum2) %>% 
+  summarise(total_reads = sum(value)) -> carryover_COI_table_forplot_2
+
+# Reorder phyla so that unassigned and other are at the bottom
+# carryover_COI_table_forplot_2$phylum2 <- factor(carryover_COI_table_forplot_2$phylum2, levels = c("Arthropoda", "Bacillariophyta", "Chaetognatha", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
+carryover_COI_table_forplot_2$phylum2 <- factor(carryover_COI_table_forplot_2$phylum2, levels = c("Annelida", "Arthropoda", "Bacillariophyta", "Chordata", "Cnidaria", "Gastrotricha", "Haptophyta",  "Ochrophyta", "Oomycota", "Picozoa", "Other", "Unassigned"))
+
+carryover_COI_table_forplot_2$name <- factor(carryover_COI_table_forplot_2$name, levels = sample_order)
+
+carryover_COI_top_phyla_plot <- ggplot(carryover_COI_table_forplot_2, aes(x = name, y = total_reads, fill = phylum2)) +
+  geom_bar(stat = "identity", color = "black", size = 0.3) +
+  scale_fill_manual(values = phylum_colors)+
+  labs(x = "Sample", y = "Total Reads") +
+  # scale_y_reverse(expand = c(0,0), labels = c("100", "75", "50", "25", "0")) +
+  coord_flip()+
+  scale_x_discrete(expand = c(0,0), limits = rev) + 
+  guides(fill = guide_legend(title = "Phylum", nrow = 4, byrow = TRUE, title.position = "top")) +
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title.x = element_text(size = 14),
+        # Remove the axis labels (sample names)so that there is only one set of labels in the combined 16S/16S figure
+        # axis.text.y = element_blank(),
+        # axis.title.y = element_blank(),
+        axis.ticks.length.y=unit(0, "cm"),
+        axis.ticks.length.x = unit(0.1, "cm"),
+        # axis.ticks=element_blank(),
+        plot.margin = margin(5, 0.25, 0.25, 0.25, "cm"),
+        # plot.margin = margin(0.5, 0.25, 0.25, 0.25, "cm"),
+        legend.text = element_text(size = 12),
+        legend.title = element_text(size = 15),
+        # legend.position = "top",
+        # legend.margin = margin(-10, 0, 0, -10),
+        # legend.justification = c(-1,1),
+        legend.position = c(0.2, 1.15),
+        legend.title.align = 0.5)
+        # axis.line.x.bottom = element_line(color = "black", size = 1),
+        # axis.line.y.left = element_line(color = "black", size = 1))
+
+carryover_COI_top_phyla_plot
+
+ggsave(paste0(fig_dir, "/COI_carryover_phyla_plot_absolute_reads.png"), carryover_COI_top_phyla_plot, height = 10, width = 6)
+
+```
+
+
+
