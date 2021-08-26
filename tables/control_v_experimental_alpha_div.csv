@@ -1,0 +1,9 @@
+marker,test,control_shannon,exp_shannon,p_value,control_N,exp_N
+COI,ESP/CTD Blanks vs. Exp,1.48,4.51,9.86E-08,11,72
+COI,ESP Blanks vs. Exp,1.34,4.51,4.12E-07,8,72
+COI,CTD Blanks vs. Exp,1.85,4.51,0.080768379,3,72
+18S,ESP/CTD Blanks vs. Exp,3.29,5.17,0.000126907,11,64
+18S,ESP Blanks vs. Exp,2.97,5.17,0.000526932,8,64
+18S,CTD Blanks vs. Exp,4.14,5.17,0.035629066,3,64
+12S,ESP Blanks vs. Exp,0.94,1.05,0.738325444,8,60
+16S,ESP Blanks vs. Exp,2.13,4.51,6.80E-07,8,71
