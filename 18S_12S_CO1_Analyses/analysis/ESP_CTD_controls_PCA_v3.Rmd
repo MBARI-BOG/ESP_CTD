@@ -669,7 +669,7 @@ ESP_CTD_16S_envt_negative_metadata <- as.data.frame(as.matrix(sample_data(ESP_CT
 ESP_CTD_16S_envt_negative_metadata <- tibble::rownames_to_column(ESP_CTD_16S_envt_negative_metadata,"#SampleID")
 # Make new sample_type_2 column that has either negative or environmental
 ESP_CTD_16S_envt_negative_metadata %>% 
-  mutate(sample_type_2 = ifelse(control_status == "Exp", "environmental", "negative")) -> ESP_CTD_16S_envt_negative_metadata
+  mutate(sample_type_2 = ifelse(control_status == "exp", "environmental", "negative")) -> ESP_CTD_16S_envt_negative_metadata
 ESP_CTD_16S_envt_negative_metadata %>%
   mutate(depth = as.numeric(depth_m)) %>%
   mutate(depth_cat = ifelse(depth <= 25.5 | is.na(depth), "0-25",
@@ -980,3 +980,174 @@ sort(sample_sums(ESP_CTD_12S_negative_phyloseq))
 sort(sample_sums(ESP_CTD_16S_negative_phyloseq))
 ```
 1 18S control, 0 COI controls, 3 12S controls, 4 16S controls.
+
+
+# Alpha diversity for controls vs. experimental
+
+The controls we are interested in here are the field blanks: the ESP pre- and post- deployment blanks and the CTD collection blanks.
+
+```{r}
+# Check to make sure all field blanks are present
+
+# COI - 3 CTD collection blanks, 8 ESP field blanks
+table(as.data.frame(as.matrix(sample_data(ESP_CTD_COI_envt_negative_phyloseq)))$sample_type.x)
+sample_names(subset_samples(ESP_CTD_COI_envt_negative_phyloseq, sample_data(ESP_CTD_COI_envt_negative_phyloseq)$sample_type.x == "negative"))
+
+# 18S - 3 CTD collection blanks, 8 ESP field blanks
+table(as.data.frame(as.matrix(sample_data(ESP_CTD_18S_envt_negative_phyloseq)))$sample_type.x)
+sample_names(subset_samples(ESP_CTD_18S_envt_negative_phyloseq, sample_data(ESP_CTD_18S_envt_negative_phyloseq)$sample_type.x == "negative"))
+
+# 12S - no CTD collection blanks, 8 ESP field blanks
+table(as.data.frame(as.matrix(sample_data(ESP_CTD_12S_envt_negative_phyloseq)))$sample_type.x)
+sample_names(subset_samples(ESP_CTD_12S_envt_negative_phyloseq, sample_data(ESP_CTD_12S_envt_negative_phyloseq)$sample_type.x == "negative"))
+
+# 16S - no CTD collection blanks, 8 ESP field blanks
+table(as.data.frame(as.matrix(sample_data(ESP_CTD_16S_envt_negative_phyloseq)))$control_status)
+sample_names(subset_samples(ESP_CTD_16S_envt_negative_phyloseq, sample_data(ESP_CTD_16S_envt_negative_phyloseq)$control_status == "control"))
+```
+
+## COI
+
+```{r run_alpha_diversity_COI}
+con_exp_COI_shannon <- estimate_richness(ESP_CTD_COI_envt_negative_phyloseq, split = TRUE, measures = c("Shannon"))
+
+con_exp_COI_shannon %>% tibble::rownames_to_column(.,"#SampleID") -> con_exp_COI_shannon
+
+# Add metadata
+con_exp_COI_shannon <- left_join(con_exp_COI_shannon,ESP_CTD_COI_envt_negative_metadata,by = "#SampleID")
+
+con_exp_COI_shannon <- con_exp_COI_shannon[,c("#SampleID","Shannon","sample_type.x")]
+
+# Add CTD or ESP blank field
+con_exp_COI_shannon %>% 
+  mutate(sample_type = ifelse(sample_type.x == "negative" & grepl("CB", `#SampleID`), "CTD Collection Blank",
+                              ifelse(sample_type.x == "negative", "ESP Field Blank", sample_type.x))) -> con_exp_COI_shannon
+
+# t-test: All blanks (ESP and CTD) vs. experimental
+shannon_ttest_COI_allblanks <- t.test(subset(con_exp_COI_shannon, sample_type.x == "negative")$Shannon, 
+                            subset(con_exp_COI_shannon, sample_type.x == "environmental")$Shannon)
+
+# t-test: ESP blanks vs. experimental
+shannon_ttest_COI_ESPblanks <- t.test(subset(con_exp_COI_shannon, sample_type == "ESP Field Blank")$Shannon, 
+                            subset(con_exp_COI_shannon, sample_type.x == "environmental")$Shannon)
+
+# t-test: CTD blanks vs. experimental
+shannon_ttest_COI_CTDblanks <- t.test(subset(con_exp_COI_shannon, sample_type == "CTD Collection Blank")$Shannon, 
+                            subset(con_exp_COI_shannon, sample_type.x == "environmental")$Shannon)
+```
+
+
+## 18S
+
+```{r run_alpha_diversity_18S}
+con_exp_18S_shannon <- estimate_richness(ESP_CTD_18S_envt_negative_phyloseq, split = TRUE, measures = c("Shannon"))
+
+con_exp_18S_shannon %>% tibble::rownames_to_column(.,"#SampleID") -> con_exp_18S_shannon
+
+# Add metadata
+con_exp_18S_shannon <- left_join(con_exp_18S_shannon,ESP_CTD_18S_envt_negative_metadata,by = "#SampleID")
+
+con_exp_18S_shannon <- con_exp_18S_shannon[,c("#SampleID","Shannon","sample_type.x")]
+
+# Add CTD or ESP blank field
+con_exp_18S_shannon %>% 
+  mutate(sample_type = ifelse(sample_type.x == "negative" & grepl("CB", `#SampleID`), "CTD Collection Blank",
+                              ifelse(sample_type.x == "negative", "ESP Field Blank", sample_type.x))) -> con_exp_18S_shannon
+
+# t-test: All blanks (ESP and CTD) vs. experimental
+shannon_ttest_18S_allblanks <- t.test(subset(con_exp_18S_shannon, sample_type.x == "negative")$Shannon, 
+                                      subset(con_exp_18S_shannon, sample_type.x == "environmental")$Shannon)
+
+# t-test: ESP blanks vs. experimental
+shannon_ttest_18S_ESPblanks <- t.test(subset(con_exp_18S_shannon, sample_type == "ESP Field Blank")$Shannon, 
+                                      subset(con_exp_18S_shannon, sample_type.x == "environmental")$Shannon)
+
+# t-test: CTD blanks vs. experimental
+shannon_ttest_18S_CTDblanks <- t.test(subset(con_exp_18S_shannon, sample_type == "CTD Collection Blank")$Shannon, 
+                                      subset(con_exp_18S_shannon, sample_type.x == "environmental")$Shannon)
+```
+
+## 12S
+
+```{r run_alpha_diversity_12S}
+con_exp_12S_shannon <- estimate_richness(ESP_CTD_12S_envt_negative_phyloseq, split = TRUE, measures = c("Shannon"))
+
+con_exp_12S_shannon %>% tibble::rownames_to_column(.,"#SampleID") -> con_exp_12S_shannon
+
+# Add metadata
+con_exp_12S_shannon <- left_join(con_exp_12S_shannon,ESP_CTD_12S_envt_negative_metadata,by = "#SampleID")
+
+con_exp_12S_shannon <- con_exp_12S_shannon[,c("#SampleID","Shannon","sample_type.x")]
+
+# t-test: ESP blanks vs. experimental (all blanks are ESP blanks)
+shannon_ttest_12S_allblanks <- t.test(subset(con_exp_12S_shannon, sample_type.x == "negative")$Shannon, 
+                                      subset(con_exp_12S_shannon, sample_type.x == "environmental")$Shannon)
+```
+
+
+
+## 16S
+
+```{r run_alpha_diversity_16S}
+con_exp_16S_shannon <- estimate_richness(ESP_CTD_16S_envt_negative_phyloseq, split = TRUE, measures = c("Shannon"))
+
+con_exp_16S_shannon %>% tibble::rownames_to_column(.,"#SampleID") -> con_exp_16S_shannon
+
+# Add metadata
+con_exp_16S_shannon <- left_join(con_exp_16S_shannon,ESP_CTD_16S_envt_negative_metadata,by = "#SampleID")
+
+con_exp_16S_shannon <- con_exp_16S_shannon[,c("#SampleID","Shannon","control_status")]
+
+# t-test: ESP blanks vs. experimental (all blanks are ESP blanks)
+shannon_ttest_16S_allblanks <- t.test(subset(con_exp_16S_shannon, control_status == "control")$Shannon, 
+                                      subset(con_exp_16S_shannon, control_status == "exp")$Shannon)
+
+```
+
+## Summarize all markers
+
+
+
+
+
+```{r summarize_alpha_diversity}
+# Make a data frame for storing
+fieldblanks_alpha <- data.frame(marker = c(rep("COI", 3), rep("18S", 3), "12S", "16S"), 
+                                test = c("ESP/CTD Blanks vs. Exp", "ESP Blanks vs. Exp", "CTD Blanks vs. Exp",
+                                         "ESP/CTD Blanks vs. Exp", "ESP Blanks vs. Exp", "CTD Blanks vs. Exp",
+                                         "ESP Blanks vs. Exp",
+                                         "ESP Blanks vs. Exp"),
+                                control_shannon = rep(NA, 8),
+                                exp_shannon = rep(NA, 8),
+                                p_value = rep(NA, 8),
+                                control_N = rep(NA, 8),
+                                exp_N = rep(NA, 8))
+
+# COI: All blanks vs. exp
+fieldblanks_alpha[1,] <- c("COI", "ESP/CTD Blanks vs. Exp", round(shannon_ttest_COI_allblanks$estimate[1],2), round(shannon_ttest_COI_allblanks$estimate[2],2), shannon_ttest_COI_allblanks$p.value, dim(subset(con_exp_COI_shannon, sample_type.x == "negative"))[1], dim(subset(con_exp_COI_shannon, sample_type.x == "environmental"))[1])
+
+# COI: ESP blanks vs. exp
+fieldblanks_alpha[2,] <- c("COI", "ESP Blanks vs. Exp", round(shannon_ttest_COI_ESPblanks$estimate[1],2), round(shannon_ttest_COI_ESPblanks$estimate[2],2), shannon_ttest_COI_ESPblanks$p.value, dim(subset(con_exp_COI_shannon, sample_type == "ESP Field Blank"))[1], dim(subset(con_exp_COI_shannon, sample_type.x == "environmental"))[1])
+
+# COI: CTD blanks vs. exp
+fieldblanks_alpha[3,] <- c("COI", "CTD Blanks vs. Exp", round(shannon_ttest_COI_CTDblanks$estimate[1],2), round(shannon_ttest_COI_CTDblanks$estimate[2],2), shannon_ttest_COI_CTDblanks$p.value, dim(subset(con_exp_COI_shannon, sample_type == "CTD Collection Blank"))[1], dim(subset(con_exp_COI_shannon, sample_type.x == "environmental"))[1])
+
+# 18S: All blanks vs. exp
+fieldblanks_alpha[4,] <- c("18S", "ESP/CTD Blanks vs. Exp", round(shannon_ttest_18S_allblanks$estimate[1],2), round(shannon_ttest_18S_allblanks$estimate[2],2), shannon_ttest_18S_allblanks$p.value, dim(subset(con_exp_18S_shannon, sample_type.x == "negative"))[1], dim(subset(con_exp_18S_shannon, sample_type.x == "environmental"))[1])
+
+# 18S: ESP blanks vs. exp
+fieldblanks_alpha[5,] <- c("18S", "ESP Blanks vs. Exp", round(shannon_ttest_18S_ESPblanks$estimate[1],2), round(shannon_ttest_18S_ESPblanks$estimate[2],2), shannon_ttest_18S_ESPblanks$p.value, dim(subset(con_exp_18S_shannon, sample_type == "ESP Field Blank"))[1], dim(subset(con_exp_18S_shannon, sample_type.x == "environmental"))[1])
+
+# 18S: CTD blanks vs. exp
+fieldblanks_alpha[6,] <- c("18S", "CTD Blanks vs. Exp", round(shannon_ttest_18S_CTDblanks$estimate[1],2), round(shannon_ttest_18S_CTDblanks$estimate[2],2), shannon_ttest_18S_CTDblanks$p.value, dim(subset(con_exp_18S_shannon, sample_type == "CTD Collection Blank"))[1], dim(subset(con_exp_18S_shannon, sample_type.x == "environmental"))[1])
+
+# 12S: ESP blanks vs. exp
+fieldblanks_alpha[7,] <- c("12S", "ESP Blanks vs. Exp", round(shannon_ttest_12S_allblanks$estimate[1],2), round(shannon_ttest_12S_allblanks$estimate[2],2), shannon_ttest_12S_allblanks$p.value, dim(subset(con_exp_12S_shannon, sample_type.x == "negative"))[1], dim(subset(con_exp_12S_shannon, sample_type.x == "environmental"))[1])
+
+# 16S: ESP blanks vs. exp
+fieldblanks_alpha[8,] <- c("16S", "ESP Blanks vs. Exp", round(shannon_ttest_16S_allblanks$estimate[1],2), round(shannon_ttest_16S_allblanks$estimate[2],2), shannon_ttest_16S_allblanks$p.value, dim(subset(con_exp_16S_shannon, control_status == "control"))[1], dim(subset(con_exp_16S_shannon, control_status == "exp"))[1])
+
+
+write.csv(fieldblanks_alpha, here("tables", "control_v_experimental_alpha_div.csv"), row.names = FALSE)
+```
+
