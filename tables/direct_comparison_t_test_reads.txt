@@ -1,4 +1,4 @@
-### Paired t-test for direct comparison samples
+### Paired t-test for read counts of direct comparison samples
 
 
 
