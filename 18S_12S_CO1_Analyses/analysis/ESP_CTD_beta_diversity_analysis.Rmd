@@ -27,6 +27,7 @@ library(here)
 library(vegan)
 library(ggpubr)
 library(egg)
+library(rstatix)
 ```
 
 ### Load data
@@ -970,6 +971,30 @@ multi_permanova_COI <- adonis2(PCA_dist ~ shallow_deep + SAMPLING_cruise + match
 # Here the issue is that each pair of samples is treated as a separate group, which isn't as interesting for our analysis
 
 # Run ANOVA
+
+# Test assumptions
+
+# Check normality assumption
+lm_COI  <- lm(distance ~ same_cruise + same_depth + paired, data = distances_metadata_COI)
+# Create a QQ plot of residuals
+ggqqplot(residuals(lm_COI))
+# Compute Shapiro-Wilk test of normality
+shapiro_test(residuals(lm_COI))
+# Horribly not normal
+
+# log transform, try again
+distances_metadata_COI %>% 
+  mutate(log_distance = log(distance)) -> distances_metadata_COI
+lm_log_COI  <- lm(log_distance ~ same_cruise + same_depth + paired, data = distances_metadata_COI)
+# Create a QQ plot of residuals
+ggqqplot(residuals(lm_log_COI))
+# Compute Shapiro-Wilk test of normality
+shapiro_test(residuals(lm_log_COI))
+# Still horribly not normal
+
+
+
+
 
 # Order matters: control for cruise and depth first
 
