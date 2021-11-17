@@ -1,0 +1,46 @@
+### COI              
+res.aov.COI <- aov(distance ~ same_cruise + same_depth + paired,  data = distances_metadata_COI)              
+              Df Sum Sq Mean Sq  F value Pr(>F)    
+              
+same_cruise    1 1818.3  1818.3 3928.417 <2e-16 ***
+same_depth     1   95.2    95.2  205.691 <2e-16 ***
+paired         1    0.8     0.8    1.829  0.176    
+Residuals   2012  931.3     0.5                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+### 18S              
+res.aov.18S <- aov(distance ~ same_cruise + same_depth + paired,  data = distances_metadata_18S)              
+              Df Sum Sq Mean Sq  F value Pr(>F)    
+              
+              Df Sum Sq Mean Sq  F value Pr(>F)    
+same_cruise    1  803.3   803.3 1703.345 <2e-16 ***
+same_depth     1   99.7    99.7  211.513 <2e-16 ***
+paired         1    0.0     0.0    0.001  0.973    
+Residuals   2012  948.8     0.5                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+### 12S              
+res.aov.12S <- aov(distance ~ same_cruise + same_depth + paired,  data = distances_metadata_12S)              
+              Df Sum Sq Mean Sq  F value Pr(>F)    
+              
+              Df Sum Sq Mean Sq F value Pr(>F)    
+same_cruise    1  392.7   392.7 565.114 <2e-16 ***
+same_depth     1  247.2   247.2 355.712 <2e-16 ***
+paired         1    1.3     1.3   1.802   0.18    
+Residuals   1766 1227.2     0.7                   
+---
+
+### 16S              
+res.aov.16S <- aov(distance ~ same_cruise + same_depth + paired,  data = distances_metadata_16S)              
+              Df Sum Sq Mean Sq  F value Pr(>F)    
+              
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+              Df Sum Sq Mean Sq  F value Pr(>F)    
+same_cruise    1 1824.9  1824.9 3011.393 <2e-16 ***
+same_depth     1   87.4    87.4  144.256 <2e-16 ***
+paired         1    2.2     2.2    3.556 0.0595 .  
+Residuals   1887 1143.5     0.6                    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
