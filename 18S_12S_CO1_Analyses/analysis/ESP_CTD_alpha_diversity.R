@@ -4,6 +4,7 @@ library(tidyverse)
 library(phyloseq)
 library(ggpubr)
 library(here)
+library(rstatix)
 
 ## ----Load data----------------------------------------------------------------
 
@@ -153,7 +154,19 @@ ESP_CTD_16S_shannon$marker <- "16S"
 
 
 
+##----Check all markers for normality------------------------------------------
+qqplot(ESP_CTD_COI_shannon$Shannon, runif(1000))
+qqplot(ESP_CTD_18S_shannon$Shannon, runif(1000))
+qqplot(ESP_CTD_12S_shannon$Shannon, runif(1000))
+qqplot(ESP_CTD_16S_shannon$Shannon, runif(1000))
+
+
+
+
+
 ##----Measure significance using t-test------------------------------------------
+
+# UNPAIRED
 shannon_ttest_16S <- t.test(subset(ESP_CTD_16S_shannon, CTD_or_ESP == "ESP")$Shannon, 
                             subset(ESP_CTD_16S_shannon, CTD_or_ESP == "CTD")$Shannon)
 
@@ -166,7 +179,62 @@ shannon_ttest_COI <- t.test(subset(ESP_CTD_COI_shannon, CTD_or_ESP == "ESP")$Sha
 shannon_ttest_12S <- t.test(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP")$Shannon, 
                             subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$Shannon)
 
-# All are > 0.05
+
+# PAIRED
+
+# Confirm that paired samples are in the same order
+ESP_CTD_COI_shannon %>% 
+  arrange(matching_ID) -> ESP_CTD_COI_shannon
+subset(ESP_CTD_COI_shannon, CTD_or_ESP == "ESP")$matching_ID
+subset(ESP_CTD_COI_shannon, CTD_or_ESP == "CTD")$matching_ID
+
+ESP_CTD_18S_shannon %>% 
+  arrange(matching_ID) -> ESP_CTD_18S_shannon
+subset(ESP_CTD_18S_shannon, CTD_or_ESP == "ESP")$matching_ID
+subset(ESP_CTD_18S_shannon, CTD_or_ESP == "CTD")$matching_ID
+
+ESP_CTD_12S_shannon %>% 
+  arrange(matching_ID) -> ESP_CTD_12S_shannon
+subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP")$matching_ID
+subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$matching_ID
+# 12S has the issue where there are some missing CTD samples - remove the following:
+setdiff(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP")$matching_ID, 
+        subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$matching_ID)
+# CN18F1, CN18F2, CN18F21, CN18F3
+
+ESP_CTD_16S_shannon %>% 
+  arrange(matching_ID) -> ESP_CTD_16S_shannon
+subset(ESP_CTD_16S_shannon, CTD_or_ESP == "ESP")$matching_ID
+subset(ESP_CTD_16S_shannon, CTD_or_ESP == "CTD")$matching_ID
+
+shannon_ttest_16S_paired <- t.test(subset(ESP_CTD_16S_shannon, CTD_or_ESP == "ESP")$Shannon, 
+                            subset(ESP_CTD_16S_shannon, CTD_or_ESP == "CTD")$Shannon,
+                            paired = TRUE)
+
+shannon_ttest_18S_paired <- t.test(subset(ESP_CTD_18S_shannon, CTD_or_ESP == "ESP")$Shannon, 
+                            subset(ESP_CTD_18S_shannon, CTD_or_ESP == "CTD")$Shannon,
+                            paired = TRUE)
+
+shannon_ttest_COI_paired <- t.test(subset(ESP_CTD_COI_shannon, CTD_or_ESP == "ESP")$Shannon, 
+                            subset(ESP_CTD_COI_shannon, CTD_or_ESP == "CTD")$Shannon,
+                            paired = TRUE)
+
+shannon_ttest_12S_paired <- t.test(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP" & 
+                                     !(matching_ID %in% c("CN18F1", "CN18F2", "CN18F21", "CN18F3")))$Shannon, 
+                            subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD" & 
+                                     !(matching_ID %in% c("CN18F1", "CN18F2", "CN18F21", "CN18F3")))$Shannon,
+                            paired = TRUE)
+
+shannon_ttest_COI_paired
+shannon_ttest_18S_paired
+shannon_ttest_12S_paired
+shannon_ttest_16S_paired
+
+# 12S is significant (p = 0.006), all others are not
+# 12S: mean of the differences = -0.2826637 (ESP vs. CTD)
+mean(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP")$Shannon)
+mean(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$Shannon)
+# 12S: CTD has mean difference of 0.28 more Shannon diversity
 
 ##----Join all markers together-------------------------------------------------
 
@@ -209,7 +277,7 @@ for (i in 1:length(markers)){
 
 ## Arrange all plots
 
-shannon_plot_combined <- annotate_figure(ggpubr::ggarrange(shannon_plot_16S, shannon_plot_18S,shannon_plot_COI,shannon_plot_12S, 
+shannon_plot_combined <- annotate_figure(ggpubr::ggarrange(shannon_plot_16S, shannon_plot_18S,shannon_plot_COI,shannon_plot_12S,
                                           ncol = 2, nrow = 2,labels = c("(a)", "(b)", "(c)", "(d)"), 
                                           label.x = 0.1, label.y = 0.985,
                                           font.label = list(size = 20, color = "black", face = "plain")),
@@ -221,6 +289,132 @@ shannon_plot_combined <- annotate_figure(ggpubr::ggarrange(shannon_plot_16S, sha
 ggsave(shannon_plot_combined, height = 8, width = 8, path = fig_dir, filename = "ESP_CTD_shannon_plot.png", device = "png")
 
 # Resave according to figure guidelines of eDNA journal
-final_fig_dir <- here("figures", "final_figures")
+final_fig_dir <- here("resubmission")
 ggsave(shannon_plot_combined, height = 8, width = 8, path = final_fig_dir, filename = "Fig4_alpha_diversity.pdf", device = "pdf")
 
+
+
+##### Run three-way ANOVA #####
+
+##### COI #####
+
+# Add metadata to all data frames of shannon div
+ESP_CTD_COI_shannon %>% 
+  left_join(., dplyr::select(ESP_CTD_COI_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
+  mutate(depth = as.numeric(depth)) %>% 
+  mutate(shallow_deep = ifelse(depth > 50, "deep", "shallow")) -> ESP_CTD_COI_shannon_meta
+
+
+# Test ANOVA assumptions
+# Plot data distributions
+ggplot(ESP_CTD_COI_shannon_meta, aes(x = Shannon)) +
+  geom_histogram()
+
+# Build the linear model
+model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_COI_shannon_meta)
+# Create a QQ plot of residuals
+ggqqplot(residuals(model))
+
+# Compute Shapiro-Wilk test of normality
+shapiro_test(residuals(model))
+
+# Not normally distributed
+
+# Run the ANOVA anyway
+res.aov.COI <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_COI_shannon_meta)
+summary(res.aov.COI)
+
+
+##### 18S #####
+
+# Add metadata to all data frames of shannon div
+ESP_CTD_18S_shannon %>% 
+  left_join(., dplyr::select(ESP_CTD_18S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
+  mutate(depth = as.numeric(depth)) %>% 
+  mutate(shallow_deep = ifelse(depth > 50, "deep", "shallow")) -> ESP_CTD_18S_shannon_meta
+
+
+# Test ANOVA assumptions
+# Plot data distributions
+ggplot(ESP_CTD_18S_shannon_meta, aes(x = Shannon)) +
+  geom_histogram()
+
+# Build the linear model
+model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_18S_shannon_meta)
+# Create a QQ plot of residuals
+ggqqplot(residuals(model))
+
+# Compute Shapiro-Wilk test of normality
+shapiro_test(residuals(model))
+
+# Not normally distributed
+
+# Run the ANOVA anyway
+res.aov.18S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_18S_shannon_meta)
+summary(res.aov.18S)
+
+
+##### 12S #####
+
+# Add metadata to all data frames of shannon div
+ESP_CTD_12S_shannon %>% 
+  left_join(., dplyr::select(ESP_CTD_12S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
+  mutate(depth = as.numeric(depth)) %>% 
+  mutate(shallow_deep = ifelse(depth > 50, "deep", "shallow")) -> ESP_CTD_12S_shannon_meta
+
+
+# Test ANOVA assumptions
+# Plot data distributions
+ggplot(ESP_CTD_12S_shannon_meta, aes(x = Shannon)) +
+  geom_histogram()
+
+# Build the linear model
+model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_12S_shannon_meta)
+# Create a QQ plot of residuals
+ggqqplot(residuals(model))
+
+# Compute Shapiro-Wilk test of normality
+shapiro_test(residuals(model))
+
+# Not normally distributed
+
+# Run the ANOVA anyway
+res.aov.12S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_12S_shannon_meta)
+summary(res.aov.12S)
+
+
+##### 16S #####
+
+# Add metadata to all data frames of shannon div
+ESP_CTD_16S_shannon %>% 
+  left_join(., dplyr::select(ESP_CTD_16S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, Depth)), by = "sample_name") %>% 
+  mutate(Depth = as.numeric(parse_number(Depth))) %>% 
+  mutate(shallow_deep = ifelse(Depth > 50, "deep", "shallow")) -> ESP_CTD_16S_shannon_meta
+
+
+# Test ANOVA assumptions
+# Plot data distributions
+ggplot(ESP_CTD_16S_shannon_meta, aes(x = Shannon)) +
+  geom_histogram()
+
+# Build the linear model
+model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_16S_shannon_meta)
+# Create a QQ plot of residuals
+ggqqplot(residuals(model))
+
+# Compute Shapiro-Wilk test of normality
+shapiro_test(residuals(model))
+
+# Not normally distributed
+
+# Run the ANOVA anyway
+res.aov.16S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_16S_shannon_meta)
+summary(res.aov.16S)
+
+
+##### Examine all ANOVA results #####
+
+summary(res.aov.COI)
+summary(res.aov.18S)
+summary(res.aov.12S)
+summary(res.aov.16S)
