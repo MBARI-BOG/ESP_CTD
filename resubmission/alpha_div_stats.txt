@@ -1,0 +1,96 @@
+### PAIRED T-TEST ###
+
+> shannon_ttest_COI_paired
+
+	Paired t-test
+
+data:  ESP_Shannon and CTD_Shannon 
+t = 1.682, df = 31, p-value = 0.1026
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.05008448  0.52136145
+sample estimates:
+mean of the differences 
+              0.2356385 
+
+> shannon_ttest_18S_paired
+
+	Paired t-test
+
+data:  ESP_Shannon and CTD_Shannon 
+t = 0.18722, df = 31, p-value = 0.8527
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.1760304  0.2116140
+sample estimates:
+mean of the differences 
+             0.01779182 
+
+> shannon_ttest_12S_paired
+
+	Paired t-test
+
+data:  ESP_Shannon and CTD_Shannon 
+t = -2.9756, df = 27, p-value = 0.006099
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.4775739 -0.0877534
+sample estimates:
+mean of the differences 
+             -0.2826637 
+
+> shannon_ttest_16S_paired
+
+	Paired t-test
+
+data:  ESP_Shannon and CTD_Shannon 
+t = 0.29857, df = 30, p-value = 0.7673
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.08625152  0.11578846
+sample estimates:
+mean of the differences 
+             0.01476847 
+             
+
+             
+### ANOVA ###
+
+> summary(res.aov.COI)
+                Df Sum Sq Mean Sq F value   Pr(>F)    
+SAMPLING_cruise  1 11.074  11.074  35.074 1.66e-07 ***
+shallow_deep     1 10.532  10.532  33.358 2.90e-07 ***
+CTD_or_ESP       1  0.888   0.888   2.814   0.0987 .  
+Residuals       60 18.944   0.316                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+> summary(res.aov.18S)
+                Df Sum Sq Mean Sq F value   Pr(>F)    
+SAMPLING_cruise  1  4.493   4.493  13.118 0.000603 ***
+shallow_deep     1  5.484   5.484  16.009 0.000176 ***
+CTD_or_ESP       1  0.005   0.005   0.015 0.903623    
+Residuals       60 20.552   0.343                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+> summary(res.aov.12S)
+                Df Sum Sq Mean Sq F value   Pr(>F)    
+SAMPLING_cruise  1 12.342  12.342  80.976 1.81e-12 ***
+shallow_deep     1  0.283   0.283   1.857   0.1784    
+CTD_or_ESP       1  1.014   1.014   6.651   0.0126 *  
+Residuals       56  8.535   0.152                     
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+
+> summary(res.aov.16S)
+                Df Sum Sq Mean Sq F value Pr(>F)  
+SAMPLING_cruise  1 0.2625 0.26248   6.407 0.0141 *
+shallow_deep     1 0.0191 0.01913   0.467 0.4971  
+CTD_or_ESP       1 0.0034 0.00338   0.083 0.7749  
+Residuals       58 2.3760 0.04097                 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
