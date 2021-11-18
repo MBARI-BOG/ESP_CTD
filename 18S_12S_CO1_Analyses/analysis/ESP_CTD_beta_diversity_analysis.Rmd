@@ -236,6 +236,68 @@ ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width =
 ```
 
 
+### Plot COI DEICODE RPCA - with pairs labeled
+```{r}
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "COI","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_COI_envtsamples_metadata
+
+# Add a shortened label
+pca_metadata %>% 
+  mutate(ID_short = gsub("CN18", "", matching_ID)) -> pca_metadata
+
+
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_COI_PCA_pairs_labeled <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  geom_line(lty = 2, aes(group = matching_ID)) +
+  # geom_text(aes(label = ID_short)) +
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA_pairs_labeled.png", ESP_CTD_COI_PCA_pairs_labeled, width = 7,height = 5)
+```
+
+
 # 18S
 
 ### Prep data for DEICODE
@@ -389,6 +451,65 @@ ESP_CTD_18S_PCA <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill
 ESP_CTD_18S_PCA
 
 ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA.png", ESP_CTD_18S_PCA,width = 7,height = 5)
+```
+
+### Plot 18S DEICODE RPCA - pairs labeled
+```{r}
+# Set figure directory
+fig_dir <- here::here("resubmission")
+
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "18S","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_18S_envtsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_18S_PCA_pairs_labeled <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  geom_line(lty = 2, aes(group = matching_ID)) +
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ESP_CTD_18S_PCA
+
+ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA_pairs_labeled.png", ESP_CTD_18S_PCA_pairs_labeled,width = 7,height = 5)
 ```
 
 
@@ -549,6 +670,66 @@ ESP_CTD_12S_PCA
 ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA.png", ESP_CTD_12S_PCA,width = 7,height = 5)
 ```
 
+
+### Plot 12S DEICODE RPCA - pairs labeled
+```{r}
+# Set figure directory
+fig_dir <- here::here("resubmission")
+
+pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "12S","ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_12S_envtsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_12S_PCA_pairs_labeled <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  geom_line(lty = 2, aes(group = matching_ID)) +
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ESP_CTD_12S_PCA_pairs_labeled
+
+ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA_pairs_labeled.png", ESP_CTD_12S_PCA_pairs_labeled,width = 7,height = 5)
+```
+
 # 16S
 
 ### Prep data for DEICODE
@@ -707,6 +888,66 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA.png", ESP_CTD_16S_PCA,width =
 ```
 
 
+### Plot 16S DEICODE RPCA - pairs labeled
+```{r}
+pco <- read_qza(here::here("16S_Analyses", "DEICODE", "resubmission", "ordination.qza"))
+
+label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
+label.PC1
+label.PC2 <- paste0("PC2 (", round(pco$data$ProportionExplained$PC2, 3)*100,"%)")
+label.PC2
+label.PC3 <- paste0("PC3 (", round(pco$data$ProportionExplained$PC3, 3)*100,"%)")
+label.PC3
+
+## Prepare PCA data for ggplot
+
+pca_metadata <- ESP_CTD_16S_envtsamples_metadata
+pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+pca_data <- pco$data$Vectors
+pca_data <- right_join(pca_data,pca_metadata,on = "SampleID")
+pca_data <- subset(pca_data, !(is.na(pca_data$PC1)))
+
+# Extract depth data
+pca_data$depth <- extract_numeric(pca_data$Depth)
+
+# Shape guide for depths
+# depth_shapes <- c("0-25" = 21, "27-50" = 22, "195-200" = 24)
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+CTD_ESP_shapes <- c("CTD" = 21, "ESP" = 24)
+# CTD_ESP_colors = c("CTD" = "#ff7f00", "ESP" = "#1f78b4")
+
+##----Make plot-----------------------------------------------------------------
+
+ESP_CTD_16S_PCA_pairs_labeled <- ggplot(pca_data,aes(x=PC1,y=PC2,color = SAMPLING_cruise, fill = SAMPLING_cruise, shape = CTD_or_ESP))+
+  # Make fill for geom point be white if depth is deep; if depth is shallow, then fill with season
+  geom_point(size = 5, stroke = 2, fill = ifelse(pca_data$depth_cat %in% c("195-200"), "white", 
+                                     ifelse(pca_data$SAMPLING_cruise == "CN18F", "#ff7f00", "#1f78b4")))+
+  geom_line(lty = 2, aes(group = matching_ID)) +
+  xlab(print(label.PC1))+
+  ylab(print(label.PC2))+
+  scale_color_manual(values = cruise_colors)+
+  scale_fill_manual(values = cruise_colors)+
+  scale_shape_manual(values = CTD_ESP_shapes)+
+  theme(panel.background = element_rect(fill = "white",size = 1),
+        panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        axis.title = element_text(size = 20),
+        axis.text = element_blank(),
+        axis.ticks.length=unit(0.25, "cm"),
+        axis.ticks=element_blank(),
+        plot.margin = margin(0.25, 0.25, 0.25, 0.25, "cm"),
+        axis.line.x.bottom = element_line(color = "black", size = 1),
+        axis.line.y.left = element_line(color = "black", size = 1),
+        legend.position = "none")+
+  ylim(min(pca_data$PC2)-abs(max(pca_data$PC2)-min(pca_data$PC2))/30, max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/12)
+# +
+#   annotate(geom = "text", x = max(pca_data$PC1), y = max(pca_data$PC2)+abs(max(pca_data$PC2)-min(pca_data$PC2))/15, label = paste0("PERMANOVA (Autonomous vs. Shipboard), p = ",permanova_value), hjust = 1, size = 5)
+
+ESP_CTD_16S_PCA_pairs_labeled
+
+ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA_pairs_labeled.png", ESP_CTD_16S_PCA_pairs_labeled,width = 7,height = 5)
+```
+
+
 # Create a legend manually
 ```{r}
 PCA_legend <- ggplot(pca_data) +
@@ -762,6 +1003,28 @@ combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA,
 
 
 ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "combined_PCA_fig.png", device = "png")
+
+```
+
+# Combine all PCA figures - pairs labeled
+```{r}
+combined_PCA_pairs_labeled_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA_pairs_labeled, 
+                                                 ESP_CTD_COI_PCA_pairs_labeled, ESP_CTD_12S_PCA_pairs_labeled, ESP_CTD_16S_PCA_pairs_labeled, ncol = 2, nrow = 2,
+                                                 labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
+                                                 font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
+                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
+
+# Reorder according to organism size
+
+combined_PCA_pairs_labeled_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA_pairs_labeled, 
+                                                 ESP_CTD_18S_PCA_pairs_labeled, ESP_CTD_COI_PCA_pairs_labeled, ESP_CTD_12S_PCA_pairs_labeled, ncol = 2, nrow = 2,
+                                                 labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"), label.x = 0.05, label.y = 0.985,
+                                                 font.label = list(size = 35, color = "black", face = "bold"), hjust = -0.12),
+                                                 PCA_legend, nrow = 2, ncol = 1, heights = c(7,1))
+                                   
+
+
+ggsave(combined_PCA_pairs_labeled_gg, height = 16, width = 16, path = fig_dir, filename = "combined_PCA_fig_pairs_labeled.png", device = "png")
 
 ```
 
@@ -954,13 +1217,14 @@ In this ANOVA we will test three variables:
 
 # Extract metadata
 pca_metadata <- ESP_CTD_COI_envtsamples_metadata
-pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
+# pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
 
 ## Load COI Data
 distance <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "COI","distance.qza"))
 
 # Extract distance matrix
-distance_matrix <- distance$data
+distance_matrix <- as.matrix(distance$data)
+dput(distance_matrix)
 
 # convert DEICODE matrix to "dist" class object
 PCA_dist <- as.dist(distance_matrix)
