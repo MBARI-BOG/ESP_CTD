@@ -32,7 +32,7 @@ library(rstatix)
 
 ### Load data
 
-```{r eval = FALSE}
+```{r}
 #### COI
 asv_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_asv_table.csv")
 tax_table_path_COI <- here::here("data", "COI", "ESP_CTD_COI_tax_table.csv")
@@ -86,7 +86,7 @@ fig_dir <- here::here("resubmission")
 # COI
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission",  "COI")
 
@@ -183,7 +183,7 @@ permanova_value <- mutli_permanova_COI$`Pr(>F)`[3]
 
 
 ### Plot COI DEICODE RPCA
-```{r}
+```{r eval = FALSE}
 pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "COI","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -237,7 +237,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width =
 
 
 ### Plot COI DEICODE RPCA - with pairs labeled
-```{r}
+```{r eval = FALSE}
 pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "COI","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -301,7 +301,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA_pairs_labeled.png", ESP_CTD_C
 # 18S
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission",  "18S")
 
@@ -396,7 +396,7 @@ permanova_value <- mutli_permanova_18S$`Pr(>F)`[3]
 ```
 
 ### Plot 18S DEICODE RPCA
-```{r}
+```{r eval = FALSE}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -454,7 +454,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA.png", ESP_CTD_18S_PCA,width =
 ```
 
 ### Plot 18S DEICODE RPCA - pairs labeled
-```{r}
+```{r eval = FALSE}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -516,7 +516,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA_pairs_labeled.png", ESP_CTD_1
 # 12S
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "12S")
 
@@ -613,7 +613,7 @@ permanova_value <- mutli_permanova_12S$`Pr(>F)`[3]
 
 
 ### Plot 12S DEICODE RPCA
-```{r}
+```{r eval = FALSE}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -672,7 +672,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA.png", ESP_CTD_12S_PCA,width =
 
 
 ### Plot 12S DEICODE RPCA - pairs labeled
-```{r}
+```{r eval = FALSE}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -733,7 +733,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA_pairs_labeled.png", ESP_CTD_1
 # 16S
 
 ### Prep data for DEICODE
-```{r  eval = FALSE}
+```{r}
 # Set directory for saving DEICODE data
 deicode_dir <- here::here("16S_Analyses", "DEICODE", "resubmission")
 
@@ -830,7 +830,7 @@ permanova_value <- mutli_permanova_16S$`Pr(>F)`[3]
 
 
 ### Plot 16S DEICODE RPCA
-```{r}
+```{r eval = FALSE}
 pco <- read_qza(here::here("16S_Analyses", "DEICODE", "resubmission", "ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -889,7 +889,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA.png", ESP_CTD_16S_PCA,width =
 
 
 ### Plot 16S DEICODE RPCA - pairs labeled
-```{r}
+```{r eval = FALSE}
 pco <- read_qza(here::here("16S_Analyses", "DEICODE", "resubmission", "ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -949,7 +949,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA_pairs_labeled.png", ESP_CTD_1
 
 
 # Create a legend manually
-```{r}
+```{r eval = FALSE}
 PCA_legend <- ggplot(pca_data) +
   # ESP vs. CTD
   annotate("text",label = "Sampling Method", x = 0, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
@@ -985,7 +985,7 @@ PCA_legend <- ggplot(pca_data) +
 ```
 
 # Combine all PCA figures
-```{r}
+```{r eval = FALSE}
 combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA, 
                                                  ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ESP_CTD_16S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
@@ -1007,7 +1007,7 @@ ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "com
 ```
 
 # Combine all PCA figures - pairs labeled
-```{r}
+```{r eval = FALSE}
 combined_PCA_pairs_labeled_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA_pairs_labeled, 
                                                  ESP_CTD_COI_PCA_pairs_labeled, ESP_CTD_12S_PCA_pairs_labeled, ESP_CTD_16S_PCA_pairs_labeled, ncol = 2, nrow = 2,
                                                  labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
@@ -1031,7 +1031,7 @@ ggsave(combined_PCA_pairs_labeled_gg, height = 16, width = 16, path = fig_dir, f
 # Combine all PERMANOVA results, export as two tables
 
 ### Table of multi-factor PERMANOVA results
-```{r}
+```{r eval = FALSE}
 Dataset <- c(rep("18S",3), rep("COI",3),  rep("12S",3), rep("16S",3))
 Variable_tested <- c(rep(c("Sampling method (ESP vs CTD)", "Season (fall vs spring)","Depth groups (0-25, 27-50, 70-200)"),4))
 p_value <- c(mutli_permanova_18S$`Pr(>F)`[3], mutli_permanova_18S$`Pr(>F)`[2], mutli_permanova_18S$`Pr(>F)`[1],
@@ -1191,7 +1191,7 @@ distances_metadata_COI <- distance_data_prep(metadata = ESP_CTD_COI_envtsamples_
 
 Make a single column figure, multiple panels. Same x-axis on each panel.
 Split the data so that you have all paired samples, samples from the same depth, samples from the same cruise.
-```{r}
+```{r eval = FALSE}
 paired_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "paired")
 cruise_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "same_cruise")
 depth_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "same_depth")
@@ -1497,5 +1497,126 @@ summary(res.aov.12S)
 summary(res.aov.16S)
 ```
 
+
+
+# Permutation party!
+
+Here we will compare the mean distance between paired samples to the mean distance between randomly paired samples.
+
+This will be run for each cruise and depth bin.
+
+
+## Function
+We will write a function where the input is the cruise, depth, and marker, and it will run this permutation test.
+
+Inputs:
+1) Distance and metadata in one DF (output from distance_data_prep() function)
+2) Number of desired permutations
+
+First let's check the mean values (without permutations)
+```{r}
+# Calculate mean distance between paired samples
+distances_metadata_COI %>% 
+  subset(SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F") %>% 
+  subset(depth_cat_1 == "Shallow" & depth_cat_2 == "Shallow") %>% 
+  subset(paired == "Paired") -> paired_samples_df 
+
+mean(paired_samples_df$distance)
+
+# Calculate mean distance between all samples
+
+distances_metadata_COI %>% 
+  subset(SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F") %>% 
+  subset(depth_cat_1 == "Shallow" & depth_cat_2 == "Shallow") %>% 
+  subset(paired == "Not paired") -> non_paired_samples_df 
+
+mean(non_paired_samples_df$distance)
+```
+
+
+```{r}
+paired_permutation_test <- function(distance_metadata_df, permutations, cruise, depth){
+  
+distance_metadata_df %>% 
+  subset(SAMPLING_cruise_1 == cruise & SAMPLING_cruise_2 == cruise) %>% 
+  subset(depth_cat_1 == depth & depth_cat_2 == depth) -> cruise_depth_df
+
+# Get the mean distance between paired samples
+actual_mean <- mean(subset(cruise_depth_df, paired == "Paired")$distance)
+
+# Create a vector to store these
+random_distances <- vector(length = permutations)
+
+
+# Get a vector of random distances - same length as permuted variables
+for (i in 1:permutations){
+  random_distances[i] <- mean(sample(cruise_depth_df$distance, 22, replace = FALSE))
+}
+
+# Determine the frequency with which actual mean was less than random mean
+p_val <- length(random_distances[actual_mean > random_distances])/length(random_distances)
+
+# Plot a histogram
+random_distances %>% 
+  as.data.frame() %>% 
+  dplyr::rename(distance = ".") -> random_distances_df
+
+permutation_plot <- ggplot(random_distances_df, aes(x = distance)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = actual_mean)
+
+print(paste0("p = ", round(p_val, 3)))
+
+return(permutation_plot)
+
+}
+
+
+```
+
+### Run the function for each combination of cruise and depth
+```{r}
+paired_permutation_test(distance_metadata_df = distances_metadata_COI, permutations = 1000, cruise = "CN18F", depth = "Shallow")
+
+markers <- c("COI", "18S", "12S", "16S")
+cruises <- c("CN18S", "CN18F")
+depths <- c("Shallow", "Deep")
+
+for (i in 1:length(markers)){
+  for (j in 1:length(cruises)){
+    for (k in 1:length(depths)){
+      tryCatch({
+        print(paste(markers[i], cruises[j], depths[k]), sep = " ")
+      paired_permutation_test(distance_metadata_df = eval(parse(text = paste0("distances_metadata_",markers[i]))), 
+                              permutations = 1000, 
+                              cruise = cruises[j], 
+                              depth = depths[k])
+      }, error = function(e){cat("This combination of depth + cruise does not exist \n")})
+      
+      
+    }
+  }
+}
+
+# Visually inspect the significant cruise + depth + marker combinations
+
+paired_permutation_test(distance_metadata_df = distances_metadata_COI, permutations = 1000, cruise = "CN18S", depth = "Deep")
+distance_histogram(input_data = subset(distances_metadata_COI,
+                                                               SAMPLING_cruise_1 == "CN18S" &
+                                                               SAMPLING_cruise_2 == "CN18S" &
+                                                               depth_cat_1 == "Deep" &
+                                                               depth_cat_2 == "Deep"),
+                                                               variable = "paired")
+
+paired_permutation_test(distance_metadata_df = distances_metadata_16S, permutations = 1000, cruise = "CN18S", depth = "Shallow")
+
+distance_histogram(input_data = subset(distances_metadata_16S,
+                                                               SAMPLING_cruise_1 == "CN18S" &
+                                                               SAMPLING_cruise_2 == "CN18S" &
+                                                               depth_cat_1 == "Shallow" &
+                                                               depth_cat_2 == "Shallow"),
+                                                               variable = "paired")
+# paired_permutation_test(distance_metadata_df = distances_metadata_18S, permutations = 1000, cruise = "CN18F", depth = "Shallow")
+```
 
 
