@@ -240,43 +240,92 @@ mean(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "ESP")$Shannon)
 mean(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$Shannon)
 # 12S: CTD has mean difference of 0.28 more Shannon diversity
 
+
+##----Add metadata to shannon stats-------------------------------------------------
+ESP_CTD_COI_shannon %>% 
+  left_join(., ESP_CTD_COI_envtsamples_metadata, by = "sample_name") -> ESP_CTD_COI_shannon
+ESP_CTD_18S_shannon %>% 
+  left_join(., ESP_CTD_18S_envtsamples_metadata, by = "sample_name") -> ESP_CTD_18S_shannon
+ESP_CTD_12S_shannon %>% 
+  left_join(., ESP_CTD_12S_envtsamples_metadata, by = "sample_name") -> ESP_CTD_12S_shannon
+ESP_CTD_16S_shannon %>% 
+  left_join(., ESP_CTD_16S_envtsamples_metadata, by = "sample_name") -> ESP_CTD_16S_shannon
+
+
 ##----Join all markers together-------------------------------------------------
 
-ESP_CTD_shannon <- rbind(ESP_CTD_COI_shannon, ESP_CTD_18S_shannon, ESP_CTD_12S_shannon, ESP_CTD_16S_shannon)
+# ESP_CTD_shannon <- rbind(ESP_CTD_COI_shannon, ESP_CTD_18S_shannon, ESP_CTD_12S_shannon, ESP_CTD_16S_shannon)
+ESP_CTD_COI_shannon %>% 
+  bind_rows(., ESP_CTD_18S_shannon) %>% 
+  bind_rows(., ESP_CTD_12S_shannon) %>% 
+  bind_rows(., ESP_CTD_16S_shannon) -> ESP_CTD_shannon
 
 # Change CTD to "Shipboard" and ESP to "Autonomous"
+# Change depth to shallow_deep
 ESP_CTD_shannon %>%
-  mutate(CTD_or_ESP = ifelse(CTD_or_ESP == "CTD", "Shipboard", "Autonomous")) -> ESP_CTD_shannon
+  mutate(CTD_or_ESP = ifelse(CTD_or_ESP.x == "CTD", "Shipboard", "Autonomous")) %>% 
+  mutate(shallow_deep = ifelse(depth < 100, "Shallow", "Deep")) %>% 
+  mutate(shallow_deep = ifelse(is.na(shallow_deep), ifelse(Depth == "Deep_200m", "Deep", "Shallow"), shallow_deep)) -> ESP_CTD_shannon
 
 ##----Violin Plots--------------------------------------------------------------
 
-CTD_ESP_colors = c("Shipboard" = "#6a3d9a", "Autonomous" = "#33a02c")
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+depth_shapes <- c("Shallow" = 19, "Deep" = 1)
 
-## Plot four markers in a for loop
-markers <- c("16S", "18S", "COI", "12S")
+## Plot three markers in a for loop; 12S is separate because it's significant
+# markers <- c("16S", "18S", "COI", "12S")
+markers <- c("16S", "18S", "COI")
 
 for (i in 1:length(markers)){
   data = subset(ESP_CTD_shannon, marker == markers[i])
-  plot <- ggplot(data, aes(CTD_or_ESP, Shannon, colour=CTD_or_ESP)) + 
-    geom_point(size=1, position=position_dodge(width=1)) +
+  plot <- ggplot(data, aes(CTD_or_ESP, Shannon, color=SAMPLING_cruise, shape = shallow_deep)) + 
+    geom_point(size=1.5, position=position_dodge(width=1)) +
+    scale_shape_manual(values = depth_shapes) +
     geom_violin(alpha=0, position=position_dodge(width=1)) + 
-    scale_color_manual(values = CTD_ESP_colors) + 
-    ylim(0,7) +
+    scale_color_manual(values = cruise_colors) + 
+    # ylim(0,7) +
     theme(legend.position = "none",
           panel.background = element_rect(fill = "white"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
           axis.line.x = element_line(size = 0.5, color = "black"),
-          axis.line.y = element_line(size = ifelse(i %in% c(2,4), 0, 0.5), color = "black"),
+          # axis.line.y = element_line(size = ifelse(i %in% c(2,4), 0, 0.5), color = "black"),
+          axis.line.y = element_line(size = 0.5, color = "black"),
           axis.ticks.length.x = unit(0,"cm"),
-          axis.ticks.length.y = unit(ifelse(i %in% c(2,4), 0, 0.2),"cm"),
-          axis.text.y = element_text(size = ifelse(i %in% c(2,4), 0, 15)),
-          axis.text.x = element_text(size = ifelse(i %in% c(1,2), 0, 15)),
+          # axis.ticks.length.y = unit(ifelse(i %in% c(2,4), 0, 0.2),"cm"),
+          axis.ticks.length.y = unit(0.2,"cm"),
+          axis.text.x = element_text(size = 15),
+          axis.text.y = element_text(size = 15),
           axis.title = element_blank())+
-    annotate(geom = "text", label = paste0(markers[i], ": ", "p > 0.05"), x = 2.4, y = 6.8, size = 5, hjust = 1)
+    # annotate(geom = "text", label = paste0(markers[i], ": ", "p > 0.05"), x = 2.4, y = max(data$Shannon)+0.3, size = 5, hjust = 1)
+    annotate(geom = "text", label = paste0("p > 0.05"), x = 2.4, y = max(data$Shannon)+0.3, size = 5, hjust = 1)
   assign(paste0("shannon_plot_",markers[i]), plot)  
 }
 
+data = subset(ESP_CTD_shannon, marker == "12S")
+shannon_plot_12S <- ggplot(data, aes(CTD_or_ESP, Shannon, color=SAMPLING_cruise, shape = shallow_deep)) + 
+  scale_shape_manual(values = depth_shapes) +
+  geom_point(size=1.5, position=position_dodge(width=1)) +
+  geom_violin(alpha=0, position=position_dodge(width=1)) + 
+  scale_color_manual(values = cruise_colors) + 
+  # ylim(0,7) +
+  theme(legend.position = "none",
+        panel.background = element_rect(fill = "white"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line.x = element_line(size = 0.5, color = "black"),
+        # axis.line.y = element_line(size = ifelse(i %in% c(2,4), 0, 0.5), color = "black"),
+        axis.line.y = element_line(size = 0.5, color = "black"),
+        axis.ticks.length.x = unit(0,"cm"),
+        # axis.ticks.length.y = unit(ifelse(i %in% c(2,4), 0, 0.2),"cm"),
+        axis.ticks.length.y = unit(0.2,"cm"),
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        # axis.text.y = element_text(size = ifelse(i %in% c(2,4), 0, 15)),
+        # axis.text.x = element_text(size = ifelse(i %in% c(1,2), 0, 15)),
+        axis.title = element_blank())+
+  # annotate(geom = "text", label = paste0("12S", ": ", "p = 0.006"), x = 2.4, y = max(data$Shannon)+0.3, size = 5, hjust = 1)
+  annotate(geom = "text", label = paste0("p = 0.006"), x = 2.4, y = max(data$Shannon)+0.3, size = 5, hjust = 1)
 
 
 ## Arrange all plots
@@ -289,12 +338,45 @@ shannon_plot_combined <- annotate_figure(ggpubr::ggarrange(shannon_plot_16S, sha
                                          left = text_grob("Shannon Index", color = "black", size = 15, rot = 90),
                                          bottom = text_grob("Sampling Method", size = 15))
 
+shannon_plot_combined <- annotate_figure(egg::ggarrange(shannon_plot_16S, shannon_plot_18S,shannon_plot_COI,shannon_plot_12S, 
+                                                        ncol = 2, nrow = 2,labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"),
+                                                      label.args = list(gp=gpar(font=1, cex = 1.5), x=unit(1.5,"cm"), y=unit(8.75,"cm"), hjust = 0)),
+                                         # annotate_figure
+                                         left = text_grob("Shannon Index", color = "black", size = 15, rot = 90),
+                                         bottom = text_grob("Sampling Method", size = 15))
 
-ggsave(shannon_plot_combined, height = 8, width = 8, path = fig_dir, filename = "ESP_CTD_shannon_plot.png", device = "png")
+# Make a legend manually
+shannon_legend_violinplot <- ggplot(ESP_CTD_shannon) +
+  # Season and depth
+  annotate("text",label = "Season/Depth:", x = 1, y = 1.1,size = 6, adj = 0)+ # Title 
+  annotate("point", x = 3.2, y = 1, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 5, stroke = 3)+ # circle point
+  annotate("text",label = "Spring (shallow)", x = 3.5, y = 1,size = 4,adj = 0)+
+  annotate("point", x = 5.4, y = 1, shape = 1, colour = "#1f78b4",  size = 6, stroke = 2)+ # circle open point
+  annotate("text",label = "Spring (deep)", x = 5.7, y = 1,size = 4,adj = 0)+
+  annotate("point", x = 7.6, y = 1, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 5, stroke = 3)+ # circle point
+  annotate("text",label = "Fall (shallow)", x = 7.9, y = 1,size = 4,adj = 0)+
+  
+  xlim(1,9)+
+  # ylim(0.2,3.2)+
+  ylim(0,2)+
+  theme(panel.background = element_rect(fill="white"),
+        panel.border = element_rect(colour = "black", fill=NA, size=2),
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        legend.position = "none",
+        plot.margin = unit(c(0.2,1,0,1),"cm"))
+
+
+shannon_violin_plot <- ggpubr::ggarrange(shannon_plot_combined, shannon_legend_violinplot, ncol = 1,
+                                                    heights = c(12,1))
+
+
+# ggsave(shannon_plot_combined, height = 8, width = 8, path = fig_dir, filename = "ESP_CTD_shannon_plot.png", device = "png")
 
 # Resave according to figure guidelines of eDNA journal
 final_fig_dir <- here("resubmission")
-ggsave(shannon_plot_combined, height = 8, width = 8, path = final_fig_dir, filename = "Fig4_alpha_diversity.pdf", device = "pdf")
+ggsave(shannon_violin_plot, height = 8, width = 8, path = final_fig_dir, filename = "Fig4_alpha_diversity_v3.pdf", device = "pdf")
 
 
 
