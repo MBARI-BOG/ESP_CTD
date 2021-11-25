@@ -1160,9 +1160,21 @@ distance_histogram <- function(input_data, variable){
     color_values = c("gray80", "gray20")
   }
   
+  # Store legend title
+  if (variable == "same_cruise_depth"){
+    legend_title = "Cruise & Depth"
+  }
+  else if (variable == "paired"){
+    legend_title = "Paired"
+  }
+  else {
+    legend_title = "not using these!"
+  }
+  
+  
   histogram <- ggplot(data = input_data, aes_string(x = "distance", fill = variable))+
     geom_histogram(bins = 100) +
-    scale_fill_manual(values = color_values) +
+    scale_fill_manual(values = color_values, name = legend_title) +
     theme(panel.background = element_rect(fill ="white", color = "black"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank()) +
@@ -1197,10 +1209,10 @@ cruise_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, 
 depth_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "same_depth")
 cruise_depth_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "same_cruise_depth")
 
-COI_histograms <- egg::ggarrange(paired_histogram_COI, cruise_histogram_COI, depth_histogram_COI, cruise_depth_histogram_COI,
+COI_histograms <- egg::ggarrange(paired_histogram_COI, cruise_depth_histogram_COI,
           ncol = 1)
 
-ggsave(here("resubmission", "distance_histograms", "COI_histograms.pdf"), COI_histograms,  height = 9, width = 6)
+ggsave(here("resubmission", "distance_histograms", "COI_histograms.pdf"), COI_histograms,  height = 5, width = 6)
 ```
 
 ### Run ANOVA
@@ -1293,10 +1305,10 @@ cruise_histogram_18S <- distance_histogram(input_data = distances_metadata_18S, 
 depth_histogram_18S <- distance_histogram(input_data = distances_metadata_18S, variable = "same_depth")
 cruise_depth_histogram_18S <- distance_histogram(input_data = distances_metadata_18S, variable = "same_cruise_depth")
 
-histograms_18S <- egg::ggarrange(paired_histogram_18S, cruise_histogram_18S, depth_histogram_18S, cruise_depth_histogram_18S,
+histograms_18S <- egg::ggarrange(paired_histogram_18S, cruise_depth_histogram_18S,
                                  ncol = 1)
 
-ggsave(here("resubmission", "distance_histograms", "18S_histograms.pdf"), histograms_18S,  height = 9, width = 6)
+ggsave(here("resubmission", "distance_histograms", "18S_histograms.pdf"), histograms_18S,  height = 5, width = 6)
 ```
 
 ### Run ANOVA
@@ -1365,10 +1377,10 @@ cruise_histogram_12S <- distance_histogram(input_data = distances_metadata_12S, 
 depth_histogram_12S <- distance_histogram(input_data = distances_metadata_12S, variable = "same_depth")
 cruise_depth_histogram_12S <- distance_histogram(input_data = distances_metadata_12S, variable = "same_cruise_depth")
 
-histograms_12S <- egg::ggarrange(paired_histogram_12S, cruise_histogram_12S, depth_histogram_12S, cruise_depth_histogram_12S,
+histograms_12S <- egg::ggarrange(paired_histogram_12S, cruise_depth_histogram_12S,
                                  ncol = 1)
 
-ggsave(here("resubmission", "distance_histograms", "12S_histograms.pdf"), histograms_12S,  height = 9, width = 6)
+ggsave(here("resubmission", "distance_histograms", "12S_histograms.pdf"), histograms_12S,  height = 5, width = 6)
 ```
 
 ### Run ANOVA
@@ -1441,7 +1453,7 @@ cruise_histogram_16S <- distance_histogram(input_data = distances_metadata_16S, 
 depth_histogram_16S <- distance_histogram(input_data = distances_metadata_16S, variable = "same_depth")
 cruise_depth_histogram_16S <- distance_histogram(input_data = distances_metadata_16S, variable = "same_cruise_depth")
 
-histograms_16S <- egg::ggarrange(paired_histogram_16S, cruise_histogram_16S, depth_histogram_16S, cruise_depth_histogram_16S,
+histograms_16S <- egg::ggarrange(paired_histogram_16S, cruise_depth_histogram_16S,
                                  ncol = 1)
 
 ggsave(here("resubmission", "distance_histograms", "16S_histograms.pdf"), histograms_16S,  height = 9, width = 6)
