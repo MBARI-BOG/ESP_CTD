@@ -242,13 +242,13 @@ mean(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$Shannon)
 
 
 ##----Add metadata to shannon stats-------------------------------------------------
-ESP_CTD_COI_shannon %>% 
+ESP_CTD_COI_shannon %>%
   left_join(., ESP_CTD_COI_envtsamples_metadata, by = "sample_name") -> ESP_CTD_COI_shannon
-ESP_CTD_18S_shannon %>% 
+ESP_CTD_18S_shannon %>%
   left_join(., ESP_CTD_18S_envtsamples_metadata, by = "sample_name") -> ESP_CTD_18S_shannon
-ESP_CTD_12S_shannon %>% 
+ESP_CTD_12S_shannon %>%
   left_join(., ESP_CTD_12S_envtsamples_metadata, by = "sample_name") -> ESP_CTD_12S_shannon
-ESP_CTD_16S_shannon %>% 
+ESP_CTD_16S_shannon %>%
   left_join(., ESP_CTD_16S_envtsamples_metadata, by = "sample_name") -> ESP_CTD_16S_shannon
 
 
@@ -263,7 +263,8 @@ ESP_CTD_COI_shannon %>%
 # Change CTD to "Shipboard" and ESP to "Autonomous"
 # Change depth to shallow_deep
 ESP_CTD_shannon %>%
-  mutate(CTD_or_ESP = ifelse(CTD_or_ESP.x == "CTD", "Shipboard", "Autonomous")) %>% 
+  mutate(CTD_or_ESP = ifelse(CTD_or_ESP.x == "CTD", "Shipboard", "Autonomous")) %>%
+  # mutate(CTD_or_ESP = ifelse(CTD_or_ESP == "CTD", "Shipboard", "Autonomous")) %>% 
   mutate(shallow_deep = ifelse(depth < 100, "Shallow", "Deep")) %>% 
   mutate(shallow_deep = ifelse(is.na(shallow_deep), ifelse(Depth == "Deep_200m", "Deep", "Shallow"), shallow_deep)) -> ESP_CTD_shannon
 
@@ -386,7 +387,7 @@ ggsave(shannon_violin_plot, height = 8, width = 8, path = final_fig_dir, filenam
 
 # Add metadata to all data frames of shannon div
 ESP_CTD_COI_shannon %>% 
-  left_join(., dplyr::select(ESP_CTD_COI_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
+  # left_join(., dplyr::select(ESP_CTD_COI_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>%
   mutate(depth = as.numeric(depth)) %>% 
   mutate(shallow_deep = ifelse(depth > 50, "deep", "shallow")) -> ESP_CTD_COI_shannon_meta
 
@@ -397,7 +398,7 @@ ggplot(ESP_CTD_COI_shannon_meta, aes(x = Shannon)) +
   geom_histogram()
 
 # Build the linear model
-model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_COI_shannon_meta)
+model  <- lm(Shannon ~ CTD_or_ESP.x, data = ESP_CTD_COI_shannon_meta)
 # Create a QQ plot of residuals
 ggqqplot(residuals(model))
 
@@ -407,7 +408,7 @@ shapiro_test(residuals(model))
 # Not normally distributed
 
 # Run the ANOVA anyway
-res.aov.COI <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_COI_shannon_meta)
+res.aov.COI <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP.x,  data = ESP_CTD_COI_shannon_meta)
 summary(res.aov.COI)
 
 
@@ -415,7 +416,7 @@ summary(res.aov.COI)
 
 # Add metadata to all data frames of shannon div
 ESP_CTD_18S_shannon %>% 
-  left_join(., dplyr::select(ESP_CTD_18S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
+  # left_join(., dplyr::select(ESP_CTD_18S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
   mutate(depth = as.numeric(depth)) %>% 
   mutate(shallow_deep = ifelse(depth > 50, "deep", "shallow")) -> ESP_CTD_18S_shannon_meta
 
@@ -426,7 +427,7 @@ ggplot(ESP_CTD_18S_shannon_meta, aes(x = Shannon)) +
   geom_histogram()
 
 # Build the linear model
-model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_18S_shannon_meta)
+model  <- lm(Shannon ~ CTD_or_ESP.x, data = ESP_CTD_18S_shannon_meta)
 # Create a QQ plot of residuals
 ggqqplot(residuals(model))
 
@@ -436,7 +437,7 @@ shapiro_test(residuals(model))
 # Not normally distributed
 
 # Run the ANOVA anyway
-res.aov.18S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_18S_shannon_meta)
+res.aov.18S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP.x,  data = ESP_CTD_18S_shannon_meta)
 summary(res.aov.18S)
 
 
@@ -444,7 +445,7 @@ summary(res.aov.18S)
 
 # Add metadata to all data frames of shannon div
 ESP_CTD_12S_shannon %>% 
-  left_join(., dplyr::select(ESP_CTD_12S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
+  # left_join(., dplyr::select(ESP_CTD_12S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, depth)), by = "sample_name") %>% 
   mutate(depth = as.numeric(depth)) %>% 
   mutate(shallow_deep = ifelse(depth > 50, "deep", "shallow")) -> ESP_CTD_12S_shannon_meta
 
@@ -455,7 +456,7 @@ ggplot(ESP_CTD_12S_shannon_meta, aes(x = Shannon)) +
   geom_histogram()
 
 # Build the linear model
-model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_12S_shannon_meta)
+model  <- lm(Shannon ~ CTD_or_ESP.x, data = ESP_CTD_12S_shannon_meta)
 # Create a QQ plot of residuals
 ggqqplot(residuals(model))
 
@@ -465,7 +466,7 @@ shapiro_test(residuals(model))
 # Not normally distributed
 
 # Run the ANOVA anyway
-res.aov.12S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_12S_shannon_meta)
+res.aov.12S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP.x,  data = ESP_CTD_12S_shannon_meta)
 summary(res.aov.12S)
 
 
@@ -473,7 +474,7 @@ summary(res.aov.12S)
 
 # Add metadata to all data frames of shannon div
 ESP_CTD_16S_shannon %>% 
-  left_join(., dplyr::select(ESP_CTD_16S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, Depth)), by = "sample_name") %>% 
+  # left_join(., dplyr::select(ESP_CTD_16S_envtsamples_metadata, c(sample_name, SAMPLING_cruise, Depth)), by = "sample_name") %>% 
   mutate(Depth = as.numeric(parse_number(Depth))) %>% 
   mutate(shallow_deep = ifelse(Depth > 50, "deep", "shallow")) -> ESP_CTD_16S_shannon_meta
 
@@ -484,7 +485,7 @@ ggplot(ESP_CTD_16S_shannon_meta, aes(x = Shannon)) +
   geom_histogram()
 
 # Build the linear model
-model  <- lm(Shannon ~ CTD_or_ESP, data = ESP_CTD_16S_shannon_meta)
+model  <- lm(Shannon ~ CTD_or_ESP.x, data = ESP_CTD_16S_shannon_meta)
 # Create a QQ plot of residuals
 ggqqplot(residuals(model))
 
@@ -494,7 +495,7 @@ shapiro_test(residuals(model))
 # Not normally distributed
 
 # Run the ANOVA anyway
-res.aov.16S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP,  data = ESP_CTD_16S_shannon_meta)
+res.aov.16S <- aov(Shannon ~ SAMPLING_cruise + shallow_deep + CTD_or_ESP.x,  data = ESP_CTD_16S_shannon_meta)
 summary(res.aov.16S)
 
 
@@ -511,7 +512,8 @@ summary(res.aov.16S)
 # Reformat data function
 reformat_shannon_data <- function(input_data){
   input_data %>% 
-    dplyr::select(Shannon, CTD_or_ESP, matching_ID, SAMPLING_cruise, shallow_deep) %>% 
+    dplyr::select(Shannon, CTD_or_ESP.x, matching_ID.x, SAMPLING_cruise, shallow_deep) %>% 
+    dplyr::rename(CTD_or_ESP = CTD_or_ESP.x, matching_ID = matching_ID.x) %>% 
     pivot_longer(., cols = "Shannon", names_to = "Shannon") %>%
     dplyr::select(-Shannon) %>% 
     group_by(matching_ID) %>% 
@@ -534,12 +536,14 @@ plot_shannon_paired <- function(input_data, marker){
   
   # Generate plot
   cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+  depth_shapes <- c("shallow" = 19, "deep" = 17)
   # Generate plot
-  shannon_gg <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise))+
+  shannon_gg <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise, shape = shallow_deep))+
     geom_point(size = 2.5)+
     scale_color_manual(values = cruise_colors)+
+    scale_shape_manual(values = depth_shapes)+
     geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
-    geom_smooth(method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
+    geom_smooth(aes(group = 1), method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
     # annotate("text",x = 2.5, y =5.75, label = expression(paste("R"^"2"," = "), eval(parse(text = "r_squared"))),size = 6,hjust = 0)+ 
     annotate("text",x = round(min(input_data$CTD-0.5), 0)+0.5, y = round(max(input_data$ESP+0.5), 0)-0.75, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
     ylab("Autonomous\n")+
@@ -590,12 +594,14 @@ r_squared <- round(r_squared, 4)
 
 # Generate plot
 cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+depth_shapes <- c("shallow" = 19, "deep" = 17)
 # Generate plot
-shannon_paired_16S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise))+
+shannon_paired_16S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise, shape = shallow_deep))+
   geom_point(size = 2.5)+
   scale_color_manual(values = cruise_colors)+
+  scale_shape_manual(values = depth_shapes)+
   geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
-  geom_smooth(method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
+  geom_smooth(aes(group = 1), method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
   # annotate("text",x = 2.5, y =5.75, label = expression(paste("R"^"2"," = "), eval(parse(text = "r_squared"))),size = 6,hjust = 0)+ 
   annotate("text",x = 3.9, y = 4.9, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
   ylab("Autonomous\n")+
@@ -618,6 +624,51 @@ shannon_paired_16S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_c
         legend.position = "none")
   # ggtitle(paste0("Shannon Diversity: 16S"))
 
+# Plot 12S differently because the limits are so different
+# Remove all rows with NA values
+input_data <- ESP_CTD_12S_shannon_paired
+input_data <- subset(input_data, !(is.na(ESP)) & !(is.na(CTD)))
+
+
+# Get R^2 value
+shannon_lm <- lm(formula = ESP~CTD, data = input_data)
+lm_summary <- summary(shannon_lm)
+r_squared <- lm_summary$r.squared
+r_squared <- round(r_squared, 4)
+
+
+# Generate plot
+cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
+depth_shapes <- c("shallow" = 19, "deep" = 17)
+# Generate plot
+shannon_paired_12S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise, shape = shallow_deep))+
+  geom_point(size = 2.5)+
+  scale_color_manual(values = cruise_colors)+
+  scale_shape_manual(values = depth_shapes)+
+  geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
+  geom_smooth(aes(group = 1), method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
+  # annotate("text",x = 2.5, y =5.75, label = expression(paste("R"^"2"," = "), eval(parse(text = "r_squared"))),size = 6,hjust = 0)+ 
+  annotate("text",x = 0.38, y = 2.45, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
+  ylab("Autonomous\n")+
+  xlab("\nShipboard")+
+  # scale_y_continuous(breaks = seq(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0), 1), 
+  #                    limits = c(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0)), expand = c(0,0))+
+  # scale_x_continuous(breaks = seq(round(min(input_data$CTD-0.5), 0), round(max(input_data$CTD+0.5), 0), 1), 
+  #                    limits = c(round(min(input_data$CTD-0.5), 0), round(max(input_data$CTD+0.5), 0)), expand = c(0,0))+
+  scale_y_continuous(breaks = seq(0,3,1), limits = c(0,3), expand = c(0,0))+
+  scale_x_continuous(breaks = seq(0,3,1), limits = c(0,3), expand = c(0,0))+
+  theme(axis.line = element_line(colour = "black"),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        panel.border = element_blank(),
+        panel.background = element_blank(),
+        plot.title = element_text(face = "bold",hjust = 0.5,size = 18),
+        axis.text = element_text(size = 12),
+        axis.title = element_text(face = "bold", size = 15),
+        axis.ticks.length = unit(0.3, "cm"),
+        legend.position = "none")
+# ggtitle(paste0("Shannon Diversity: 12S"))
+
 
 shannon_paired_COI
 shannon_paired_18S
@@ -638,23 +689,30 @@ shannon_paired_combined <- egg::ggarrange(shannon_paired_16S, shannon_paired_18S
 
 # Create a legend manually
 shannon_legend <- ggplot(ESP_CTD_COI_shannon_paired) +
-  # Season and depth
-  annotate("text",label = "Season:", x = 1, y = 1,size = 10, adj = 0)+ # Title 
-  annotate("point", x = 4, y = 1, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 7, stroke = 3)+ # circle point
-  annotate("text",label = "Spring", x = 4.5, y = 1,size = 7.5,adj = 0)+
-  annotate("point", x = 7, y = 1, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 7, stroke = 3)+ # circle point
-  annotate("text",label = "Fall", x = 7.5, y = 1,size = 7.5,adj = 0)+
+  # Season
+  annotate("text",label = "Season:", x = 1, y = 2,size = 7, adj = 0)+ # Title 
+  annotate("point", x = 4, y = 2, shape = 21, colour = "#1f78b4", fill = "#1f78b4", size = 5, stroke = 3)+ # circle point
+  annotate("text",label = "Spring", x = 4.5, y = 2,size = 5.5,adj = 0)+
+  annotate("point", x = 7, y = 2, shape = 21, colour = "#ff7f00", fill = "#ff7f00", size = 5, stroke = 3)+ # circle point
+  annotate("text",label = "Fall", x = 7.5, y = 2,size = 5.5,adj = 0)+
+  
+  # Depth
+  annotate("text",label = "Depth:", x = 1, y = 1,size = 7, adj = 0)+ # Title 
+  annotate("point", x = 4, y = 1, shape = 19, colour = "black", size = 5, stroke = 3)+ # circle point
+  annotate("text",label = "Shallow", x = 4.5, y = 1,size = 5.5,adj = 0)+
+  annotate("point", x = 7, y = 1, shape = 17, colour = "black", size = 5, stroke = 3)+ # circle point
+  annotate("text",label = "Deep", x = 7.5, y = 1,size = 5.5,adj = 0)+
   
   xlim(1,9)+
   # ylim(0.2,3.2)+
-  ylim(0,2)+
+  ylim(0.4,2.6)+
   theme(panel.background = element_rect(fill="white"),
         panel.border = element_rect(colour = "black", fill=NA, size=2),
         axis.text = element_blank(),
         axis.title = element_blank(),
         axis.ticks = element_blank(),
         legend.position = "none",
-        plot.margin = unit(c(0,6,0,6),"cm"))
+        plot.margin = unit(c(0.2,6,0.2,6),"cm"))
   # theme(panel.background = element_rect(fill="white"),
   #       panel.border = element_rect(colour = "black", fill=NA, size=2),
   #       axis.text = element_blank(),
@@ -666,12 +724,12 @@ shannon_legend <- ggplot(ESP_CTD_COI_shannon_paired) +
 # shannon_legend
 
 shannon_paired_combined_legend <- ggpubr::ggarrange(shannon_paired_combined, shannon_legend, ncol = 1,
-                  heights = c(10,1))
+                  heights = c(10,1.5))
 
 
 
 
-ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = fig_dir, filename = "shannon_paired_combined_legend.pdf", device = "pdf")
+ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = final_fig_dir, filename = "shannon_paired_combined_legend_v2.pdf", device = "pdf")
 
 
 
