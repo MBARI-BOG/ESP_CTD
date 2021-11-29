@@ -117,37 +117,37 @@ write.table(ESP_CTD_COI_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 pwd
 #Make biom file
-biom convert -i ./DEICODE/resubmission/COI/ESP_CTD_COI_envt_asv_table_for_biom.txt -o ./DEICODE/resubmission/COI/table.from_txt_json.biom --table-type="OTU table" --to-json
+biom convert -i ../DEICODE/resubmission/COI/ESP_CTD_COI_envt_asv_table_for_biom.txt -o ../DEICODE/resubmission/COI/table.from_txt_json.biom --table-type="OTU table" --to-json
 #add metadata files to biom file
-biom add-metadata -i ./DEICODE/resubmission/COI/table.from_txt_json.biom -o ./DEICODE/resubmission/COI/table.w_md.biom \
---observation-metadata-fp ./DEICODE/resubmission/COI/ESP_CTD_COI_envt_tax_table_for_biom.txt \
---sample-metadata-fp ./DEICODE/resubmission/COI/ESP_CTD_COI_envt_sample_data_for_biom.txt
+biom add-metadata -i ../DEICODE/resubmission/COI/table.from_txt_json.biom -o ../DEICODE/resubmission/COI/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/resubmission/COI/ESP_CTD_COI_envt_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/resubmission/COI/ESP_CTD_COI_envt_sample_data_for_biom.txt
 
 #import into Qiime2
 qiime tools import \
- --input-path ./DEICODE/resubmission/COI/table.w_md.biom \
- --output-path ./DEICODE/resubmission/COI/ESP_CTD_COI_master.biom.qza \
+ --input-path ../DEICODE/resubmission/COI/table.w_md.biom \
+ --output-path ../DEICODE/resubmission/COI/ESP_CTD_COI_master.biom.qza \
  --type FeatureTable[Frequency]
 
 #run DEICODE
 qiime deicode rpca \
-    --i-table ./DEICODE/resubmission/COI/ESP_CTD_COI_master.biom.qza \
+    --i-table ../DEICODE/resubmission/COI/ESP_CTD_COI_master.biom.qza \
     --p-n-components 3 \
     --p-min-feature-count 10 \
     --p-min-sample-count 1000 \
-    --o-biplot ./DEICODE/resubmission/COI/ordination.qza \
-    --o-distance-matrix ./DEICODE/resubmission/COI/distance.qza
+    --o-biplot ../DEICODE/resubmission/COI/ordination.qza \
+    --o-distance-matrix ../DEICODE/resubmission/COI/distance.qza
 ```
 
 
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_COI_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -183,7 +183,7 @@ permanova_value <- mutli_permanova_COI$`Pr(>F)`[3]
 
 
 ### Plot COI DEICODE RPCA
-```{r eval = FALSE}
+```{r}
 pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "COI","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -237,7 +237,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_COI_PCA.png", ESP_CTD_COI_PCA,width =
 
 
 ### Plot COI DEICODE RPCA - with pairs labeled
-```{r eval = FALSE}
+```{r}
 pco <- read_qza(here::here("18S_12S_CO1_Analyses", "DEICODE", "resubmission", "COI","ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -332,36 +332,36 @@ write.table(ESP_CTD_18S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
 #Make biom file
-biom convert -i ./DEICODE/resubmission/18S/ESP_CTD_18S_envt_asv_table_for_biom.txt -o ./DEICODE/resubmission/18S/table.from_txt_json.biom --table-type="OTU table" --to-json
+biom convert -i ../DEICODE/resubmission/18S/ESP_CTD_18S_envt_asv_table_for_biom.txt -o ../DEICODE/resubmission/18S/table.from_txt_json.biom --table-type="OTU table" --to-json
 #add metadata files to biom file
-biom add-metadata -i ./DEICODE/resubmission/18S/table.from_txt_json.biom -o ./DEICODE/resubmission/18S/table.w_md.biom \
---observation-metadata-fp ./DEICODE/resubmission/18S/ESP_CTD_18S_envt_tax_table_for_biom.txt \
---sample-metadata-fp ./DEICODE/resubmission/18S/ESP_CTD_18S_envt_sample_data_for_biom.txt
+biom add-metadata -i ../DEICODE/resubmission/18S/table.from_txt_json.biom -o ../DEICODE/resubmission/18S/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/resubmission/18S/ESP_CTD_18S_envt_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/resubmission/18S/ESP_CTD_18S_envt_sample_data_for_biom.txt
 
 #import into Qiime2
 qiime tools import \
---input-path ./DEICODE/resubmission/18S/table.w_md.biom \
---output-path ./DEICODE/resubmission/18S/ESP_CTD_18S_master.biom.qza \
+--input-path ../DEICODE/resubmission/18S/table.w_md.biom \
+--output-path ../DEICODE/resubmission/18S/ESP_CTD_18S_master.biom.qza \
 --type FeatureTable[Frequency]
 
 #run DEICODE
 qiime deicode rpca \
---i-table ./DEICODE/resubmission/18S/ESP_CTD_18S_master.biom.qza \
+--i-table ../DEICODE/resubmission/18S/ESP_CTD_18S_master.biom.qza \
 --p-n-components 3 \
 --p-min-feature-count 10 \
 --p-min-sample-count 1000 \
---o-biplot ./DEICODE/resubmission/18S/ordination.qza \
---o-distance-matrix ./DEICODE/resubmission/18S/distance.qza
+--o-biplot ../DEICODE/resubmission/18S/ordination.qza \
+--o-distance-matrix ../DEICODE/resubmission/18S/distance.qza
 ```
 
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_18S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -396,7 +396,7 @@ permanova_value <- mutli_permanova_18S$`Pr(>F)`[3]
 ```
 
 ### Plot 18S DEICODE RPCA
-```{r eval = FALSE}
+```{r}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -454,7 +454,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_18S_PCA.png", ESP_CTD_18S_PCA,width =
 ```
 
 ### Plot 18S DEICODE RPCA - pairs labeled
-```{r eval = FALSE}
+```{r}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -547,37 +547,37 @@ write.table(ESP_CTD_12S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
 
 #Make biom file
-biom convert -i ./DEICODE/resubmission/12S/ESP_CTD_12S_envt_asv_table_for_biom.txt -o ./DEICODE/resubmission/12S/table.from_txt_json.biom --table-type="OTU table" --to-json
+biom convert -i ../DEICODE/resubmission/12S/ESP_CTD_12S_envt_asv_table_for_biom.txt -o ../DEICODE/resubmission/12S/table.from_txt_json.biom --table-type="OTU table" --to-json
 #add metadata files to biom file
-biom add-metadata -i ./DEICODE/resubmission/12S/table.from_txt_json.biom -o ./DEICODE/resubmission/12S/table.w_md.biom \
---observation-metadata-fp ./DEICODE/resubmission/12S/ESP_CTD_12S_envt_tax_table_for_biom.txt \
---sample-metadata-fp ./DEICODE/resubmission/12S/ESP_CTD_12S_envt_sample_data_for_biom.txt
+biom add-metadata -i ../DEICODE/resubmission/12S/table.from_txt_json.biom -o ../DEICODE/resubmission/12S/table.w_md.biom \
+--observation-metadata-fp ../DEICODE/resubmission/12S/ESP_CTD_12S_envt_tax_table_for_biom.txt \
+--sample-metadata-fp ../DEICODE/resubmission/12S/ESP_CTD_12S_envt_sample_data_for_biom.txt
 
 #import into Qiime2
 qiime tools import \
---input-path ./DEICODE/resubmission/12S/table.w_md.biom \
---output-path ./DEICODE/resubmission/12S/ESP_CTD_12S_master.biom.qza \
+--input-path ../DEICODE/resubmission/12S/table.w_md.biom \
+--output-path ../DEICODE/resubmission/12S/ESP_CTD_12S_master.biom.qza \
 --type FeatureTable[Frequency]
 
 #run DEICODE
 qiime deicode rpca \
---i-table ./DEICODE/resubmission/12S/ESP_CTD_12S_master.biom.qza \
+--i-table ../DEICODE/resubmission/12S/ESP_CTD_12S_master.biom.qza \
 --p-n-components 3 \
 --p-min-feature-count 10 \
 --p-min-sample-count 1000 \
---o-biplot ./DEICODE/resubmission/12S/ordination.qza \
---o-distance-matrix ./DEICODE/resubmission/12S/distance.qza
+--o-biplot ../DEICODE/resubmission/12S/ordination.qza \
+--o-distance-matrix ../DEICODE/resubmission/12S/distance.qza
 ```
 
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_12S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -613,7 +613,7 @@ permanova_value <- mutli_permanova_12S$`Pr(>F)`[3]
 
 
 ### Plot 12S DEICODE RPCA
-```{r eval = FALSE}
+```{r}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -672,7 +672,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_12S_PCA.png", ESP_CTD_12S_PCA,width =
 
 
 ### Plot 12S DEICODE RPCA - pairs labeled
-```{r eval = FALSE}
+```{r}
 # Set figure directory
 fig_dir <- here::here("resubmission")
 
@@ -766,7 +766,7 @@ write.table(ESP_CTD_16S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, eval = FALSE, engine.opts = '-l'}
+```{bash, engine.opts = '-l'}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 pwd
@@ -794,7 +794,7 @@ qiime deicode rpca \
 ```
 
 ### Run PERMANOVA
-```{r  eval = FALSE}
+```{r }
 # Extract metadata
 pca_metadata <- ESP_CTD_16S_envtsamples_metadata
 pca_metadata %>% dplyr::rename(., "SampleID" = "#SampleID") -> pca_metadata
@@ -830,7 +830,7 @@ permanova_value <- mutli_permanova_16S$`Pr(>F)`[3]
 
 
 ### Plot 16S DEICODE RPCA
-```{r eval = FALSE}
+```{r}
 pco <- read_qza(here::here("16S_Analyses", "DEICODE", "resubmission", "ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -889,7 +889,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA.png", ESP_CTD_16S_PCA,width =
 
 
 ### Plot 16S DEICODE RPCA - pairs labeled
-```{r eval = FALSE}
+```{r}
 pco <- read_qza(here::here("16S_Analyses", "DEICODE", "resubmission", "ordination.qza"))
 
 label.PC1 <- paste0("PC1 (", round(pco$data$ProportionExplained$PC1, 3)*100,"%)")
@@ -949,7 +949,7 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_PCA_pairs_labeled.png", ESP_CTD_1
 
 
 # Create a legend manually
-```{r eval = FALSE}
+```{r}
 PCA_legend <- ggplot(pca_data) +
   # ESP vs. CTD
   annotate("text",label = "Sampling Method", x = 0, y = 2.8,size = 10,adj = 0)+ # Title ESP or CTD
@@ -985,7 +985,7 @@ PCA_legend <- ggplot(pca_data) +
 ```
 
 # Combine all PCA figures
-```{r eval = FALSE}
+```{r}
 combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA, 
                                                  ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ESP_CTD_16S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
@@ -1007,7 +1007,7 @@ ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "com
 ```
 
 # Combine all PCA figures - pairs labeled
-```{r eval = FALSE}
+```{r}
 combined_PCA_pairs_labeled_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_18S_PCA_pairs_labeled, 
                                                  ESP_CTD_COI_PCA_pairs_labeled, ESP_CTD_12S_PCA_pairs_labeled, ESP_CTD_16S_PCA_pairs_labeled, ncol = 2, nrow = 2,
                                                  labels = c("(a) 18S", "(b) COI", "(c) 12S", "(d) 16S"), label.x = 0.05, label.y = 0.985,
@@ -1031,7 +1031,7 @@ ggsave(combined_PCA_pairs_labeled_gg, height = 16, width = 16, path = fig_dir, f
 # Combine all PERMANOVA results, export as two tables
 
 ### Table of multi-factor PERMANOVA results
-```{r eval = FALSE}
+```{r}
 Dataset <- c(rep("18S",3), rep("COI",3),  rep("12S",3), rep("16S",3))
 Variable_tested <- c(rep(c("Sampling method (ESP vs CTD)", "Season (fall vs spring)","Depth groups (0-25, 27-50, 70-200)"),4))
 p_value <- c(mutli_permanova_18S$`Pr(>F)`[3], mutli_permanova_18S$`Pr(>F)`[2], mutli_permanova_18S$`Pr(>F)`[1],
@@ -1044,7 +1044,7 @@ F_statistic <- c(mutli_permanova_18S$F[3], mutli_permanova_18S$F[2], mutli_perma
                  mutli_permanova_16S$F[3], mutli_permanova_16S$F[2], mutli_permanova_16S$F[1])
 multi_PERMANOVA_results_table <- data.frame(Dataset, Variable_tested, p_value, F_statistic)
 
-write.csv(multi_PERMANOVA_results_table, here::here("resubmission", "TableS3.csv"))
+write.csv(multi_PERMANOVA_results_table, here::here("resubmission", "TableS3_2021-11-29.csv"))
 ```
 
 # Pairwise comparisons
@@ -1203,7 +1203,7 @@ distances_metadata_COI <- distance_data_prep(metadata = ESP_CTD_COI_envtsamples_
 
 Make a single column figure, multiple panels. Same x-axis on each panel.
 Split the data so that you have all paired samples, samples from the same depth, samples from the same cruise.
-```{r eval = FALSE}
+```{r}
 paired_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "paired")
 cruise_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "same_cruise")
 depth_histogram_COI <- distance_histogram(input_data = distances_metadata_COI, variable = "same_depth")
@@ -1456,7 +1456,7 @@ cruise_depth_histogram_16S <- distance_histogram(input_data = distances_metadata
 histograms_16S <- egg::ggarrange(paired_histogram_16S, cruise_depth_histogram_16S,
                                  ncol = 1)
 
-ggsave(here("resubmission", "distance_histograms", "16S_histograms.pdf"), histograms_16S,  height = 9, width = 6)
+ggsave(here("resubmission", "distance_histograms", "16S_histograms.pdf"), histograms_16S,  height = 5, width = 6)
 ```
 
 ### Run ANOVA
