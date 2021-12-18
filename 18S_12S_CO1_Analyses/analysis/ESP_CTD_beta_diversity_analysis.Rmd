@@ -117,7 +117,7 @@ write.table(ESP_CTD_COI_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_COI_
 
 ### Run DEICODE in Qiime2
 
-```{bash, engine.opts = '-l'}
+```{bash, engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 pwd
@@ -332,7 +332,7 @@ write.table(ESP_CTD_18S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_18S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, engine.opts = '-l'}
+```{bash, engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -547,7 +547,7 @@ write.table(ESP_CTD_12S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_12S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, engine.opts = '-l'}
+```{bash, engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -766,7 +766,7 @@ write.table(ESP_CTD_16S_envtsamples_metadata, paste0(deicode_dir, "/ESP_CTD_16S_
 
 ### Run DEICODE in Qiime2
 
-```{bash, engine.opts = '-l'}
+```{bash, engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 pwd
@@ -1177,7 +1177,8 @@ distance_histogram <- function(input_data, variable){
     scale_fill_manual(values = color_values, name = legend_title) +
     theme(panel.background = element_rect(fill ="white", color = "black"),
           panel.grid.major = element_blank(),
-          panel.grid.minor = element_blank()) +
+          panel.grid.minor = element_blank(),
+          legend.position = "none") +
     scale_x_continuous(limits = c(0,max(input_data$distance+0.1)), oob = scales::oob_keep, expand = c(0,0)) +
     xlab("Aitchison Distance") +
     # scale_y_continuous(limits = c(0, 70), expand = c(0,0))
@@ -1459,6 +1460,69 @@ histograms_16S <- egg::ggarrange(paired_histogram_16S, cruise_depth_histogram_16
 ggsave(here("resubmission", "distance_histograms", "16S_histograms.pdf"), histograms_16S,  height = 5, width = 6)
 ```
 
+## Combine markers into supplemental figure - four rows, two columns
+
+### Generate the legend
+```{r}
+distance_histogram_2 <- function(input_data, variable){
+  # Store colors
+  if (variable == "same_cruise_depth"){
+    color_values = c("#a6cee3", "#1f78b4", "#b2df8a", "#33a02c")
+  }
+  else {
+    color_values = c("gray80", "gray20")
+  }
+  
+  # Store legend title
+  if (variable == "same_cruise_depth"){
+    legend_title = "Cruise & Depth"
+  }
+  else if (variable == "paired"){
+    legend_title = "Paired"
+  }
+  else {
+    legend_title = "not using these!"
+  }
+  
+  
+  histogram <- ggplot(data = input_data, aes_string(x = "distance", fill = variable))+
+    geom_histogram(bins = 100) +
+    scale_fill_manual(values = color_values, name = legend_title) +
+    theme(panel.background = element_rect(fill ="white", color = "black"),
+          panel.grid.major = element_blank(),
+          panel.grid.minor = element_blank()) +
+    scale_x_continuous(limits = c(0,max(input_data$distance+0.1)), oob = scales::oob_keep, expand = c(0,0)) +
+    xlab("Aitchison Distance") +
+    # scale_y_continuous(limits = c(0, 70), expand = c(0,0))
+    scale_y_continuous(expand = expansion(mult = c(0, .05)))
+  return(histogram)
+}
+
+paired_histogram_16S_2 <- distance_histogram_2(input_data = distances_metadata_16S, variable = "paired")
+cruise_depth_histogram_16S_2 <- distance_histogram_2(input_data = distances_metadata_16S, variable = "same_cruise_depth")
+
+paired_hist_legend <- ggpubr::get_legend(paired_histogram_16S_2)
+paired_hist_legend <- as_ggplot(paired_hist_legend)
+cruise_depth_hist_legend <- ggpubr::get_legend(cruise_depth_histogram_16S_2)
+cruise_depth_hist_legend <- as_ggplot(cruise_depth_hist_legend)
+```
+
+
+### Plot everything together
+```{r}
+combined_dist_hist <- egg::ggarrange(paired_histogram_16S, cruise_depth_histogram_16S,
+                                     paired_histogram_18S, cruise_depth_histogram_18S,
+                                     paired_histogram_COI, cruise_depth_histogram_COI,
+                                     paired_histogram_12S, cruise_depth_histogram_12S,
+                                     paired_hist_legend, cruise_depth_hist_legend,
+                                     nrow = 5, ncol = 2,
+                                     labels = c("", "(a) 16S", "", "(b) 18S", "", "(c) COI", "", "(d) 12S", "", ""),
+                                                      label.args = list(gp=gpar(font=1, cex = 1.5), x=unit(9.75,"cm"), y=unit(5,"cm"), hjust = 1))
+
+ggsave(here("resubmission", "combined_distance_histogram.pdf"), combined_dist_hist,
+       height = 10, width = 8)
+```
+
 ### Run ANOVA
 
 Here we will be running an ANOVA on pairwise distances, rather than a PERMANOVA.
@@ -1509,6 +1573,31 @@ summary(res.aov.12S)
 summary(res.aov.16S)
 ```
 
+
+
+
+# Check pairwise distances by cruise
+```{r}
+paired_16S_distances <- subset(distances_metadata_16S, paired == "Paired")
+
+t.test(subset(paired_16S_distances, SAMPLING_cruise_1 == "CN18S")$distance,
+        subset(paired_16S_distances, SAMPLING_cruise_1 == "CN18F")$distance)
+
+paired_18S_distances <- subset(distances_metadata_18S, paired == "Paired")
+
+t.test(subset(paired_18S_distances, SAMPLING_cruise_1 == "CN18S")$distance,
+        subset(paired_18S_distances, SAMPLING_cruise_1 == "CN18F")$distance)
+
+paired_COI_distances <- subset(distances_metadata_COI, paired == "Paired")
+
+t.test(subset(paired_COI_distances, SAMPLING_cruise_1 == "CN18S")$distance,
+        subset(paired_COI_distances, SAMPLING_cruise_1 == "CN18F")$distance)
+
+paired_12S_distances <- subset(distances_metadata_12S, paired == "Paired")
+
+t.test(subset(paired_12S_distances, SAMPLING_cruise_1 == "CN18S")$distance,
+        subset(paired_12S_distances, SAMPLING_cruise_1 == "CN18F")$distance)
+```
 
 
 # Permutation party!
@@ -1630,5 +1719,60 @@ distance_histogram(input_data = subset(distances_metadata_16S,
                                                                variable = "paired")
 # paired_permutation_test(distance_metadata_df = distances_metadata_18S, permutations = 1000, cruise = "CN18F", depth = "Shallow")
 ```
+
+
+# Permutation test
+
+Here we will examine if paired samples are significantly more similar than non-paired samples, when you subset just the same cruise and depth samples. This is different than the previous permutation tests in that we aren't looking at each cruise and depth pairing separately. This way, we're significantly increasing the number of samples that can be chosen for the test.
+
+```{r}
+paired_permutation_test <- function(distance_metadata_df, permutations){
+  
+distance_metadata_df %>% 
+  subset(same_cruise_depth == "Same Cruise, Same Depth") -> same_cruise_depth_df
+
+# Get the mean distance between paired samples
+actual_mean <- mean(subset(same_cruise_depth_df, paired == "Paired")$distance)
+
+# Create a vector to store these
+random_distances <- vector(length = permutations)
+
+
+# Get a vector of random distances - same length as permuted variables
+# Get number of pairs
+npairs <- dim(subset(same_cruise_depth_df, paired == "Paired"))[1]
+
+for (i in 1:permutations){
+  random_distances[i] <- mean(sample(same_cruise_depth_df$distance, npairs, replace = FALSE))
+}
+
+# Determine the frequency with which actual mean was less than random mean
+p_val <- length(random_distances[actual_mean > random_distances])/length(random_distances)
+
+# Plot a histogram
+random_distances %>% 
+  as.data.frame() %>% 
+  dplyr::rename(distance = ".") -> random_distances_df
+
+permutation_plot <- ggplot(random_distances_df, aes(x = distance)) +
+  geom_histogram(bins = 50) +
+  geom_vline(xintercept = actual_mean)
+
+print(paste0("p = ", round(p_val, 3)))
+
+return(permutation_plot)
+
+}
+
+set.seed(123)
+paired_permutation_test(distance_metadata_df = distances_metadata_16S, permutations = 1000)
+paired_permutation_test(distance_metadata_df = distances_metadata_18S, permutations = 1000)
+paired_permutation_test(distance_metadata_df = distances_metadata_COI, permutations = 1000)
+paired_permutation_test(distance_metadata_df = distances_metadata_12S, permutations = 1000)
+```
+
+
+
+
 
 
