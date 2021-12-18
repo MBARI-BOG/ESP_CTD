@@ -536,10 +536,10 @@ plot_shannon_paired <- function(input_data, marker){
   
   # Generate plot
   cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
-  depth_shapes <- c("shallow" = 19, "deep" = 17)
+  depth_shapes <- c("shallow" = 19, "deep" = 1)
   # Generate plot
   shannon_gg <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise, shape = shallow_deep))+
-    geom_point(size = 2.5)+
+    geom_point(size = 2.5, stroke = 1)+
     scale_color_manual(values = cruise_colors)+
     scale_shape_manual(values = depth_shapes)+
     geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
@@ -548,8 +548,11 @@ plot_shannon_paired <- function(input_data, marker){
     annotate("text",x = round(min(input_data$CTD-0.5), 0)+0.5, y = round(max(input_data$ESP+0.5), 0)-0.75, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
     ylab("Autonomous\n")+
     xlab("\nShipboard")+
-    scale_y_continuous(breaks = seq(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0), 1), 
-                       limits = c(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0)), expand = c(0,0))+
+    # scale_y_continuous(breaks = seq(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0), 1), 
+    #                    limits = c(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0)), expand = c(0,0))+
+    # Have to do this so that the axes are the same
+    scale_y_continuous(breaks = seq(round(min(input_data$CTD-0.5), 0), round(max(input_data$CTD+0.5), 0), 1), 
+                       limits = c(round(min(input_data$CTD-0.5), 0), round(max(input_data$CTD+0.5), 0)), expand = c(0,0))+
     scale_x_continuous(breaks = seq(round(min(input_data$CTD-0.5), 0), round(max(input_data$CTD+0.5), 0), 1), 
                        limits = c(round(min(input_data$CTD-0.5), 0), round(max(input_data$CTD+0.5), 0)), expand = c(0,0))+
     theme(axis.line = element_line(colour = "black"),
@@ -594,10 +597,10 @@ r_squared <- round(r_squared, 4)
 
 # Generate plot
 cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
-depth_shapes <- c("shallow" = 19, "deep" = 17)
+depth_shapes <- c("shallow" = 19, "deep" = 1)
 # Generate plot
 shannon_paired_16S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise, shape = shallow_deep))+
-  geom_point(size = 2.5)+
+  geom_point(size = 2.5, stroke = 1)+
   scale_color_manual(values = cruise_colors)+
   scale_shape_manual(values = depth_shapes)+
   geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
@@ -639,10 +642,10 @@ r_squared <- round(r_squared, 4)
 
 # Generate plot
 cruise_colors <- c("CN18F" = "#ff7f00", "CN18S" = "#1f78b4")
-depth_shapes <- c("shallow" = 19, "deep" = 17)
+depth_shapes <- c("shallow" = 19, "deep" = 1)
 # Generate plot
 shannon_paired_12S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_cruise, shape = shallow_deep))+
-  geom_point(size = 2.5)+
+  geom_point(size = 2.5, stroke = 1)+
   scale_color_manual(values = cruise_colors)+
   scale_shape_manual(values = depth_shapes)+
   geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
@@ -684,10 +687,11 @@ shannon_paired_16S
 
 shannon_paired_combined <- egg::ggarrange(shannon_paired_16S, shannon_paired_18S, shannon_paired_COI, shannon_paired_12S, ncol = 2, nrow = 2,
                                           labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"),
-                                          label.args = list(gp=gpar(font=1, cex = 2), x=unit(2.7,"cm"), y=unit(11,"cm"), hjust = 0))
+                                          label.args = list(gp=gpar(font=1, cex = 2), x=unit(2.7,"cm"), y=unit(11.5,"cm"), hjust = 0))
 
 
 # Create a legend manually
+# Don't use this - use the same legend as the violin plot
 shannon_legend <- ggplot(ESP_CTD_COI_shannon_paired) +
   # Season
   annotate("text",label = "Season:", x = 1, y = 2,size = 7, adj = 0)+ # Title 
@@ -723,18 +727,51 @@ shannon_legend <- ggplot(ESP_CTD_COI_shannon_paired) +
 
 # shannon_legend
 
-shannon_paired_combined_legend <- ggpubr::ggarrange(shannon_paired_combined, shannon_legend, ncol = 1,
-                  heights = c(10,1.5))
+# shannon_paired_combined_legend <- ggpubr::ggarrange(shannon_paired_combined, shannon_legend, ncol = 1,
+#                   heights = c(10,1.5))
+shannon_paired_combined_legend <- ggpubr::ggarrange(shannon_paired_combined, shannon_legend_violinplot, ncol = 1,
+                  heights = c(10.5,1))
+
+
+ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = final_fig_dir, filename = "shannon_paired_combined_legend_v3.pdf", device = "pdf")
 
 
 
 
-ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = final_fig_dir, filename = "shannon_paired_combined_legend_v2.pdf", device = "pdf")
 
 
 
+##----Get R^2 values for cruises individually
+r2_function <- function(data, cruise){
+  data_cruise <- subset(data, SAMPLING_cruise == cruise)
+  shannon_lm <- lm(formula = ESP~CTD, data = data_cruise)
+  lm_summary <- summary(shannon_lm)
+  r_squared <- lm_summary$r.squared
+  r_squared <- round(r_squared, 4)
+  return(r_squared)
+}
+
+r2_table <- data.frame(markers = c("16S", "18S", "COI", "12S"),
+                       CN18S = rep(NA, 4),
+                       CN18F = rep(NA, 4))
+
+# Column 2 is CN18S, Column 3 CN18F
+# Populate 16S (row 1)
+r2_table[1,2] <- r2_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18S")
+r2_table[1,3] <- r2_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18F")
+
+# Populate 18S (row 2)
+r2_table[2,2] <- r2_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18S")
+r2_table[2,3] <- r2_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18F")
 
 
+# Populate COI (row 3)
+r2_table[3,2] <- r2_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18S")
+r2_table[3,3] <- r2_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18F")
 
 
+# Populate 12S (row 4)
+r2_table[4,2] <- r2_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18S")
+r2_table[4,3] <- r2_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18F")
 
+write.csv(r2_table, here("resubmission", "cruise_alpha_r2_table.csv"))
