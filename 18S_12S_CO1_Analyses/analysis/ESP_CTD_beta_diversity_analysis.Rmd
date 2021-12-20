@@ -1771,6 +1771,24 @@ paired_permutation_test(distance_metadata_df = distances_metadata_16S, permutati
 paired_permutation_test(distance_metadata_df = distances_metadata_18S, permutations = 1000)
 paired_permutation_test(distance_metadata_df = distances_metadata_COI, permutations = 1000)
 paired_permutation_test(distance_metadata_df = distances_metadata_12S, permutations = 1000)
+
+
+# Run this again, subsetting each cruise
+
+# CN18S
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_16S, SAMPLING_cruise_1 == "CN18S" & SAMPLING_cruise_2 == "CN18S"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_18S, SAMPLING_cruise_1 == "CN18S" & SAMPLING_cruise_2 == "CN18S"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_COI, SAMPLING_cruise_1 == "CN18S" & SAMPLING_cruise_2 == "CN18S"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_12S, SAMPLING_cruise_1 == "CN18S" & SAMPLING_cruise_2 == "CN18S"), permutations = 1000)
+
+# CN18F
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_16S, SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_18S, SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_COI, SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_12S, SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F"), permutations = 1000)
+
+
+
 ```
 
 
