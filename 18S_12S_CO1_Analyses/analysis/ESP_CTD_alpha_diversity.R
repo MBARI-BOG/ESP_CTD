@@ -542,10 +542,14 @@ plot_shannon_paired <- function(input_data, marker){
     geom_point(size = 2.5, stroke = 1)+
     scale_color_manual(values = cruise_colors)+
     scale_shape_manual(values = depth_shapes)+
-    geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
-    geom_smooth(aes(group = 1), method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
+    # geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
+    # Get separate lines for spring and fall
+    geom_smooth(data = subset(input_data, SAMPLING_cruise == "CN18F"), aes(x = CTD, y = ESP, group = 1), method='lm', formula= y~x, 
+                lty = 2,se = FALSE, color = "#ff7f00", inherit.aes = FALSE)+
+    geom_smooth(data = subset(input_data, SAMPLING_cruise == "CN18S"), aes(x = CTD, y = ESP, group = 1), method='lm', formula= y~x, 
+                lty = 2,se = FALSE, color = "#1f78b4", inherit.aes = FALSE)+
     # annotate("text",x = 2.5, y =5.75, label = expression(paste("R"^"2"," = "), eval(parse(text = "r_squared"))),size = 6,hjust = 0)+ 
-    annotate("text",x = round(min(input_data$CTD-0.5), 0)+0.5, y = round(max(input_data$ESP+0.5), 0)-0.75, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
+    # annotate("text",x = round(min(input_data$CTD-0.5), 0)+0.5, y = round(max(input_data$ESP+0.5), 0)-0.75, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
     ylab("Autonomous\n")+
     xlab("\nShipboard")+
     # scale_y_continuous(breaks = seq(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0), 1), 
@@ -603,10 +607,14 @@ shannon_paired_16S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_c
   geom_point(size = 2.5, stroke = 1)+
   scale_color_manual(values = cruise_colors)+
   scale_shape_manual(values = depth_shapes)+
-  geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
-  geom_smooth(aes(group = 1), method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
+  # geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
+  # Get separate lines for spring and fall
+  geom_smooth(data = subset(input_data, SAMPLING_cruise == "CN18F"), aes(x = CTD, y = ESP, group = 1), method='lm', formula= y~x, 
+              lty = 2,se = FALSE, color = "#ff7f00", inherit.aes = FALSE)+
+  geom_smooth(data = subset(input_data, SAMPLING_cruise == "CN18S"), aes(x = CTD, y = ESP, group = 1), method='lm', formula= y~x, 
+              lty = 2,se = FALSE, color = "#1f78b4", inherit.aes = FALSE)+
   # annotate("text",x = 2.5, y =5.75, label = expression(paste("R"^"2"," = "), eval(parse(text = "r_squared"))),size = 6,hjust = 0)+ 
-  annotate("text",x = 3.9, y = 4.9, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
+  # annotate("text",x = 3.9, y = 4.9, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
   ylab("Autonomous\n")+
   xlab("\nShipboard")+
   # scale_y_continuous(breaks = seq(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0), 1), 
@@ -635,6 +643,8 @@ input_data <- subset(input_data, !(is.na(ESP)) & !(is.na(CTD)))
 
 # Get R^2 value
 shannon_lm <- lm(formula = ESP~CTD, data = input_data)
+cor(input_data$ESP, input_data$CTD, method = c("pearson"))
+cor.test(input_data$ESP, input_data$CTD, method = c("pearson"))
 lm_summary <- summary(shannon_lm)
 r_squared <- lm_summary$r.squared
 r_squared <- round(r_squared, 4)
@@ -648,10 +658,14 @@ shannon_paired_12S <- ggplot(input_data,aes(x = CTD, y = ESP, color = SAMPLING_c
   geom_point(size = 2.5, stroke = 1)+
   scale_color_manual(values = cruise_colors)+
   scale_shape_manual(values = depth_shapes)+
-  geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
-  geom_smooth(aes(group = 1), method='lm', formula= y~x, color = "black", lty = 2,se = FALSE)+
+  # geom_abline(intercept = 0, slope = 1,lty = 4,color = "gold2", size = 1)+
+  # Get separate lines for spring and fall
+  geom_smooth(data = subset(input_data, SAMPLING_cruise == "CN18F"), aes(x = CTD, y = ESP, group = 1), method='lm', formula= y~x, 
+              lty = 2,se = FALSE, color = "#ff7f00", inherit.aes = FALSE)+
+  geom_smooth(data = subset(input_data, SAMPLING_cruise == "CN18S"), aes(x = CTD, y = ESP, group = 1), method='lm', formula= y~x, 
+              lty = 2,se = FALSE, color = "#1f78b4", inherit.aes = FALSE)+
   # annotate("text",x = 2.5, y =5.75, label = expression(paste("R"^"2"," = "), eval(parse(text = "r_squared"))),size = 6,hjust = 0)+ 
-  annotate("text",x = 0.38, y = 2.45, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
+  # annotate("text",x = 0.38, y = 2.45, label = as.expression(bquote(R^2 ~ "=" ~ .(r_squared))),size = 6,hjust = 0)+
   ylab("Autonomous\n")+
   xlab("\nShipboard")+
   # scale_y_continuous(breaks = seq(round(min(input_data$ESP-0.5), 0), round(max(input_data$ESP+0.5), 0), 1), 
@@ -733,7 +747,7 @@ shannon_paired_combined_legend <- ggpubr::ggarrange(shannon_paired_combined, sha
                   heights = c(10.5,1))
 
 
-ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = final_fig_dir, filename = "shannon_paired_combined_legend_v3.pdf", device = "pdf")
+ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = final_fig_dir, filename = "shannon_paired_combined_legend_v4.pdf", device = "pdf")
 
 
 
@@ -741,37 +755,65 @@ ggsave(shannon_paired_combined_legend, height = 10, width = 10, path = final_fig
 
 
 
-##----Get R^2 values for cruises individually
-r2_function <- function(data, cruise){
+##----Get R^2, F-stat, and p-values for cruises individually
+lm_extract_function <- function(data, cruise){
   data_cruise <- subset(data, SAMPLING_cruise == cruise)
   shannon_lm <- lm(formula = ESP~CTD, data = data_cruise)
   lm_summary <- summary(shannon_lm)
-  r_squared <- lm_summary$r.squared
-  r_squared <- round(r_squared, 4)
-  return(r_squared)
+  r_squared <- round(lm_summary$r.squared, 4)
+  f_statistic <- round(lm_summary$fstatistic[1], 2)
+  p_value <- round(lm_summary$coefficients[8], 6)
+  
+  stats_list <- c(r_squared, f_statistic, p_value)
+  
+  return(stats_list)
 }
 
-r2_table <- data.frame(markers = c("16S", "18S", "COI", "12S"),
-                       CN18S = rep(NA, 4),
-                       CN18F = rep(NA, 4))
+# Get F-statistic, R^2 value, and p-value for each cruise/
+correlation_table <- data.frame(marker = c("16S", "16S", "18S", "18S", "COI", "COI", "12S", "12S"),
+                       cruise = c("CN18S", "CN18F", "CN18S", "CN18F", "CN18S", "CN18F", "CN18S", "CN18F"),
+                       r_squared = rep(NA, 8),
+                       f_statistic = rep(NA, 8),
+                       p_value = rep(NA, 8))
 
-# Column 2 is CN18S, Column 3 CN18F
-# Populate 16S (row 1)
-r2_table[1,2] <- r2_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18S")
-r2_table[1,3] <- r2_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18F")
+# Populate 16S, spring
+correlation_table[1,3] <- lm_extract_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18S")[1] # R^2
+correlation_table[1,4] <- lm_extract_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18S")[2] # f-statistic
+correlation_table[1,5] <- lm_extract_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18S")[3] # p-value
 
-# Populate 18S (row 2)
-r2_table[2,2] <- r2_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18S")
-r2_table[2,3] <- r2_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18F")
+# Populate 16S, fall
+correlation_table[2,3] <- lm_extract_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18F")[1] # R^2
+correlation_table[2,4] <- lm_extract_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18F")[2] # f-statistic
+correlation_table[2,5] <- lm_extract_function(data = ESP_CTD_16S_shannon_paired, cruise = "CN18F")[3] # p-value
 
+# Populate 18S, spring
+correlation_table[3,3] <- lm_extract_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18S")[1] # R^2
+correlation_table[3,4] <- lm_extract_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18S")[2] # f-statistic
+correlation_table[3,5] <- lm_extract_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18S")[3] # p-value
 
-# Populate COI (row 3)
-r2_table[3,2] <- r2_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18S")
-r2_table[3,3] <- r2_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18F")
+# Populate 18S, fall
+correlation_table[4,3] <- lm_extract_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18F")[1] # R^2
+correlation_table[4,4] <- lm_extract_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18F")[2] # f-statistic
+correlation_table[4,5] <- lm_extract_function(data = ESP_CTD_18S_shannon_paired, cruise = "CN18F")[3] # p-value
 
+# Populate COI, spring
+correlation_table[5,3] <- lm_extract_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18S")[1] # R^2
+correlation_table[5,4] <- lm_extract_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18S")[2] # f-statistic
+correlation_table[5,5] <- lm_extract_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18S")[3] # p-value
 
-# Populate 12S (row 4)
-r2_table[4,2] <- r2_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18S")
-r2_table[4,3] <- r2_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18F")
+# Populate COI, fall
+correlation_table[6,3] <- lm_extract_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18F")[1] # R^2
+correlation_table[6,4] <- lm_extract_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18F")[2] # f-statistic
+correlation_table[6,5] <- lm_extract_function(data = ESP_CTD_COI_shannon_paired, cruise = "CN18F")[3] # p-value
 
-write.csv(r2_table, here("resubmission", "cruise_alpha_r2_table.csv"))
+# Populate 12S, spring
+correlation_table[7,3] <- lm_extract_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18S")[1] # R^2
+correlation_table[7,4] <- lm_extract_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18S")[2] # f-statistic
+correlation_table[7,5] <- lm_extract_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18S")[3] # p-value
+
+# Populate 12S, fall
+correlation_table[8,3] <- lm_extract_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18F")[1] # R^2
+correlation_table[8,4] <- lm_extract_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18F")[2] # f-statistic
+correlation_table[8,5] <- lm_extract_function(data = ESP_CTD_12S_shannon_paired, cruise = "CN18F")[3] # p-value
+
+write.csv(correlation_table, here("resubmission", "alpha_correlation_table.csv"))
