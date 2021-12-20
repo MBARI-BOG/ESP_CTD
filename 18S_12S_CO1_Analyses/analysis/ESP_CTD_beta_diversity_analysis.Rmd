@@ -28,6 +28,7 @@ library(vegan)
 library(ggpubr)
 library(egg)
 library(rstatix)
+library(grid)
 ```
 
 ### Load data
@@ -1178,6 +1179,7 @@ distance_histogram <- function(input_data, variable){
     theme(panel.background = element_rect(fill ="white", color = "black"),
           panel.grid.major = element_blank(),
           panel.grid.minor = element_blank(),
+          plot.margin = unit(c(1.5,0.25,0,0), "cm"),
           legend.position = "none") +
     scale_x_continuous(limits = c(0,max(input_data$distance+0.1)), oob = scales::oob_keep, expand = c(0,0)) +
     xlab("Aitchison Distance") +
@@ -1516,11 +1518,11 @@ combined_dist_hist <- egg::ggarrange(paired_histogram_16S, cruise_depth_histogra
                                      paired_histogram_12S, cruise_depth_histogram_12S,
                                      paired_hist_legend, cruise_depth_hist_legend,
                                      nrow = 5, ncol = 2,
-                                     labels = c("", "(a) 16S", "", "(b) 18S", "", "(c) COI", "", "(d) 12S", "", ""),
-                                                      label.args = list(gp=gpar(font=1, cex = 1.5), x=unit(9.75,"cm"), y=unit(5,"cm"), hjust = 1))
+                                     labels = c("(a) 16S", "", "(b) 18S", "", "(c) COI", "", "(d) 12S", "", "", ""),
+                                                      label.args = list(gp=gpar(font=1, cex = 1.5), x=unit(0.25,"cm"), y=unit(5.6,"cm"), hjust = 0))
 
-ggsave(here("resubmission", "combined_distance_histogram.pdf"), combined_dist_hist,
-       height = 10, width = 8)
+ggsave(here("resubmission", "combined_distance_histogram_v2.pdf"), combined_dist_hist,
+       height = 11, width = 8)
 ```
 
 ### Run ANOVA
@@ -1676,7 +1678,7 @@ return(permutation_plot)
 ```
 
 ### Run the function for each combination of cruise and depth
-```{r}
+```{r eval = FALSE}
 paired_permutation_test(distance_metadata_df = distances_metadata_COI, permutations = 1000, cruise = "CN18F", depth = "Shallow")
 
 markers <- c("COI", "18S", "12S", "16S")
@@ -1725,7 +1727,7 @@ distance_histogram(input_data = subset(distances_metadata_16S,
 
 Here we will examine if paired samples are significantly more similar than non-paired samples, when you subset just the same cruise and depth samples. This is different than the previous permutation tests in that we aren't looking at each cruise and depth pairing separately. This way, we're significantly increasing the number of samples that can be chosen for the test.
 
-```{r}
+```{r eval = FALSE}
 paired_permutation_test <- function(distance_metadata_df, permutations){
   
 distance_metadata_df %>% 
