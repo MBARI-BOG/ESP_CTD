@@ -1787,6 +1787,17 @@ paired_permutation_test(distance_metadata_df = subset(distances_metadata_18S, SA
 paired_permutation_test(distance_metadata_df = subset(distances_metadata_COI, SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F"), permutations = 1000)
 paired_permutation_test(distance_metadata_df = subset(distances_metadata_12S, SAMPLING_cruise_1 == "CN18F" & SAMPLING_cruise_2 == "CN18F"), permutations = 1000)
 
+# Shallow only
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_16S, depth_cat_1 == "Shallow" & depth_cat_2 == "Shallow"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_18S, depth_cat_1 == "Shallow" & depth_cat_2 == "Shallow"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_COI, depth_cat_1 == "Shallow" & depth_cat_2 == "Shallow"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_12S, depth_cat_1 == "Shallow" & depth_cat_2 == "Shallow"), permutations = 1000)
+
+# Deep only
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_16S, depth_cat_1 == "Deep" & depth_cat_2 == "Deep"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_18S, depth_cat_1 == "Deep" & depth_cat_2 == "Deep"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_COI, depth_cat_1 == "Deep" & depth_cat_2 == "Deep"), permutations = 1000)
+paired_permutation_test(distance_metadata_df = subset(distances_metadata_12S, depth_cat_1 == "Deep" & depth_cat_2 == "Deep"), permutations = 1000)
 
 
 ```
