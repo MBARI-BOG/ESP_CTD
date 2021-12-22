@@ -142,8 +142,8 @@ deicode_dir <- here::here("18S_12S_CO1_Analyses", "DEICODE", "COI_controls")
 
 # Subset phyloseq to only include the environmental samples and the correct negative controls
 # Remove positive controls
-sample_data(ESP_CTD_COI_directcomp_CN18FS_phyloseq)
-sample_data(ESP_CTD_COI_envt_negative_phyloseq)
+# sample_data(ESP_CTD_COI_directcomp_CN18FS_phyloseq)
+# sample_data(ESP_CTD_COI_envt_negative_phyloseq)
 # ESP_CTD_COI_envt_negative_phyloseq <- prune_samples(!(sample_data(ESP_CTD_COI_directcomp_CN18FS_phyloseq)$sample_type.x == "positive"),ESP_CTD_COI_directcomp_CN18FS_phyloseq)
 
 ESP_CTD_COI_envt_negative_phyloseq <- prune_samples(sample_data(ESP_CTD_COI_directcomp_CN18FS_phyloseq)$sample_type.x != "positive",ESP_CTD_COI_directcomp_CN18FS_phyloseq)
@@ -171,7 +171,7 @@ write.table(ESP_CTD_COI_envt_negative_metadata, paste0(deicode_dir, "/ESP_CTD_CO
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -270,7 +270,7 @@ distance_matrix <- distance$data
 PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
-
+set.seed(123)
 permanova_control_envt_COI <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
 permanova_control_envt_COI_value <- permanova_control_envt_COI$`Pr(>F)`[1]
 
@@ -348,7 +348,7 @@ write.table(ESP_CTD_18S_envt_negative_metadata, paste0(deicode_dir, "/ESP_CTD_18
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -448,7 +448,7 @@ distance_matrix <- distance$data
 PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
-
+set.seed(123)
 permanova_control_envt_18S <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
 permanova_control_envt_18S_value <- permanova_control_envt_18S$`Pr(>F)`[1]
 
@@ -517,7 +517,7 @@ write.table(ESP_CTD_12S_envt_negative_metadata, paste0(deicode_dir, "/ESP_CTD_12
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -608,7 +608,7 @@ distance_matrix <- distance$data
 PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
-
+set.seed(123)
 permanova_control_envt_12S <- adonis2(PCA_dist ~ sample_type.x, data = pca_metadata, permutations=999)
 permanova_control_envt_12S_value <- permanova_control_envt_12S$`Pr(>F)`[1]
 
@@ -702,7 +702,7 @@ write.table(ESP_CTD_16S_envt_negative_metadata, paste0(deicode_dir, "/ESP_CTD_16
 
 ### Run DEICODE in Qiime2
 
-```{bash engine.opts = '-l'}
+```{bash engine.opts = '-l', eval = FALSE}
 # Enter qiime2 environment
 conda activate qiime2-2020.11
 
@@ -792,7 +792,7 @@ distance_matrix <- distance$data
 PCA_dist <- as.dist(distance_matrix)
 
 # PERMANOVA for control vs exp
-
+set.seed(123)
 permanova_control_envt_16S <- adonis2(PCA_dist ~ control_status, data = pca_metadata, permutations=999)
 permanova_control_envt_16S_value <- permanova_control_envt_16S$`Pr(>F)`[1]
 
@@ -870,6 +870,15 @@ ggsave(path = fig_dir, filename = "ESP_CTD_16S_controls_PCA_v2.png", ESP_CTD_16S
 
 # pca_data$sample_type_2
 ```
+
+## Inspect all PERMANOVA outputs
+```{r}
+permanova_control_envt_16S
+permanova_control_envt_18S
+permanova_control_envt_COI
+permanova_control_envt_12S
+```
+
 
 # Create a legend manually
 ```{r}
@@ -952,7 +961,7 @@ combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA,
 ggsave(combined_PCA_gg, height = 16, width = 16, path = fig_dir, filename = "supplemental_PCA_fig_v2.png", device = "png")
 
 # Export final version
-final_fig_dir <- here("figures", "final_figures")
+final_fig_dir <- here("resubmission")
 combined_PCA_gg <- ggpubr::ggarrange(ggpubr::ggarrange(ESP_CTD_16S_PCA, 
                                                  ESP_CTD_18S_PCA, ESP_CTD_COI_PCA, ESP_CTD_12S_PCA, ncol = 2, nrow = 2,
                                                  labels = c("(a) 16S", "(b) 18S", "(c) COI", "(d) 12S"), label.x = 0.05, label.y = 0.985,
