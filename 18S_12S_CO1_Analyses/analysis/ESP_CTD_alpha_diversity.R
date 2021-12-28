@@ -241,6 +241,39 @@ mean(subset(ESP_CTD_12S_shannon, CTD_or_ESP == "CTD")$Shannon)
 # 12S: CTD has mean difference of 0.28 more Shannon diversity
 
 
+# Okay, try for 12S looking only at depth/cruise combos
+
+# Spring, shallow
+ESP_CTD_12S_shannon %>% 
+  subset(., SAMPLING_cruise == "CN18S" & depth < 100) -> ESP_CTD_12S_shannon_CN18S_shallow
+
+shannon_ttest_12S_CN18S_shallow_paired <- t.test(subset(ESP_CTD_12S_shannon_CN18S_shallow, CTD_or_ESP.y == "ESP")$Shannon, 
+                                   subset(ESP_CTD_12S_shannon_CN18S_shallow, CTD_or_ESP.y == "CTD")$Shannon,
+                                   paired = TRUE)
+
+# Spring, deep
+ESP_CTD_12S_shannon %>% 
+  subset(., SAMPLING_cruise == "CN18S" & depth > 100) -> ESP_CTD_12S_shannon_CN18S_deep
+
+shannon_ttest_12S_CN18S_deep_paired <- t.test(subset(ESP_CTD_12S_shannon_CN18S_deep, CTD_or_ESP.y == "ESP")$Shannon, 
+                                                 subset(ESP_CTD_12S_shannon_CN18S_deep, CTD_or_ESP.y == "CTD")$Shannon,
+                                                 paired = TRUE)
+
+
+# Fall (all deep)
+ESP_CTD_12S_shannon %>% 
+  subset(., SAMPLING_cruise == "CN18F") -> ESP_CTD_12S_shannon_CN18F
+
+shannon_ttest_12S_CN18F_paired <- t.test(subset(ESP_CTD_12S_shannon_CN18F, CTD_or_ESP.y == "ESP"  & 
+                                                  !(matching_ID.x %in% c("CN18F1", "CN18F2", "CN18F21", "CN18F3")))$Shannon, 
+                                                 subset(ESP_CTD_12S_shannon_CN18F, CTD_or_ESP.y == "CTD"  & 
+                                                          !(matching_ID.x %in% c("CN18F1", "CN18F2", "CN18F21", "CN18F3")))$Shannon,
+                                                 paired = TRUE)
+
+shannon_ttest_12S_CN18S_shallow_paired
+shannon_ttest_12S_CN18S_deep_paired
+shannon_ttest_12S_CN18F_paired
+
 ##----Add metadata to shannon stats-------------------------------------------------
 ESP_CTD_COI_shannon %>%
   left_join(., ESP_CTD_COI_envtsamples_metadata, by = "sample_name") -> ESP_CTD_COI_shannon
@@ -501,6 +534,7 @@ summary(res.aov.16S)
 
 ##### Examine all ANOVA results #####
 
+# NOTE! THESE RESULTS NOT USED! ONLY PAIRED T-TEST alpha div comparisons
 summary(res.aov.COI)
 summary(res.aov.18S)
 summary(res.aov.12S)
